@@ -1,0 +1,30 @@
+{
+  "name": "ipfsdb",
+  "version": "0.1.0",
+  "description": "IpfsDB aims to bring MongoDB-like developer interface to Web 3.0.",
+  "main": "src/Store.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dappkit/ipfsdb.git"
+  },
+  "author": "Dappkit",
+  "bugs": {
+    "url": "https://github.com/dappkit/ipfsdb/issues"
+  },
+  "homepage": "https://github.com/dappkit/ipfsdb#readme",
+  "contributors": [
+    "vasa-develop",
+    "vaultec81"
+  ],
+  "devDependencies": {
+    "mocha": "^7.1.1",
+    "orbit-db-test-utils": "^0.8.5",
+    "orbit-db": "^0.23.1"
+  },
+  "dependencies": {
+    "orbit-db-store": "^3.1.0"
+  }
+}
