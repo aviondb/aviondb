@@ -1,0 +1,18 @@
+language: node_js
+
+node_js:
+  - 'stable'
+  - 10
+  - 9
+  - 8
+  
+os:
+  - linux
+  - osx
+
+install:
+  - npm i
+  - npm i -g codecov
+  
+script:
+  - npm run test:coverage
