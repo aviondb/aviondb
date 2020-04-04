@@ -1,5 +1,6 @@
 const OrbitdbStore = require("orbit-db-store")
 const CollectionIndex = require('./CollectionIndex')
+const ObjectId = require("bson-objectid")
 
 class Collection extends OrbitdbStore {
     constructor(ipfs, id, dbname, options) {
@@ -9,16 +10,27 @@ class Collection extends OrbitdbStore {
         this._type = 'ipfsdb.collection';
     }
     insert(docs) {
-        
+        for (var doc of docs) {
+            if (!doc._id) {
+                doc._id = ObjectId.generate()
+            }
+        }
+        return this._addOperation({
+            op: "INSERT",
+            value: docs
+        })
     }
-    insertOne(doc) {
+    async insertOne(doc) {
+        if (typeof doc !== "object")
+            throw "Object documents are only supported"
         
+        return (await this.insert([doc]))[0]; ''
     }
-    async find(query) {
-
+    find(query) {
+        return this._index.find(query);
     }
     async findOne(query) {
-
+        return (await this.find(query))[0];
     }
     async findOneAndUpdate(query, modification) {
 
@@ -26,11 +38,11 @@ class Collection extends OrbitdbStore {
     async findOneAndDelete(query) {
 
     }
-    async distinct() {
-
+    distinct(key, query) {
+        return this._index.distinct(key, query)
     }
     async drop() {
-        
+
     }
 }
 module.exports = Collection;

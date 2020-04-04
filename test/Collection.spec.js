@@ -2,6 +2,7 @@ const Store = require('../src/Collection')
 const Cache = require('orbit-db-cache')
 const Keystore = require('orbit-db-keystore')
 const IdentityProvider = require('orbit-db-identity-provider')
+const assert = require('assert')
 
 var DefaultOptions = {};
 // Test utils
@@ -30,6 +31,7 @@ describe("Collection", function () {
         const keystore = new Keystore(identityStore)
 
         cacheStore = await storage.createStore('cache')
+        await cacheStore.open()
         const cache = new Cache(cacheStore)
 
         testIdentity = await IdentityProvider.createIdentity({ id: 'userA', keystore })
@@ -52,6 +54,9 @@ describe("Collection", function () {
     })
     //TODO: Add tests 
     it("InsertOne", async () => {
-        
+        await store.insertOne({ name: "kim", age: 35 })
+        var result = await store.findOne({name:"kim"})
+        assert.strictEqual(result.age, 35);
+        assert.strictEqual(result.name, "kim");
     })
 })
