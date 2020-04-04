@@ -4,7 +4,8 @@
   "description": "IpfsDB aims to bring MongoDB-like developer interface to Web 3.0.",
   "main": "src/Store.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "test:coverage": "codecov"
   },
   "repository": {
     "type": "git",
