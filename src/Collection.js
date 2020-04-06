@@ -8,6 +8,12 @@ class Collection extends OrbitdbStore {
         Object.assign(opts, options);
         super(ipfs, id, dbname, opts);
         this._type = 'ipfsdb.collection';
+        this.events.on("write", (address, entry) => {
+            this._index.handleEntry(entry);
+        });
+        this.events.on("replicate.progres", (address, hash, entry) => {
+            this._index.handleEntry(entry);
+        })
     }
     insert(docs) {
         for (var doc of docs) {
@@ -24,7 +30,7 @@ class Collection extends OrbitdbStore {
         if (typeof doc !== "object")
             throw "Object documents are only supported"
         
-        return (await this.insert([doc]))[0]; ''
+        return (await this.insert([doc]))[0];
     }
     find(query) {
         return this._index.find(query);
@@ -42,7 +48,8 @@ class Collection extends OrbitdbStore {
         return this._index.distinct(key, query)
     }
     async drop() {
-
+        super.drop();
+        //TODO: broadcast drop message on binding database
     }
 }
 module.exports = Collection;

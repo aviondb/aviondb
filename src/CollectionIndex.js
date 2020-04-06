@@ -48,25 +48,41 @@ class CollectionIndex {
         }
         return Object.keys(out);
     }
+    handleEntry(item) {
+        var { payload } = item;
+        switch (payload.op) {
+            case "INSERT": {
+                this.handleInsert(payload);
+                break;
+            }
+            case "UPDATE": {
+
+            }
+            case "DELETE": {
+
+            }
+        }
+    }
+    async handleInsert(payload) {
+        var { value } = payload;
+        for (var doc of value) {
+            var _id = doc._id;
+            this._index[_id] = doc;
+
+            for (var key in doc) {
+                var value = doc[key];
+            }
+        }
+    }
+    handleUpdate(payload) {
+        var { value } = payload;
+    }
+    handleDelete(payload) {
+        var { value } = payload;
+
+    }
     updateIndex(oplog) {
-        oplog.values
-            .slice()
-            .reverse()
-            .reduce((handled, item) => {
-                var { payload } = item;
-                var { value } = payload;
-                switch (payload.op) {
-                    case "INSERT": {
-                        for (var doc of value) {
-                            var _id = doc._id;
-                            this._index[_id] = doc;
-                        }
-                        break;
-                    }
-                    
-                }
-                return handled
-            }, [])
+        //Left over to prevent errors from being thrown.
     }
 }
 
