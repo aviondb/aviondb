@@ -56,6 +56,7 @@ describe("Collection", function () {
     it("InsertOne", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         var result = await store.findOne({name:"kim"})
+        assert.strictEqual(typeof result, "object")
         assert.strictEqual(result.age, 35);
         assert.strictEqual(result.name, "kim");
     })
