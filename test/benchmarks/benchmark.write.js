@@ -47,7 +47,7 @@ ipfs.on('error', (err) => console.error(err))
 ipfs.on('ready', async () => {
     const run = async () => {
         try {
-            OrbitDB.addDatabaseType("ipfsdb.collection", require('../src/Collection'))
+            OrbitDB.addDatabaseType("ipfsdb.collection", require('../../src/Collection'))
             const orbit = await OrbitDB.createInstance(ipfs, { directory: './orbitdb/benchmarks' })
 
             const db = await orbit.create('orbit-db.benchmark', "ipfsdb.collection", {
