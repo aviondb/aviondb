@@ -1,3 +1,5 @@
+const parseAndUpdate = require('./operators/updateOperators')
+
 class CollectionIndex {
     constructor() {
         this._index = {}
@@ -80,7 +82,8 @@ class CollectionIndex {
                 break;
             }
             case "UPDATE": {
-
+                this.handleUpdate(payload);
+                break;
             }
             case "DELETE": {
                 this.handleDelete(payload);
@@ -96,7 +99,10 @@ class CollectionIndex {
         }
     }
     handleUpdate(payload) {
-        var { value } = payload;
+        var { value, modification } = payload;
+        for (var _id of value) {
+            parseAndUpdate(this._index[_id], modification)
+        }
     }
     handleDelete(payload) {
         var { value } = payload;

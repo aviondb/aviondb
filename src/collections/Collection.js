@@ -38,12 +38,12 @@ class Collection extends OrbitdbStore {
     findOne(query) {
         return this._index.findOne(query);
     }
-    async findOneAndUpdate(filter = {}, modifications) {
+    async findOneAndUpdate(filter = {}, modification) {
         var result = await this.findOne(filter)
         return this._addOperation({
             op: "UPDATE",
             value: [result._id],
-            modifications: modifications
+            modification: modification
         })
     }
     /**
@@ -64,20 +64,32 @@ class Collection extends OrbitdbStore {
     async findByIdAndDelete(id) {
 
     }
-    async findByIdAndUpdate(id, modifications) {
+    async findByIdAndUpdate(id, modification) {
 
     }
-    async update(filter = {}, modifications) {
+    async update(filter = {}, modification) {
+        var result = (await this.find(filter)).map(item => (item._id))
         return this._addOperation({
             op: "UPDATE",
-            value: {filter, modifications}
+            value: result,
+            modification: modification
         })
     }
-    async updateOne(filter = {}, modifications) {
-
+    async updateOne(filter = {}, modification) {
+        var result = await this.findOne(filter)
+        return this._addOperation({
+            op: "UPDATE",
+            value: [result._id],
+            modification: modification
+        })
     }
-    async updateMany(filter = {}, modifications) {
-
+    async updateMany(filter = {}, modification) {
+        var result = (await this.find(filter)).map(item => (item._id))
+        return this._addOperation({
+            op: "UPDATE",
+            value: result,
+            modification: modification
+        })
     }
     async deleteOne(filter = {}) {
 
