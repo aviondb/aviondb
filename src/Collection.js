@@ -97,7 +97,6 @@ class Collection extends OrbitdbStore {
     async deleteMany(filter = {}) {
 
     }
-
     distinct(key, query) {
         return this._index.distinct(key, query)
     }
