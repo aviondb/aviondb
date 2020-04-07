@@ -5,6 +5,10 @@ const IPFSRepo = require('ipfs-repo')
 const DatastoreLevel = require('datastore-level')
 const OrbitDB = require('orbit-db')
 const Crypto = require('crypto')
+const rimraf = require('rimraf')
+
+//Remove the orbitdb folder, if present
+rimraf.sync("./orbitdb");
 
 // Metrics
 let totalQueries = 0
