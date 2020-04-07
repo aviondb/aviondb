@@ -35,7 +35,7 @@ class Collection extends OrbitdbStore {
     find(query) {
         return this._index.find(query);
     }
-    async findOne(query) {
+    findOne(query) {
         return this._index.findOne(query);
     }
     async findOneAndUpdate(query, modification) {
