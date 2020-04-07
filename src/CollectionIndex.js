@@ -83,7 +83,8 @@ class CollectionIndex {
 
             }
             case "DELETE": {
-
+                this.handleDelete(payload);
+                break;
             }
         }
     }
@@ -103,7 +104,9 @@ class CollectionIndex {
     }
     handleDelete(payload) {
         var { value } = payload;
-
+        for(var _id of value) {
+            delete this._index[_id];
+        }
     }
     updateIndex(oplog) {
         //Left over to prevent errors from being thrown.

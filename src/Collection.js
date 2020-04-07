@@ -41,8 +41,17 @@ class Collection extends OrbitdbStore {
     async findOneAndUpdate(query, modification) {
 
     }
-    async findOneAndDelete(query) {
-
+    /**
+     * Deletes a single document based on the filter and sort criteria, returning the deleted document.
+     * @param {Object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
+     */
+    async findOneAndDelete(filter = {}) {
+        var result = await this.findOne(filter)
+        await this._addOperation({
+            op: "DELETE",
+            value: [result._id]
+        })
+        return result;
     }
     distinct(key, query) {
         return this._index.distinct(key, query)
