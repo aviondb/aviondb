@@ -30,6 +30,30 @@ class CollectionIndex {
         }
         return results;
     }
+
+    async findOne(query) {
+        var index = this._index;
+        for (var id in index) {
+            var doc = index[id];
+            var match = true;
+
+            for (var key in query) {
+                if (!doc[key]) {
+                    match = false;
+                    break;
+                }
+                if (doc[key] !== query[key]) {
+                    match = false;
+                    break;
+                }
+            }
+
+            if (match) {
+                return doc;
+            }
+        }
+    }
+
     async distinct(key, query) {
         if (!key) {
             throw "Key must not be undefined"
