@@ -1,4 +1,4 @@
-const parseAndUpdate = require('./operators/updateOperators')
+const parseAndUpdate = require('./operators/UpdateOperators')
 
 class CollectionIndex {
     constructor() {
