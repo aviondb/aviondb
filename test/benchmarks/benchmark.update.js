@@ -58,7 +58,7 @@ ipfs.on('ready', async () => {
                 overwrite: true
             })
 
-            console.log(`Creating ${numberOfEntries} documents for querying. Stand by! `)
+            console.log(`Creating ${numberOfEntries} documents for updating. Stand by! `)
             for (var x = 0; x < numberOfEntries; x++) {
                 await db.insertOne({
                     id: Crypto.randomBytes(6).toString("base64"),
