@@ -93,10 +93,6 @@ class CollectionIndex {
         for (var doc of value) {
             var _id = doc._id;
             this._index[_id] = doc;
-
-            for (var key in doc) {
-                var value = doc[key];
-            }
         }
     }
     handleUpdate(payload) {
