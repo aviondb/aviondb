@@ -12,6 +12,7 @@
     "url": "git+https://github.com/dappkit/ipfsdb.git"
   },
   "author": "Dappkit",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/dappkit/ipfsdb/issues"
   },
