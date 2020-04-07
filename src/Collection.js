@@ -38,8 +38,8 @@ class Collection extends OrbitdbStore {
     findOne(query) {
         return this._index.findOne(query);
     }
-    async findOneAndUpdate(query, modification) {
-
+    async findOneAndUpdate(filter = {}, modifications) {
+        
     }
     /**
      * Deletes a single document based on the filter and sort criteria, returning the deleted document.
@@ -53,6 +53,31 @@ class Collection extends OrbitdbStore {
         })
         return result;
     }
+    async findById(id) {
+
+    }
+    async findByIdAndDelete(id) {
+
+    }
+    async findByIdAndUpdate(id, modifications) {
+
+    }
+    async update(filter = {}, modifications) {
+        
+    }
+    async updateOne(filter = {}, modifications) {
+
+    }
+    async updateMany(filter = {}, modifications) {
+
+    }
+    async deleteOne(filter = {}) {
+
+    }
+    async deleteMany(filter = {}) {
+
+    }
+
     distinct(key, query) {
         return this._index.distinct(key, query)
     }
