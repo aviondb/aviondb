@@ -99,9 +99,9 @@ class CollectionIndex {
         }
     }
     handleUpdate(payload) {
-        var { value, modification } = payload;
+        var { value, modification, options } = payload;
         for (var _id of value) {
-            parseAndUpdate(this._index[_id], modification)
+            parseAndUpdate(this._index[_id], modification, options)
         }
     }
     handleDelete(payload) {
