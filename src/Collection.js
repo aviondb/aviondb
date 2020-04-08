@@ -130,7 +130,7 @@ class Collection extends OrbitdbStore {
             throw "Head Hash ID does not match store ID."
         }
         
-        //Generate list of head dags from list of hashs
+        //Generate list of head dags from list of hashes
         var heads = [];
         for(var hashOfHead of value.heads) {
             var val = (await this._ipfs.dag.get(hashOfHead)).value;
