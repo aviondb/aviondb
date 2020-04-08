@@ -68,28 +68,109 @@ class Collection extends OrbitdbStore {
     async findByIdAndUpdate(id, modification) {
 
     }
-    async update(filter = {}, modification) {
-        var result = (await this.find(filter)).map(item => (item._id))
+
+    /**
+     *
+     * Modifies an existing document or documents in a collection.
+     * The method can modify specific fields of an existing document
+     * or documents or replace an existing document entirely, depending
+     * on the update parameter.
+     * 
+     * By default, the db.collection.update() method updates a single document.
+     * Include the option multi: true to update all documents that match the query criteria.
+     * 
+     * 
+     *  db.collection.update(
+        <query>,
+        <modification>,
+        {
+            upsert: <boolean>,
+            multi: <boolean>,
+            writeConcern: <document>,
+            collation: <document>,
+            arrayFilters: [ <filterdocument1>, ... ],
+            hint:  <document|string>        
+        }
+        )
+     * @param {JSON Object} filter 
+     * @param {JSON Object} modification 
+     * @param {JSON Object} options 
+     */
+
+    async update(filter = {}, modification, options = {}) {
+        var result;
+        if (options.multi) {
+             result = (await this.find(filter)).map(item => (item._id))    
+        }
+        else {
+            result = [(await this.findOne(filter))._id]
+        }
         return this._addOperation({
             op: "UPDATE",
             value: result,
-            modification: modification
+            modification: modification,
+            options: options
         })
     }
-    async updateOne(filter = {}, modification) {
-        var result = await this.findOne(filter)
+
+    /**
+     * Updates a single document within the collection based on the filter.
+     * 
+     * db.collection.updateOne(
+        <filter>,
+        <modification>,
+        {
+            upsert: <boolean>,
+            writeConcern: <document>,
+            collation: <document>,
+            arrayFilters: [ <filterdocument1>, ... ],
+            hint:  <document|string>       
+        }
+        )
+     * 
+     * @param {JSON Object} filter 
+     * @param {JSON Object} modification 
+     * @param {JSON Object} options 
+     */
+
+    async updateOne(filter = {}, modification, options = {}) {
+        var result = (await this.findOne(filter))._id
         return this._addOperation({
             op: "UPDATE",
             value: [result._id],
-            modification: modification
+            modification: modification,
+            options: options
         })
     }
-    async updateMany(filter = {}, modification) {
+
+    /**
+     *
+     * Updates all documents that match the specified filter for a collection.
+     *  
+     * db.collection.updateMany(
+        <filter>,
+        <modification>,
+        {
+            upsert: <boolean>,
+            writeConcern: <document>,
+            collation: <document>,
+            arrayFilters: [ <filterdocument1>, ... ],
+            hint:  <document|string>       
+        }
+        )
+     * 
+     * @param {JSON Object} filter 
+     * @param {JSON Object} modification 
+     * @param {JSON Object} options 
+     */
+
+    async updateMany(filter = {}, modification, options = {}) {
         var result = (await this.find(filter)).map(item => (item._id))
         return this._addOperation({
             op: "UPDATE",
             value: result,
-            modification: modification
+            modification: modification,
+            options: options
         })
     }
     async deleteOne(filter = {}) {
