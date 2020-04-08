@@ -1,6 +1,7 @@
 const OrbitdbStore = require("orbit-db-store")
 const CollectionIndex = require('./CollectionIndex')
 const ObjectId = require("bson-objectid")
+const CID = require('cids')
 
 class Collection extends OrbitdbStore {
     constructor(ipfs, id, dbname, options) {
@@ -99,6 +100,49 @@ class Collection extends OrbitdbStore {
     }
     distinct(key, query) {
         return this._index.distinct(key, query)
+    }
+    /**
+     * Returns CID string representing oplog heads.
+     * returns null if oplog is empty
+     * @returns {String}
+     */
+    async getHeadHash() {
+        try {
+            return await this._oplog.toMultihash()
+        } catch {
+            return null;
+        }
+    }
+    /**
+     * Syncs datastore to a supplied CID representing oplog heads. Pauses all write operations until sync is complete.
+     * @param {String} hash 
+     * @param {Boolean} stopWrites 
+     * @returns {Promise<null>}
+     */
+    async syncFromHeadHash(hash, stopWrites) {
+        if(new CID(hash).equals(new CID(await this.getHeadHash()))) {
+            //Nothing to do
+            return;
+        }
+        //Retrieve dag of headhash.
+        var {value} = await this._ipfs.dag.get(hash);
+        if(value.id !== this.id) {
+            throw "Head Hash ID does not match store ID."
+        }
+        
+        //Generate list of head dags from list of hashs
+        var heads = [];
+        for(var hashOfHead of value.heads) {
+            var val = (await this._ipfs.dag.get(hashOfHead)).value;
+            val.hash = hashOfHead.toBaseEncodedString("base58btc"); //Convert to base58btc to prevent orbit-db-store from throwing comparison errors. (File future bug report)
+            heads.push(val);
+        }
+
+        if(stopWrites) {
+            this._opqueue.pause()
+        }
+        await this.sync(heads);
+        this._opqueue.start()
     }
     async drop() {
         super.drop();

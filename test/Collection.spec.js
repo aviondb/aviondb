@@ -60,4 +60,13 @@ describe("Collection", function () {
         assert.strictEqual(result.age, 35);
         assert.strictEqual(result.name, "kim");
     })
+    it("Head syncing", async () => {
+        //NOTE: notice how there is two inserts. That is because entries aren't immediately added to the oplog. store.getHeadHash() will return null if there is no oplog entries. 
+        await store.insertOne({ name: "kim", age: 35 })
+        await store.insertOne({ name: "john", age: 40 })
+        var headHash = await store.getHeadHash();
+        assert.notStrictEqual(headHash, null)
+        await store.syncFromHeadHash(headHash)
+        //Expects no errors to be thrown.
+    })
 })
