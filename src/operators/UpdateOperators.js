@@ -1,23 +1,35 @@
-module.exports = parseAndUpdate = (doc, modification) => {
+module.exports = parseAndUpdate = (doc, modification, options) => {
     Object.keys(modification).forEach(operator => {
         switch (operator) {
             case "$inc":
-                doc = inc(doc, modification[operator])
+                doc = inc(doc, modification[operator], options)
                 break;
             case "$min":
-                doc = min(doc, modification[operator])
+                doc = min(doc, modification[operator], options)
                 break;
             case "$max":
-                doc = max(doc, modification[operator])
+                doc = max(doc, modification[operator], options)
                 break;
             case "$mul":
-                doc = mul(doc, modification[operator])
+                doc = mul(doc, modification[operator], options)
                 break;
             case "$set":
-                doc = set(doc, modification[operator])
+                doc = set(doc, modification[operator], options)
                 break;
             case "$unset":
-                doc = unset(doc, modification[operator])
+                doc = unset(doc, modification[operator], options)
+                break;
+            case "$rename":
+                doc = rename(doc, modification[operator], options)
+                break;
+            case "$addToSet":
+                doc = addToSet(doc, modification[operator], options)
+                break;
+            case "$pop":
+                doc = pop(doc, modification[operator], options)
+                break;
+            case "$pullAll":
+                doc = pullAll(doc, modification[operator], options)
                 break;
             default:
                 throw new Error(`${operator} operator is not supported`)
@@ -33,7 +45,7 @@ module.exports = parseAndUpdate = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const currentDate = (doc, modification) => { 
+const currentDate = (doc, modification, options) => { 
     
 }
 
@@ -43,7 +55,7 @@ const currentDate = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const inc = (doc, modification) => { 
+const inc = (doc, modification, options) => { 
     //TODO: Support updates via JSON typed field. Eg, "user.age"
     for (field in modification) { 
         if (doc[field] && (typeof doc[field] == 'number')) {
@@ -60,7 +72,7 @@ const inc = (doc, modification) => {
  * @param {JSON Object} modification 
  */
 
-const min = (doc, modification) => { 
+const min = (doc, modification, options) => { 
     //TODO: Support updates via JSON typed field. Eg, "user.age"
     for (field in modification) { 
         if (doc[field]) { 
@@ -79,7 +91,7 @@ const min = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const max = (doc, modification) => { 
+const max = (doc, modification, options) => { 
     //TODO: Support updates via JSON typed field. Eg, "user.age"
     for (field in modification) {
         if (doc[field]) { 
@@ -97,7 +109,7 @@ const max = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const mul = (doc, modification) => { 
+const mul = (doc, modification, options) => { 
     //TODO: Support updates via JSON typed field. Eg, "user.age"
     for (field in modification) { 
         if (doc[field] && (typeof doc[field] == 'number')) {
@@ -113,8 +125,18 @@ const mul = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const rename = (doc, modification) => { 
-    
+const rename = (doc, modification, options) => { 
+    //TODO: Support updates via JSON typed field. Eg, "user.age"
+    for (field in modification) { 
+        if (doc[field]) {            
+            let value = doc[field];
+            doc = unset(doc, { field: "" });
+            let newField = {};
+            newField[modification.field] = value;
+            doc = set(doc, newField);
+        }
+    }
+    return doc
 }
 
  /**
@@ -123,7 +145,7 @@ const rename = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const set = (doc, modification) => { 
+const set = (doc, modification, options) => { 
     //TODO: Support updates via JSON typed field. Eg, "user.age"
     for (field in modification) { 
         doc[field] = modification[field];
@@ -138,8 +160,10 @@ const set = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const setOnInsert = (doc, modification) => { 
+const setOnInsert = (doc, modification, options) => { 
+    //TODO: Support updates via JSON typed field. Eg, "user.age"
 
+    return doc
 }
 
  /**
@@ -148,8 +172,8 @@ const setOnInsert = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const unset = (doc, modification) => { 
-//TODO: Support updates via JSON typed field. Eg, "user.age"
+const unset = (doc, modification, options) => { 
+    //TODO: Support updates via JSON typed field. Eg, "user.age"
     for (field in modification) { 
         delete doc[field]
     }
@@ -164,8 +188,16 @@ const unset = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const addToSet = (doc, modification) => { 
-
+const addToSet = (doc, modification, options) => { 
+    //TODO: Support updates via JSON typed field. Eg, "user.age"
+    for (field in modification) { 
+        if (doc[field] && (doc[field].constructor === Array)) {
+            if ((!doc[field].includes(modification[field]))) {
+                doc[field].push(modification[field])
+            }
+        }
+    }
+    return doc
 }
 
  /**
@@ -174,8 +206,21 @@ const addToSet = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const pop = (doc, modification) => { 
-
+const pop = (doc, modification, options) => { 
+    //TODO: Support updates via JSON typed field. Eg, "user.age"
+    for (field in modification) {
+        if (doc[field] && (doc[field].constructor === Array)) { 
+            if (doc[field].length > 0) {
+                if (modification[field] === -1) {
+                    doc[field].shift()
+                }
+                else if (modification[field] === 1) {
+                    doc[field].pop()
+                }
+            }
+        }
+    }
+    return doc
 }
 
  /**
@@ -184,8 +229,22 @@ const pop = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const pull = (doc, modification) => { 
-
+const pull = (doc, modification, options) => { 
+    //TODO: Support updates via JSON typed field. Eg, "user.age"
+    for (field in modification) {
+        if (doc[field] && (doc[field].constructor === Array)) {
+            //If the modification[field] is an Object
+            if (Object.keys(modification[field]).length === 0 && modification[field].constructor === Object) {
+                //TODO: remove the items that satisfy the condition
+                //eg. condition => { $in: [ "apples", "oranges" ] }
+            }
+            else {
+                doc = doc[field].filter((item) => { 
+                    return item !== modification[field];
+                })
+            }
+        }
+    }
 }
 
  /**
@@ -194,8 +253,19 @@ const pull = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const push = (doc, modification) => { 
-
+const push = (doc, modification, options) => { 
+    //TODO: Support updates via JSON typed field. Eg, "user.age"
+    for (field in modification) {
+        if (doc[field] && (doc[field].constructor === Array)) {
+            //TODO: Support the following modifiers
+            //https://docs.mongodb.com/manual/reference/operator/update/push/#modifiers
+            doc[field].push(modification[field]);
+        }
+        else if (!doc[field]) {
+            doc[field] = [modification[field]]
+        }
+    }
+    return doc
 }
 
  /**
@@ -204,8 +274,21 @@ const push = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const pullAll = (doc, modification) => { 
-
+const pullAll = (doc, modification, options) => { 
+    //TODO: Support updates via JSON typed field. Eg, "user.age"
+    for (field in modification) {
+        if (doc[field] && (doc[field].constructor === Array)) {
+            modification[field].forEach(element => {  
+                doc = doc[field].filter((item) => { 
+                    if (item.constructor === Array) {
+                        return !arraysEqual(item, element)
+                    }
+                    return item !== element;
+                })
+            })
+        }
+    }
+    return doc
 }
 
 // Modifiers
@@ -216,8 +299,8 @@ const pullAll = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const each = (doc, modification) => { 
-
+const each = (doc, modification, options) => { 
+    return doc
 }
 
  /**
@@ -226,8 +309,8 @@ const each = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const position = (doc, modification) => { 
-
+const position = (doc, modification, options) => { 
+    return doc
 }
 
  /**
@@ -236,8 +319,8 @@ const position = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const slice = (doc, modification) => { 
-
+const slice = (doc, modification, options) => { 
+    return doc
 }
 
  /**
@@ -246,8 +329,8 @@ const slice = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const sort = (doc, modification) => { 
-
+const sort = (doc, modification, options) => { 
+    return doc
 }
 
 // Bitwise
@@ -258,6 +341,24 @@ const sort = (doc, modification) => {
   * @param {JSON Object} modification 
   */
 
-const bit = (doc, modification) => { 
+const bit = (doc, modification, options) => { 
+    return doc
+}
 
+// Utility Functions
+
+const arraysEqual = (a, b) => {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+
+  // If you don't care about the order of the elements inside
+  // the array, you should sort both arrays here.
+  // Please note that calling sort on an array will modify that array.
+  // you might want to clone your array first.
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
 }

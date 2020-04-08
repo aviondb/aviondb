@@ -1,7 +1,7 @@
 const OrbitdbStore = require("orbit-db-store")
-const CollectionIndex = require('./CollectionIndex')
 const ObjectId = require("bson-objectid")
 const CID = require('cids')
+const CollectionIndex = require('./CollectionIndex')
 
 class Collection extends OrbitdbStore {
     constructor(ipfs, id, dbname, options) {
@@ -89,7 +89,7 @@ class Collection extends OrbitdbStore {
             writeConcern: <document>,
             collation: <document>,
             arrayFilters: [ <filterdocument1>, ... ],
-            hint:  <document|string>        
+            hint:  <document|string>
         }
         )
      * @param {JSON Object} filter 
@@ -98,12 +98,15 @@ class Collection extends OrbitdbStore {
      */
 
     async update(filter = {}, modification, options = {}) {
-        var result;
+        var result = [];
         if (options.multi) {
-             result = (await this.find(filter)).map(item => (item._id))    
+            result.push(...(await collection.find(filter).map(item => (item._id))))
         }
-        else {
-            result = [(await this.findOne(filter))._id]
+        if (options.upsert && result.length === 0) {
+            // TODO: implement upsert condition for $setOnInsert operator
+        }
+        if (Object.keys(options).length === 0 && options.constructor === Object) {
+            result.push((await this.findOne(filter))._id)
         }
         return this._addOperation({
             op: "UPDATE",
