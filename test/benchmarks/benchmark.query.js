@@ -20,8 +20,8 @@ let numberOfEntries = 5000;
 // Main loop
 const queryLoop = async (db) => {
   
-  await db.findOne({nombre: "kim"})
-  totalQueries ++
+  await db.find({ fname: "vasa", lname: "develop" })
+  totalQueries++
   lastTenSeconds ++
   queriesPerSecond ++
   setImmediate(() => queryLoop(db))
@@ -62,7 +62,10 @@ ipfs.on('ready', async () => {
       for(var x = 0; x < numberOfEntries; x++) {
         await db.insertOne({
           id: Crypto.randomBytes(6).toString("base64"),
-          nombre: "kim"
+          fname: "vasa",
+          lname: "develop",
+          age: 22,
+          bal: 1000
         })
       }
       // Metrics output

@@ -1,4 +1,5 @@
 const parseAndUpdate = require('./operators/UpdateOperators')
+const parseAndFind = require('./operators/QueryOperators')
 
 class CollectionIndex {
     constructor() {
@@ -9,51 +10,13 @@ class CollectionIndex {
         return this._index[key]
     }
     async find(query) {
-        var results = [];
-        var index = this._index;
-        for (var id in index) {
-            var doc = index[id];
-            var match = true;
-
-            for (var key in query) {
-                if (!doc[key]) {
-                    match = false;
-                    break;
-                }
-                if (doc[key] !== query[key]) {
-                    match = false;
-                    break;
-                }
-            }
-
-            if (match) {
-                results.push(doc);
-            }
-        }
-        return results;
+        let res = parseAndFind(query, this._index, false)
+        return res
     }
 
     async findOne(query) {
-        var index = this._index;
-        for (var id in index) {
-            var doc = index[id];
-            var match = true;
-
-            for (var key in query) {
-                if (!doc[key]) {
-                    match = false;
-                    break;
-                }
-                if (doc[key] !== query[key]) {
-                    match = false;
-                    break;
-                }
-            }
-
-            if (match) {
-                return doc;
-            }
-        }
+        let res = parseAndFind(query, this._index, true)
+        return res
     }
 
     async distinct(key, query) {
