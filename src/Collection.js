@@ -40,12 +40,15 @@ class Collection extends OrbitdbStore {
         return this._index.findOne(query);
     }
     async findOneAndUpdate(filter = {}, modification) {
-        var result = await this.findOne(filter)
-        return this._addOperation({
-            op: "UPDATE",
-            value: [result._id],
-            modification: modification
-        })
+        var result = (await this.findOne(filter))._id;
+        if (Object.keys(result).length > 0) {            
+            return await this._addOperation({
+                op: "UPDATE",
+                value: [result._id],
+                modification: modification
+            })
+        }
+        return {}
     }
     /**
      * Deletes a single document based on the filter and sort criteria, returning the deleted document.
@@ -53,20 +56,76 @@ class Collection extends OrbitdbStore {
      */
     async findOneAndDelete(filter = {}) {
         var result = await this.findOne(filter)
-        await this._addOperation({
-            op: "DELETE",
-            value: [result._id]
-        })
+        if (Object.keys(result).length > 0) {            
+            await this._addOperation({
+                op: "DELETE",
+                value: [result._id]
+            })
+        }
         return result;
     }
-    async findById(id) {
 
+    /**
+     * Finds a record in the collection by Id
+     * 
+     * @param {BSON ObjectID} _id 
+     * @returns {JSON Object}
+     */
+
+    findById(_id) {
+        var ids = Object.keys(this._index);
+        for (let i = 0; i < ids.length; i++) {
+            if (ids[i] === _id) {
+                return index[id];
+            }
+        }
+        return {}
     }
-    async findByIdAndDelete(id) {
 
+    /**
+     * Finds & deletes a record in the collection by Id
+     * 
+     * @param {BSON ObjectID} _id
+     * @returns {JSON Object} return the deleted record
+     */
+
+    async findByIdAndDelete(_id) {
+        var ids = Object.keys(this._index);
+        for (let i = 0; i < ids.length; i++) {
+            if (ids[i] === _id) {
+                await this._addOperation({
+                    op: "DELETE",
+                    value: [_id]
+                })
+                return this._index[_id]
+            }
+        }
+        return {}
     }
-    async findByIdAndUpdate(id, modification) {
 
+    /**
+     * 
+     * Finds & updates a record in the collection by Id
+     * 
+     * @param {BSON ObjectID} _id 
+     * @param {JSON Object} modification 
+     * @param {JSON Object} options 
+     * @returns {JSON Object} return the updated record
+     */
+
+    async findByIdAndUpdate(_id, modification, options = {}) {
+        var ids = Object.keys(this._index);
+        for (let i = 0; i < ids.length; i++) {
+            if (ids[i] === _id) {
+                return await this._addOperation({
+                    op: "UPDATE",
+                    value: [_id],
+                    modification: modification,
+                    options: options
+                })
+            }
+        }
+        return {}
     }
 
     /**
@@ -108,7 +167,7 @@ class Collection extends OrbitdbStore {
         if (Object.keys(options).length === 0 && options.constructor === Object) {
             result.push((await this.findOne(filter))._id)
         }
-        return this._addOperation({
+        return await this._addOperation({
             op: "UPDATE",
             value: result,
             modification: modification,
@@ -138,9 +197,9 @@ class Collection extends OrbitdbStore {
 
     async updateOne(filter = {}, modification, options = {}) {
         var result = (await this.findOne(filter))._id
-        return this._addOperation({
+        return await this._addOperation({
             op: "UPDATE",
-            value: [result._id],
+            value: [result],
             modification: modification,
             options: options
         })
@@ -169,22 +228,53 @@ class Collection extends OrbitdbStore {
 
     async updateMany(filter = {}, modification, options = {}) {
         var result = (await this.find(filter)).map(item => (item._id))
-        return this._addOperation({
+        return await this._addOperation({
             op: "UPDATE",
             value: result,
             modification: modification,
             options: options
         })
     }
+
+    /**
+     * Deletes a single document based on the filter, returning the deleted document.
+     * 
+     * @param {JSON Object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available. 
+     */
+
     async deleteOne(filter = {}) {
-
+        var result = await this.findOne(filter);
+        if (Object.keys(result).length > 0) {            
+            await this._addOperation({
+                op: "DELETE",
+                value: [result._id]
+            })
+        }
+        return result;
     }
+
+    /**
+     * Deletes all the documents based on the filter, returning the deleted documents.
+     * 
+     * @param {JSON Object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
+     */
+
     async deleteMany(filter = {}) {
-
+        var records = await this.find(filter);
+        var result = records.map(item => (item._id));
+        if (result.length > 0) {            
+            await this._addOperation({
+                op: "DELETE",
+                value: result
+            })
+        }
+        return records;
     }
+
     distinct(key, query) {
         return this._index.distinct(key, query)
     }
+    
     /**
      * Returns CID string representing oplog heads.
      * returns null if oplog is empty
@@ -197,6 +287,7 @@ class Collection extends OrbitdbStore {
             return null;
         }
     }
+    
     /**
      * Syncs datastore to a supplied CID representing oplog heads. Pauses all write operations until sync is complete.
      * @param {String} hash 
@@ -228,6 +319,7 @@ class Collection extends OrbitdbStore {
         await this.sync(heads);
         this._opqueue.start()
     }
+    
     async drop() {
         super.drop();
         //TODO: broadcast drop message on binding database
