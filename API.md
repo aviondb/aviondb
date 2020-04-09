@@ -219,7 +219,7 @@ console.log(results);
 
 #### Supported Logical Operators
 
-- `$and`:
+- **`$and`**
 
     Syntax: `{ $and: [ { <expression1> }, { <expression2> } , ... , { <expressionN> } ] }`
 
@@ -244,7 +244,7 @@ console.log(results);
     await collection.find( { age: { $lt: 30, $gt: 10 }, balance: { $gte: 1000 } } )
     ```
 
-- `$or`:
+- **`$or`**
 
     Syntax: `{ $or: [ { <expression1> }, { <expression2> }, ... , { <expressionN> } ] }`
 
