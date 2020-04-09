@@ -68,10 +68,12 @@ Possible queries
 
 const evaluateQuery = (doc, query) => { 
     let res;
-    for (field in query) { 
+    let killSwitch = true; // kills the main loop if set to false
+    let fields = Object.keys(query);
+    for (let j = 0; (j < fields.length) && killSwitch; j++) {
         // check for comparison operators by "$"
-        if (field[0] === "$") {
-            switch (field) {
+        if (fields[j][0] === "$") {
+            switch (fields[j]) {
                 case "$and":
                     /**
                      * $and: 
@@ -82,9 +84,12 @@ const evaluateQuery = (doc, query) => {
                         ]
                      */
                     res = true;
-                    query[field].forEach(condition => { 
-                        res = res && evaluateCondition(condition, doc)
-                    })
+                    for (let i = 0; i < query[fields[j]].length; i++) {
+                        if (!evaluateCondition(query[fields[j]][i], doc)) { 
+                            res = false;
+                            break;
+                        }
+                    }
                     break;
                 case "$or":
                     /**
@@ -96,15 +101,15 @@ const evaluateQuery = (doc, query) => {
                         ]
                      */
                     res = false
-                    for (let i = 0; i < query[field].length; i++) {
-                        if (evaluateCondition(query[field][i], doc)) {
+                    for (let i = 0; i < query[fields[j]].length; i++) {
+                        if (evaluateCondition(query[fields[j]][i], doc)) {
                             res = true;
                             break;
                         }
                     }
                     break;
                 default:
-                    throw new Error(`${operator} comparison operator is not supported`)
+                    throw new Error(`${fields[j]} comparison operator is not supported`)
             }
         }
 
@@ -116,12 +121,16 @@ const evaluateQuery = (doc, query) => {
 
         // TODO: Support updates via JSON typed field. Eg, "user.age"
         else {
-            res = true
-            Object.keys(query).forEach(field => { 
+            res = true;
+            for (let i = 0; i < fields.length; i++) {
                 let check = {}
-                check[field] = query[field]
-                res = res && evaluateCondition(check, doc)
-            })
+                check[fields[i]] = query[fields[i]]
+                if (!evaluateCondition(check, doc)) {
+                    res = false;
+                    killSwitch = false;
+                    break;
+                }
+            }
         }
     }
     return res;
@@ -143,43 +152,59 @@ const evaluateCondition = (condition, doc) => {
             var logicConditions = Object.keys(condition[field])
             if (logicConditions[0][0] === "$") {
                 //{ qty: { $lt: 20, $gt: 10 } }
-                logicConditions.forEach(operator => {
-                    switch (operator) {
+                for (let i = 0; (i < logicConditions.length) && res; i++) {
+                    switch (logicConditions[i]) {
                         case "$lt":
-                            res = res && lt(doc[field], condition[field][operator])
+                            if (!lt(doc[field], condition[field][logicConditions[i]])) {
+                                res = false;
+                            }
                             break;
                         case "$gt":
-                            res = res && gt(doc[field], condition[field][operator])
+                            if (!gt(doc[field], condition[field][logicConditions[i]])) {
+                                res = false;
+                            }
                             break;
                         case "$lte":
-                            res = res && lte(doc[field], condition[field][operator])
+                            if (!lte(doc[field], condition[field][logicConditions[i]])) {
+                                res = false;
+                            }
                             break;
                         case "$gte":
-                            res = res && gte(doc[field], condition[field][operator])
+                            if (!gte(doc[field], condition[field][logicConditions[i]])) {
+                                res = false;
+                            }
                             break;
                         default:
-                            throw new Error(`${operator} logical operator is not supported`)
+                            throw new Error(`${logicConditions[i]} logical operator is not supported`)
                     }
-                })
+                }
             }
             else {
                 //{qty: {"fname": "vasa", "lname": "develop"}}
-                res = res && jsonEqual(doc[field], condition[field])
+                if (!jsonEqual(doc[field], condition[field])) {
+                    res = false;
+                }
             }
         }
         else {
             //{qty: [1,2]}
             if (condition[field].constructor === Array) {
-                res = res && arraysEqual(doc[field], condition[field])
+                if (!arraysEqual(doc[field], condition[field])) {
+                    res = false;
+                }
             }
             //{qty: {}}
             else if (condition[field].constructor === Object) {
-                res = res && jsonEqual(doc[field], condition[field])
+                if (!jsonEqual(doc[field], condition[field])) {
+                    res = false;
+                }
             }
             //{ qty: 30 }
             //{qty: null}
             else {
-                res = res && (doc[field] === condition[field])
+                if (!(doc[field] === condition[field])) {
+                    res = false;
+                }
             }
         }
         
