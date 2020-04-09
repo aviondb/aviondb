@@ -1,6 +1,4 @@
 # See https://glebbahmutov.com/blog/configure-prettier-in-vscode/#tips for more info
 
-# do not run Prettier against JavaScript files
-# in "src/","test/"  folders
-**/src/*
-**/test/*
+# do not run Prettier against any files
+**/*
