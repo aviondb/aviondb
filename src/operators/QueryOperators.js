@@ -15,6 +15,9 @@ module.exports = parseAndFind = (query, docs, findOne = false) => {
     }
 }
 
+// Possible optimization 
+// https://docs.mongodb.com/manual/reference/operator/query/or/#or-clauses-and-indexes
+
 /* 
 Possible queries 
 
