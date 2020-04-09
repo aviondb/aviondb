@@ -81,7 +81,7 @@ class Collection extends OrbitdbStore {
      * 
      * 
      *  db.collection.update(
-        <query>,
+        <filter>,
         <modification>,
         {
             upsert: <boolean>,
