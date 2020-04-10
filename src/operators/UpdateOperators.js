@@ -32,7 +32,7 @@ module.exports = parseAndUpdate = (doc, modification, options) => {
                 doc = pullAll(doc, modification[operator], options)
                 break;
             default:
-                throw new Error(`${operator} operator is not supported`)
+                throw new Error(`${operator} update operator is not supported`)
         }
     })
 }
