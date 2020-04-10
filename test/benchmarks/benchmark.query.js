@@ -20,7 +20,7 @@ let numberOfEntries = 5000;
 // Main loop
 const queryLoop = async (db) => {
   
-  await db.find({ fname: "vasa", lname: "develop" })
+  await db.findOne({ fname: "vasa", lname: "develop" })
   totalQueries++
   lastTenSeconds ++
   queriesPerSecond ++
