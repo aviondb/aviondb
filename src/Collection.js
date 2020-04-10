@@ -44,7 +44,7 @@ class Collection extends OrbitdbStore {
         if (Object.keys(result).length > 0) {            
             return await this._addOperation({
                 op: "UPDATE",
-                value: [result._id],
+                value: [result],
                 modification: modification
             })
         }
@@ -73,10 +73,10 @@ class Collection extends OrbitdbStore {
      */
 
     findById(_id) {
-        var ids = Object.keys(this._index);
+        var ids = Object.keys(this._index._index);
         for (let i = 0; i < ids.length; i++) {
             if (ids[i] === _id) {
-                return index[id];
+                return this._index._index[_id];
             }
         }
         return {}
@@ -90,14 +90,15 @@ class Collection extends OrbitdbStore {
      */
 
     async findByIdAndDelete(_id) {
-        var ids = Object.keys(this._index);
+        var index = { ...this._index._index };
+        var ids = Object.keys(index);
         for (let i = 0; i < ids.length; i++) {
             if (ids[i] === _id) {
                 await this._addOperation({
                     op: "DELETE",
                     value: [_id]
                 })
-                return this._index[_id]
+                return index[_id]
             }
         }
         return {}
