@@ -86,14 +86,13 @@ describe("Collection", function () {
         assert.strictEqual(result.age, 35);
         assert.strictEqual(result.name, "kim");
     })
-    /* it("FindOneAndUpdate", async () => {
+    it("FindOneAndUpdate", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         var result = await store.findOneAndUpdate({ name: "kim" }, { $set: { name: "vasa", age: 22 } })
-        console.log(result)
         assert.strictEqual(typeof result, "object")
         assert.strictEqual(result.age, 22);
         assert.strictEqual(result.name, "vasa");
-    }) */
+    })
     it("FindOneAndDelete", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         var result = await store.findOneAndDelete({ name: "kim" })
@@ -115,34 +114,36 @@ describe("Collection", function () {
         assert.strictEqual(result.age, 35);
         assert.strictEqual(result.name, "kim");
     })
-    /* it("FindByIdAndUpdate", async () => {
+    it("FindByIdAndUpdate", async () => {
         await store.insertOne({ _id: "54495ad94c934721ede76d90" ,name: "kim", age: 35 })
-        var result = await store.findByIdAndUpdate("54495ad94c934721ede76d90")
+        var result = await store.findByIdAndUpdate("54495ad94c934721ede76d90", { $set: { name: "vasa", age: 22 } })
         assert.strictEqual(typeof result, "object")
-        assert.strictEqual(result.age, 35);
-        assert.strictEqual(result.name, "kim");
-    }) */
-    /* it("Update", async () => {
+        assert.strictEqual(result.age, 22);
+        assert.strictEqual(result.name, "vasa");
+    })
+    it("Update", async () => {
         await store.insertOne({ name: "kim", age: 35 })
-        var result = await store.update("54495ad94c934721ede76d90")
+        var result = await store.update({ name: "kim" }, { $set: { name: "vasa", age: 22 } })
         assert.strictEqual(typeof result, "object")
-        assert.strictEqual(result.age, 35);
-        assert.strictEqual(result.name, "kim");
-    }) */
-    /* it("UpdateOne", async () => {
+        assert.strictEqual(result[0].age, 22);
+        assert.strictEqual(result[0].name, "vasa");
+    })
+    it("UpdateOne", async () => {
         await store.insertOne({ name: "kim", age: 35 })
-        var result = await store.updateOne("54495ad94c934721ede76d90")
+        var result = await store.updateOne({ name: "kim" }, { $set: { name: "vasa", age: 22 } })
         assert.strictEqual(typeof result, "object")
-        assert.strictEqual(result.age, 35);
-        assert.strictEqual(result.name, "kim");
-    }) */
-    /* it("UpdateMany", async () => {
-        await store.insertOne({ name: "kim", age: 35 })
-        var result = await store.updateMany("54495ad94c934721ede76d90")
+        assert.strictEqual(result.age, 22);
+        assert.strictEqual(result.name, "vasa");
+    })
+    it("UpdateMany", async () => {
+        await store.insert([{ name: "kim", age: 35 }, { name: "vasa", age: 22 }])
+        var result = await store.updateMany({ age: { $gt: 20 } }, { $set: { age: 16 } })
         assert.strictEqual(typeof result, "object")
-        assert.strictEqual(result.age, 35);
-        assert.strictEqual(result.name, "kim");
-    }) */
+        assert.strictEqual(result[0].age, 16);
+        assert.strictEqual(result[0].name, "kim");
+        assert.strictEqual(result[1].age, 16);
+        assert.strictEqual(result[1].name, "vasa");
+    })
     it("DeleteOne", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         var result = await store.deleteOne({ name: "kim" })
@@ -156,14 +157,6 @@ describe("Collection", function () {
         assert.strictEqual(typeof result, "object")
         assert.strictEqual(result[0].age, 35);
         assert.strictEqual(result[0].name, "kim");
-    })
-    it("Distinct", async () => {
-        await store.insertOne({ name: "kim", age: 35 })
-        await store.insertOne({ name: "vasa", age: 22 })
-        var result = await store.distinct("name")
-        assert.strictEqual(typeof result, "object")
-        assert.strictEqual(result[0], "kim");
-        assert.strictEqual(result[1], "vasa");
     })
     it("Distinct", async () => {
         await store.insertOne({ name: "kim", age: 35 })
