@@ -4,6 +4,9 @@ const parseAndFind = require('./operators/QueryOperators')
 class CollectionIndex {
     constructor() {
         this._index = {}
+
+                
+        this.loaded = false;
     }
 
     get(key) {
@@ -74,7 +77,12 @@ class CollectionIndex {
         }
     }
     updateIndex(oplog) {
-        //Left over to prevent errors from being thrown.
+        if(!this.loaded) {
+            oplog.values.reduce((handled, item) => {
+                this.handleEntry(item)
+            })
+        }
+        this.loaded = true;
     }
 }
 
