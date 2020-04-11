@@ -29,7 +29,7 @@ class Collection extends OrbitdbStore {
     }
     async insertOne(doc) {
         if (typeof doc !== "object")
-            throw "Object documents are only supported"
+            throw new Error("Object documents are only supported")
         
         return (await this.insert([doc]))[0];
     }
@@ -40,29 +40,29 @@ class Collection extends OrbitdbStore {
         return this._index.findOne(query);
     }
     async findOneAndUpdate(filter = {}, modification) {
-        var result = (await this.findOne(filter))._id;
-        if (Object.keys(result).length > 0) {            
-            return await this._addOperation({
+        var doc = await this.findOne(filter);
+        if (doc._id) {  
+            await this._addOperation({
                 op: "UPDATE",
-                value: [result],
+                value: [doc._id],
                 modification: modification
             })
         }
-        return {}
+        return doc
     }
     /**
      * Deletes a single document based on the filter and sort criteria, returning the deleted document.
      * @param {Object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
      */
     async findOneAndDelete(filter = {}) {
-        var result = await this.findOne(filter)
-        if (Object.keys(result).length > 0) {            
+        var doc = await this.findOne(filter)
+        if (doc._id) {            
             await this._addOperation({
                 op: "DELETE",
-                value: [result._id]
+                value: [doc._id]
             })
         }
-        return result;
+        return doc;
     }
 
     /**
@@ -73,13 +73,7 @@ class Collection extends OrbitdbStore {
      */
 
     findById(_id) {
-        var ids = Object.keys(this._index._index);
-        for (let i = 0; i < ids.length; i++) {
-            if (ids[i] === _id) {
-                return this._index._index[_id];
-            }
-        }
-        return {}
+        return this._index.findById(_id);
     }
 
     /**
@@ -90,18 +84,14 @@ class Collection extends OrbitdbStore {
      */
 
     async findByIdAndDelete(_id) {
-        var index = { ...this._index._index };
-        var ids = Object.keys(index);
-        for (let i = 0; i < ids.length; i++) {
-            if (ids[i] === _id) {
-                await this._addOperation({
-                    op: "DELETE",
-                    value: [_id]
-                })
-                return index[_id]
-            }
+        var doc = this._index.findById(_id);
+        if (doc._id) {
+            await this._addOperation({
+                op: "DELETE",
+                value: [doc._id]
+            })
         }
-        return {}
+        return doc
     }
 
     /**
@@ -115,18 +105,16 @@ class Collection extends OrbitdbStore {
      */
 
     async findByIdAndUpdate(_id, modification, options = {}) {
-        var ids = Object.keys(this._index);
-        for (let i = 0; i < ids.length; i++) {
-            if (ids[i] === _id) {
-                return await this._addOperation({
-                    op: "UPDATE",
-                    value: [_id],
-                    modification: modification,
-                    options: options
-                })
-            }
+        var doc = await this._index.findById(_id);
+        if (doc._id) {
+            await this._addOperation({
+                op: "UPDATE",
+                value: [doc._id],
+                modification: modification,
+                options: options
+            })
         }
-        return {}
+        return doc
     }
 
     /**
@@ -158,22 +146,26 @@ class Collection extends OrbitdbStore {
      */
 
     async update(filter = {}, modification, options = {}) {
-        var result = [];
+        var ids = [];
+        var docs = [];
         if (options.multi) {
-            result.push(...(await collection.find(filter).map(item => (item._id))))
+            docs.push(...(await collection.find(filter)))
+            ids.push(...(docs.map(item => (item._id))))
         }
-        if (options.upsert && result.length === 0) {
+        if (options.upsert && ids.length === 0) {
             // TODO: implement upsert condition for $setOnInsert operator
         }
         if (Object.keys(options).length === 0 && options.constructor === Object) {
-            result.push((await this.findOne(filter))._id)
+            docs.push(await this.findOne(filter))
+            ids.push(...(docs.map(item => (item._id))))
         }
-        return await this._addOperation({
+        await this._addOperation({
             op: "UPDATE",
-            value: result,
+            value: ids,
             modification: modification,
             options: options
         })
+        return docs
     }
 
     /**
@@ -197,13 +189,16 @@ class Collection extends OrbitdbStore {
      */
 
     async updateOne(filter = {}, modification, options = {}) {
-        var result = (await this.findOne(filter))._id
-        return await this._addOperation({
-            op: "UPDATE",
-            value: [result],
-            modification: modification,
-            options: options
-        })
+        var doc = await this.findOne(filter)
+        if (doc._id) {            
+            await this._addOperation({
+                op: "UPDATE",
+                value: [doc._id],
+                modification: modification,
+                options: options
+            })
+        }
+        return doc;
     }
 
     /**
@@ -228,13 +223,15 @@ class Collection extends OrbitdbStore {
      */
 
     async updateMany(filter = {}, modification, options = {}) {
-        var result = (await this.find(filter)).map(item => (item._id))
-        return await this._addOperation({
+        var docs = await this.find(filter)
+        var ids = docs.map(item => (item._id))
+        await this._addOperation({
             op: "UPDATE",
-            value: result,
+            value: ids,
             modification: modification,
             options: options
         })
+        return docs
     }
 
     /**

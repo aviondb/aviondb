@@ -22,6 +22,16 @@ class CollectionIndex {
         return res
     }
 
+    async findById(_id) {
+        var ids = Object.keys(this._index);
+        for (let i = 0; i < ids.length; i++) {
+            if (ids[i] === _id) {
+                return this._index[_id];
+            }
+        }
+        return {}
+    }
+
     async distinct(key, query) {
         if (!key) {
             throw "Key must not be undefined"
