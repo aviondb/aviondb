@@ -4,8 +4,6 @@ const parseAndFind = require('./operators/QueryOperators')
 class CollectionIndex {
     constructor() {
         this._index = {}
-
-                
         this.loaded = false;
     }
 
