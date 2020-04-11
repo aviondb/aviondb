@@ -12,3 +12,6 @@
 
 ### API
 See [API.md](https://github.com/dappkit/ipfsdb/blob/master/API.md) for the full documentation.
+
+### License
+[MIT](https://github.com/dappkit/ipfsdb/blob/master/LICENSE)
