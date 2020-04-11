@@ -5,7 +5,10 @@
   "main": "src/Store.js",
   "scripts": {
     "test": "mocha",
-    "test:coverage": "codecov"
+    "test:coverage": "codecov",
+    "benchmark:write": "node ./test/benchmarks/benchmark.write.js",
+    "benchmark:query": "node ./test/benchmarks/benchmark.query.js",
+    "benchmark:update": "node ./test/benchmarks/benchmark.update.js"
   },
   "repository": {
     "type": "git",
