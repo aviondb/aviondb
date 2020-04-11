@@ -78,6 +78,9 @@ class Store extends OrbitdbStore {
             name
         })
     }
+    listCollections(filter = {}, options = {}) {
+        return Object.keys(this.openCollections)
+    }
     collection(name) {
         if(!name | typeof name !== "string") {
             throw "Name must be a string"
