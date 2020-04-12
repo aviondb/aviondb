@@ -10,11 +10,11 @@
 
 ### We are working on the initial Specs. See [IpfsSB Specs doc](https://github.com/dappkit/ipfsdb-specs/blob/master/README.md)
 
-#### Architecture
+### Architecture
 
 // TODO: Add Diagram & Description
 
-#### Project status & support
+### Project status & support
 
 Status: **in active development**
 
@@ -43,25 +43,25 @@ This is the Javascript implementation and it works both in **Browsers** and **No
 
 ## Usage
 
-Install dependencies:
+### Install
 
 ```
-npm install ipfs git+https://github.com/dappkit/ipfsdb.git
+npm install git+https://github.com/dappkit/ipfsdb.git
 ```
 
 // TODO: Add usage example
 
-### API
+## API
 See [API.md](https://github.com/dappkit/ipfsdb/blob/master/API.md) for the full documentation.
 
-### Development
+## Development
 
-#### Run Tests
+### Run Tests
 ```
 npm test
 ```
 
-#### Benchmarks
+### Benchmarks
 
 Run Write Benchmark
 ```
@@ -81,11 +81,11 @@ npm run benchmarks:update
 See [benchmarks/](https://github.com/dappkit/ipfsdb/tree/master/test/benchmarks) for more info on benchmarks.
 
 
-### Frequently Asked Questions
+## Frequently Asked Questions
 
 // TODO: Add FAQ Page
 
-#### Are there implementations in other languages?
+### Are there implementations in other languages?
 
 We are working to implement IpfsDB for following languages:
 
@@ -98,7 +98,7 @@ The best place to find out what is out there and what is being actively worked o
 
 If you want or are planning to create an implementation in a language that is not listed here, then feel free to reach us out and discuss about it in the [Discord](https://discord.gg/88YpNuQ).
 
-### Contributing
+## Contributing
 
 **Take a look at our organization-wide [Contributing Guide](https://github.com/dappkit/ipfsdb/blob/master/CONTRIBUTING.md).**
 
@@ -108,7 +108,7 @@ If you want to code but don't know where to start, check out the issues labelled
 
 Please note that we have a [Code of Conduct](CODE_OF_CONDUCT.md), and that all activity in the [@dappkit](https://github.com/dappkit) organization falls under it. Read it when you get the chance, as being part of this community means that you agree to abide by it. Thanks.
 
-### Sponsors
+## Sponsors
 
 The development of IpfsDB has been sponsored by:
 
@@ -116,5 +116,5 @@ The development of IpfsDB has been sponsored by:
 
 If you want to sponsor developers to work on IpfsDB, please consider sponsoring using the "Sponsor" button on the top of the [IpfsDB Github Page](https://github.com/dappkit/ipfsdb).
 
-### License
+## License
 [MIT](https://github.com/dappkit/ipfsdb/blob/master/LICENSE)
