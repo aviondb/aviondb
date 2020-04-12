@@ -68,8 +68,9 @@ Returns a `Promise` that resolves to an array of collection manifests.
 #### Example
 
 ```javascript
-var collectionList = await ipfsdb.listCollection({});
-//TODO: Example collectionList.
+var collectionList = await ipfsdb.listCollection();
+console.log(collectionList)
+// [ 'Users', 'Products' ]
 ```
 
 ### ipfsdb.collection
