@@ -1,14 +1,16 @@
-## IpfsDB
+## AvionDB
 
+![npm version](https://badge.fury.io/js/aviondb.svg)
 <img src="https://img.shields.io/badge/Node.js-%3E%3D8.0.0-orange.svg?style=flat-square" /></a>
-[![Build Status](https://travis-ci.com/dappkit/ipfsdb.svg?branch=master)](https://travis-ci.com/dappkit/ipfsdb)
-<a href="https://david-dm.org/dappkit/ipfsdb"><img src="https://david-dm.org/dappkit/ipfsdb.svg?style=flat-square"/></a>
+[![Build Status](https://travis-ci.com/dappkit/aviondb.svg?branch=master)](https://travis-ci.com/dappkit/aviondb)
+<a href="https://david-dm.org/dappkit/aviondb"><img src="https://david-dm.org/dappkit/aviondb.svg?style=flat-square"/></a>
+<a href="https://bundlephobia.com/result?p=aviondb"><img src="https://flat.badgen.net/bundlephobia/minzip/aviondb"></a>
 [![Discord](https://img.shields.io/discord/616677539812868097?color=blueviolet&label=discord)](https://discord.gg/88YpNuQ)
 
 
-> IpfsDB aims to bring MongoDB-like developer interface to Web 3.0.
+> AvionDB aims to bring MongoDB-like developer interface to Web 3.0.
 
-### We are working on the initial Specs. See [IpfsDB Specs doc](https://github.com/dappkit/ipfsdb-specs/blob/master/README.md)
+### We are working on the initial Specs. See [AvionDB Specs doc](https://github.com/dappkit/aviondb-specs/blob/master/README.md)
 
 ### Architecture
 
@@ -18,7 +20,7 @@
 
 Status: **in active development**
 
-***NOTE!*** *IpfsDB is **alpha-stage** software. It means IpfsDB hasn't been security audited and programming APIs and data formats can still change. We encourage you to [reach out to the maintainers](https://discord.gg/88YpNuQ) if you plan to use Ipfsdb in mission critical systems.*
+***NOTE!*** *AvionDB is **alpha-stage** software. It means AvionDB hasn't been security audited and programming APIs and data formats can still change. We encourage you to [reach out to the maintainers](https://discord.gg/88YpNuQ) if you plan to use AvionDB in mission critical systems.*
 
 This is the Javascript implementation and it works both in **Browsers** and **Node.js** with support for Linux, OS X, and windows . The minimum required version of Node.js is now 8.6.0 due to the usage of `...` spread syntax. LTS versions (even numbered versions 8, 10, etc) are preferred.
 
@@ -46,13 +48,13 @@ This is the Javascript implementation and it works both in **Browsers** and **No
 ### Install
 
 ```
-npm install git+https://github.com/dappkit/ipfsdb.git
+npm install git+https://github.com/dappkit/aviondb.git
 ```
 
 ### Example
 ```javascript
-const ipfsDb = require("ipfsdb")
-const db = await ipfsDb.create()
+const AvionDB = require("aviondb")
+const db = await AvionDB.create()
 
 var collection = await db.createCollection("employees"); //Collection interface
 
@@ -82,7 +84,7 @@ await store.close(); //Closes all collections and binding database.
 
 
 ## API
-See [API.md](https://github.com/dappkit/ipfsdb/blob/master/API.md) for the full documentation.
+See [API.md](https://github.com/dappkit/aviondb/blob/master/API.md) for the full documentation.
 
 ## Development
 
@@ -108,7 +110,7 @@ Run Update Benchmark
 npm run benchmarks:update
 ```
 
-See [benchmarks/](https://github.com/dappkit/ipfsdb/tree/master/test/benchmarks) for more info on benchmarks.
+See [benchmarks/](https://github.com/dappkit/aviondb/tree/master/test/benchmarks) for more info on benchmarks.
 
 
 ## Frequently Asked Questions
@@ -117,7 +119,7 @@ See [benchmarks/](https://github.com/dappkit/ipfsdb/tree/master/test/benchmarks)
 
 ### Are there implementations in other languages?
 
-We are working to implement IpfsDB for following languages:
+We are working to implement AvionDB for following languages:
 
 - NodeJS & Browser JS
 - Typescript
@@ -130,21 +132,21 @@ If you want or are planning to create an implementation in a language that is no
 
 ## Contributing
 
-**Take a look at our organization-wide [Contributing Guide](https://github.com/dappkit/ipfsdb/blob/master/CONTRIBUTING.md).**
+**Take a look at our organization-wide [Contributing Guide](https://github.com/dappkit/aviondb/blob/master/CONTRIBUTING.md).**
 
-As far as code goes, we would be happy to accept PRs! If you want to work on something, it'd be good to talk beforehand to make sure nobody else is working on it. You can reach us [on Discord](https://discord.gg/88YpNuQ), or in the [issues section](https://github.com/dappkit/ipfsdb/issues).
+As far as code goes, we would be happy to accept PRs! If you want to work on something, it'd be good to talk beforehand to make sure nobody else is working on it. You can reach us [on Discord](https://discord.gg/88YpNuQ), or in the [issues section](https://github.com/dappkit/aviondb/issues).
 
-If you want to code but don't know where to start, check out the issues labelled ["help wanted"](https://github.com/dappkit/ipfsdb/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+sort%3Areactions-%2B1-desc).
+If you want to code but don't know where to start, check out the issues labelled ["help wanted"](https://github.com/dappkit/aviondb/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+sort%3Areactions-%2B1-desc).
 
 Please note that we have a [Code of Conduct](CODE_OF_CONDUCT.md), and that all activity in the [@dappkit](https://github.com/dappkit) organization falls under it. Read it when you get the chance, as being part of this community means that you agree to abide by it. Thanks.
 
 ## Sponsors
 
-The development of IpfsDB has been sponsored by:
+The development of AvionDB has been sponsored by:
 
 * [Dappkit](https://dappkit.io)
 
-If you want to sponsor developers to work on IpfsDB, please consider sponsoring using the "Sponsor" button on the top of the [IpfsDB Github Page](https://github.com/dappkit/ipfsdb).
+If you want to sponsor developers to work on AvionDB, please consider sponsoring using the "Sponsor" button on the top of the [AvionDB Github Page](https://github.com/dappkit/aviondb).
 
 ## License
-[MIT](https://github.com/dappkit/ipfsdb/blob/master/LICENSE)
+[MIT](https://github.com/dappkit/aviondb/blob/master/LICENSE)

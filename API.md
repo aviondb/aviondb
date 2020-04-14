@@ -1,4 +1,4 @@
-# IpfsDB API Documentation
+# AvionDB API Documentation
 The following APIs documented are in a usable state. More APIs are available, however they are not officially supported or complete.
 
 ## Table of Contents
@@ -6,10 +6,10 @@ The following APIs documented are in a usable state. More APIs are available, ho
 <!-- toc -->
 
 - [Public Instance Methods](#public-instance-methods)
-    * [createCollection(name, [options])](#ipfsdbcreateCollection)
-    * [dropCollection(name, [options])](#ipfsdbdropCollection)
-    * [listCollections([filter], [options])](#ipfsdblistCollections)
-    * [collection(name)](#ipfsdbcollection)
+    * [createCollection(name, [options])](#aviondbcreateCollection)
+    * [dropCollection(name, [options])](#aviondbdropCollection)
+    * [listCollections([filter], [options])](#aviondblistCollections)
+    * [collection(name)](#aviondbcollection)
     * [Collection Instance](#Collection-Instance)
         + [insert(docs)](#collectioninsert)
         + [insertOne(doc)](#collectioninsertOne)
@@ -33,22 +33,22 @@ The following APIs documented are in a usable state. More APIs are available, ho
 
 ## Public Instance Methods
 
-### ipfsdb.createCollection
+### aviondb.createCollection
 > Creates and opens a database collection.
 
-Syntax: `ipfsdb.createCollection(name, [options])`
+Syntax: `aviondb.createCollection(name, [options])`
 
 Returns a `Promise` that resolves to a [Collection Instance](#Collection-Instance).
 
 ```javascript
-var collection = await ipfsdb.createCollection("Accounts");
+var collection = await aviondb.createCollection("Accounts");
 ```
 
 
-### ipfsdb.dropCollection
+### aviondb.dropCollection
 > Deletes collection removing all stored data
 
-Syntax: `ipfsdb.dropCollection(name, [options])`
+Syntax: `aviondb.dropCollection(name, [options])`
 
 Returns a `Promise` that resolves on completeion.
 
@@ -57,35 +57,35 @@ Returns a `Promise` that resolves on completeion.
 #### Example
 
 ```javascript
-await ipfsdb.dropCollection("Accounts");
+await aviondb.dropCollection("Accounts");
 ```
 
-### ipfsdb.listCollections
+### aviondb.listCollections
 > Lists collections in database.
 
-Syntax: `ipfsdb.listCollections([filter], [options])`
+Syntax: `aviondb.listCollections([filter], [options])`
 
 Returns a `Promise` that resolves to an array of collection manifests.
 
 #### Example
 
 ```javascript
-var collectionList = await ipfsdb.listCollection();
+var collectionList = await aviondb.listCollection();
 console.log(collectionList)
 // [ 'Users', 'Products' ]
 ```
 
-### ipfsdb.collection
+### aviondb.collection
 > Returns collection instance. Throws error if collection is not open.
 
-Syntax: `ipfsdb.collection(name)`
+Syntax: `aviondb.collection(name)`
 
 Returns a [Collection Instance](#Collection-Instance)
 
 #### Example
 
 ```javascript
-var collection = ipfsdb.collection("Accounts");
+var collection = aviondb.collection("Accounts");
 ```
 
 ## Collection Instance
@@ -226,7 +226,7 @@ console.log(results);
 
     Syntax: `{ $and: [ { <expression1> }, { <expression2> } , ... , { <expressionN> } ] }`
 
-    `$and` performs a logical AND operation on an array of _one_ or _more_ expressions (e.g. `<expression1>`, `<expression2>`, etc.) and selects the documents that satisfy _all_ the expressions in the array. The `$and` operator uses _short-circuit evaluation_. If the first expression (e.g. `<expression1>`) evaluates to `false`, IpfsDB will not evaluate the remaining expressions.
+    `$and` performs a logical AND operation on an array of _one_ or _more_ expressions (e.g. `<expression1>`, `<expression2>`, etc.) and selects the documents that satisfy _all_ the expressions in the array. The `$and` operator uses _short-circuit evaluation_. If the first expression (e.g. `<expression1>`) evaluates to `false`, AvionDB will not evaluate the remaining expressions.
 
     #### Examples
 
@@ -636,18 +636,18 @@ await collection.syncFromHeadHash("zdpuAtmXUPRPueZocCXRaHwh8Hn6AnByMqupdE3iMboNW
 ## Static methods
 
 ### create
-> Creates a new instance of IpfsDb.
+> Creates a new instance of AvionDB.
 
-Syntax: `IpfsDB.create(ipfs, identity, address, options)`
+Syntax: `AvionDB.create(ipfs, identity, address, options)`
 
 Returns a `Promise` that resolves to a database instance.
 
-Alternatively ipfsdb can be created from an orbitdb instance.
+Alternatively aviondb can be created from an orbitdb instance.
 
 #### Example
 
 ```javascript
-const IpfsDB = require('ipfsdb')
-var db = await IpfsDB.create(ipfs, identity, address, options)
+const AvionDB = require('aviondb')
+var db = await AvionDB.create(ipfs, identity, address, options)
 ```
 

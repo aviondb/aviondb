@@ -6,4 +6,4 @@ Note: OrbitDB follows [semver](https://semver.org/). We are currently in alpha: 
 
 ### Supported APIs
 
-This is the first "test" release of IpfsDB 🎉 You can find all the supported [APIs here](API.md).
+This is the first "test" release of AvionDB 🎉 You can find all the supported [APIs here](API.md).

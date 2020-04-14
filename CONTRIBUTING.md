@@ -1,9 +1,9 @@
 # Contributing
 
-Want to hack on IpfsDB? Awesome! Here are instructions to get you started.
+Want to hack on AvionDB? Awesome! Here are instructions to get you started.
 They are not perfect yet. Please let us know what feels wrong or incomplete.
 
-IpfsDB is an Open Source project and we welcome contributions of all sorts.
+AvionDB is an Open Source project and we welcome contributions of all sorts.
 There are many ways to help, from reporting issues, contributing code, and
 helping us improve our community.
 
@@ -33,7 +33,7 @@ helping us improve our community.
 
 ### Security Issues
 
-The IpfsDB protocols and their implementations are still in heavy development. This means that there may be problems in our protocols, or there may be mistakes in our implementations. We take security vulnerabilities very seriously. If you discover a security issue, please bring it to our attention right away!
+The AvionDB protocols and their implementations are still in heavy development. This means that there may be problems in our protocols, or there may be mistakes in our implementations. We take security vulnerabilities very seriously. If you discover a security issue, please bring it to our attention right away!
 
 If you find a vulnerability that may affect live deployments -- please send your report privately to [vasa@dappkit.io](mailto:vasa@dappkit.io). Please DO NOT file a public issue.
 
@@ -41,7 +41,7 @@ If the issue is a protocol weakness or something not yet deployed, just discuss 
 
 ### Community Guidelines
 
-We want to keep the IpfsDB community awesome, growing and collaborative. We need your help to keep it that way. To help with this we've come up with some general guidelines for the community as a whole:
+We want to keep the AvionDB community awesome, growing and collaborative. We need your help to keep it that way. To help with this we've come up with some general guidelines for the community as a whole:
 
 - Be nice: Be courteous, respectful and polite to fellow community members: no regional, racial, gender, or other abuse will be tolerated. We like nice people way better than mean ones!
 
@@ -55,11 +55,11 @@ There is also a more extensive [Code of conduct](CODE_OF_CONDUCT.md) which we fo
 
 #### Moderation
 
-In cases where community members transgress against the values above or in the Code, members of the IpfsDB Community Moderation team will use a three-strike warning system, where the aggressor will be warned twice before they are permanently excluded from IpfsDB community spaces. This code applies to Gitter, IRC, and GitHub, and any other future space that the IpfsDB community uses for communication. For interactions between IpfsDB community members outside of this space, the code also applies if the interactions are reported and deemed to be interfering with community members safely working on IpfsDB together. Moderation conversations, where more serious than simple warnings, will occur in private repositories or by email to ensure anonymity for reporters, and to ensure the safety of the moderators. To report an instance, please see the emails in the [Code of Conduct](CODE_OF_CONDUCT.md).
+In cases where community members transgress against the values above or in the Code, members of the AvionDB Community Moderation team will use a three-strike warning system, where the aggressor will be warned twice before they are permanently excluded from AvionDB community spaces. This code applies to Gitter, IRC, and GitHub, and any other future space that the AvionDB community uses for communication. For interactions between AvionDB community members outside of this space, the code also applies if the interactions are reported and deemed to be interfering with community members safely working on AvionDB together. Moderation conversations, where more serious than simple warnings, will occur in private repositories or by email to ensure anonymity for reporters, and to ensure the safety of the moderators. To report an instance, please see the emails in the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ### Reporting Issues
 
-If you find bugs, mistakes, inconsistencies in the IpfsDB specs, code or
+If you find bugs, mistakes, inconsistencies in the AvionDB specs, code or
 documents, please let us know by filing an issue at the appropriate issue
 tracker. No issue is too small.
 
@@ -85,7 +85,7 @@ When considering design proposals for implementations, we are looking for:
 
 ### Community Improvement
 
-The IpfsDB community requires maintenance of various "public infrastructure" resources. These include documentation, GitHub repositories, CI build bots, and more. There is also helping new users with questions, spreading the word about IpfsDB, and so on. Soon, we will be planning and running conferences. Please get in touch (in particular, send  [@vasa-develop](mailto:vasa@dappkit.io) an email) if you would like to help out.
+The AvionDB community requires maintenance of various "public infrastructure" resources. These include documentation, GitHub repositories, CI build bots, and more. There is also helping new users with questions, spreading the word about AvionDB, and so on. Soon, we will be planning and running conferences. Please get in touch (in particular, send  [@vasa-develop](mailto:vasa@dappkit.io) an email) if you would like to help out.
 
 ### A small note on licensing year
 
@@ -179,12 +179,12 @@ You can join our emailing list [here](https://simpleaswater.com/#subscribe).
 
 ### Helping in other ways
 
-Dappkit occasionally is able to hire developers for part time or full time positions, to work on IpfsDB. If you are interested, check our hiring status at [Dappkit's website](https://dappkit.io/). If you'd like to help in other ways, send an email to [vasa@dappkit.io](mailto:vasa@dappkit.io).
+Dappkit occasionally is able to hire developers for part time or full time positions, to work on AvionDB. If you are interested, check our hiring status at [Dappkit's website](https://dappkit.io/). If you'd like to help in other ways, send an email to [vasa@dappkit.io](mailto:vasa@dappkit.io).
 
 ### Becoming a maintainer
 
 If you want to help us with triaging issues, merging PRs, writing code, and maintaining repositories, we would be overjoyed. Maintenance is hard work, and all of the help that we can get from contributors is appreciated. Becoming a maintainer is currently an informal process - stick around for a while, help out where you can, and show the core team that you're interested in more than just having the Dappkit logo on your GitHub profile. Once you think you're ready, reach out to [@vasa-develop](mailto:vasa@dappkit.io) on [Discord](https://discord.gg/88YpNuQ) or by his linked email: he'll talk to to team, and we'll let you know what we think at that stage.
 
-Occasionally, we'll give people access rights straight out of the gate because they have proved themselves before, or because they're the most logical choice for maintainership for certain repositories. For instance, if you wrote a Groovy implementation of IpfsDB, and you want to move it into the IpfsDB organization, you'll retain your maintainer rights for that repository.
+Occasionally, we'll give people access rights straight out of the gate because they have proved themselves before, or because they're the most logical choice for maintainership for certain repositories. For instance, if you wrote a Groovy implementation of AvionDB, and you want to move it into the AvionDB organization, you'll retain your maintainer rights for that repository.
 
 If you ever feel that someone should not have maintainer rights, send an email to the community team. Let's talk about it together.

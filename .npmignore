@@ -1,0 +1,30 @@
+# Make sure to exclude test data directory
+orbitdb/
+
+# Don't distribute the dependencies
+node_modules/
+
+# Don't distribute examples with the module
+examples/
+
+# Don't distribute source maps
+dist/*.map
+
+# Don't distribute screenshot
+# See examples at https://github.com/orbitdb/orbit-db
+images/
+
+.git
+.prettierignore
+benchmarks
+test
+ipfs
+docker
+conf
+Makefile
+gulpfile.js
+API.md
+CHANGELOG.md
+CONTRIBUTING.md
+CONTRIBUTORS.md
+CODE_OF_CONDUCT.md

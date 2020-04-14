@@ -8,7 +8,7 @@ class Collection extends OrbitdbStore {
         let opts = Object.assign({}, { Index: CollectionIndex });
         Object.assign(opts, options);
         super(ipfs, id, dbname, opts);
-        this._type = 'ipfsdb.collection';
+        this._type = 'aviondb.collection';
         this.events.on("write", (address, entry) => {
             this._index.handleEntry(entry);
         });

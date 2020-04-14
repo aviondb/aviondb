@@ -1,7 +1,7 @@
 const OrbitdbStore = require("orbit-db-store")
 const OrbitDB = require('orbit-db')
 const Index = require('./StoreIndex')
-const debug =  require('debug')("ipfsdb:store")
+const debug =  require('debug')("aviondb:store")
 
 class Store extends OrbitdbStore {
     constructor(ipfs, id, dbname, options) {
@@ -9,7 +9,7 @@ class Store extends OrbitdbStore {
         let opts = {};
         Object.assign(opts, options)
         super(ipfs, id, dbname, opts)
-        this._type = 'ipfsdb'
+        this._type = 'aviondb'
         this._orbitdb = options.orbitdb
 
         this.openCollections = {};
@@ -36,7 +36,7 @@ class Store extends OrbitdbStore {
         if(this._index._index[name]) {
             throw `Collection with name: ${name} already exists.`
         }
-        var collection = await this._orbitdb.create(name, "ipfsdb.collection");
+        var collection = await this._orbitdb.create(name, "aviondb.collection");
         this.openCollections[name] = collection;
         await this._addOperation({
             op: "collection.create",
@@ -109,7 +109,7 @@ class Store extends OrbitdbStore {
         await super.close()
     }
     static async create(ipfs, testIdentity, address, options) {
-        OrbitDB.addDatabaseType("ipfsdb.collection", require('./Collection'))
+        OrbitDB.addDatabaseType("aviondb.collection", require('./Collection'))
         var orbitdb = await OrbitDB.createInstance(ipfs);
         var Options = Object.assign({}, options, { orbitdb })
 

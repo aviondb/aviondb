@@ -1,5 +1,13 @@
 *-lock.json
+gulpfile.js
 node_modules
 orbitdb
 ipfs
 coverage
+
+# Don't track builds in git
+# Distribution builds are available via npm
+dist/
+
+# Don't track Visual Studio Code settings
+.vscode
