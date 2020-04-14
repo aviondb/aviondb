@@ -1,5 +1,7 @@
 const parseAndUpdate = require('./operators/UpdateOperators')
 const parseAndFind = require('./operators/QueryOperators')
+const AVLTree = require('binary-search-tree').AVLTree
+var bst = new AVLTree();
 
 class CollectionIndex {
     constructor() {
@@ -20,14 +22,15 @@ class CollectionIndex {
         return res
     }
 
-    async findById(_id) {
-        var ids = Object.keys(this._index);
+    findById(_id) {
+        return bst.search(_id);
+        /* var ids = Object.keys(this._index);
         for (let i = 0; i < ids.length; i++) {
             if (ids[i] === _id) {
                 return this._index[_id];
             }
         }
-        return {}
+        return {} */
     }
 
     async distinct(key, query) {
@@ -71,6 +74,7 @@ class CollectionIndex {
             var _id = doc._id;
             this._index[_id] = doc;
         }
+        bst.insert(_id, doc)
     }
     handleUpdate(payload) {
         var { value, modification, options } = payload;
@@ -82,6 +86,7 @@ class CollectionIndex {
         var { value } = payload;
         for(var _id of value) {
             delete this._index[_id];
+            bst.delete(_id)
         }
     }
     updateIndex(oplog) {
