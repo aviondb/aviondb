@@ -18,9 +18,8 @@ let lastTenSeconds = 0
 let numberOfEntries = 5000;
 
 // Main loop
-const queryLoop = async (db) => {
-  
-  await db.findOne({ fname: "vasa", lname: "develop" })
+const queryLoop = async (db) => {  
+  await db.findById("5e8cf7e1b9b93a4c7dc2d69e")
   totalQueries++
   lastTenSeconds ++
   queriesPerSecond ++
@@ -59,14 +58,27 @@ ipfs.on('ready', async () => {
       })
 
       console.log(`Creating ${numberOfEntries} documents for querying. Stand by! `)
-      for(var x = 0; x < numberOfEntries; x++) {
-        await db.insertOne({
+      for (var x = 0; x < numberOfEntries; x++) {
+        if (x === 4500) {
+          await db.insertOne({
+          _id: "5e8cf7e1b9b93a4c7dc2d69e",
           id: Crypto.randomBytes(6).toString("base64"),
           fname: "vasa",
           lname: "develop",
           age: 22,
           bal: 1000
         })
+        }
+        else {
+          await db.insertOne({
+            _id:Crypto.randomBytes(24).toString("base64"), 
+            id: Crypto.randomBytes(6).toString("base64"),
+            fname: "vasa",
+            lname: "develop",
+            age: 22,
+            bal: 1000
+          })
+        }
       }
       // Metrics output
       setInterval(() => {
