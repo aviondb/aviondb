@@ -21,13 +21,7 @@ class CollectionIndex {
     }
 
     async findById(_id) {
-        var ids = Object.keys(this._index);
-        for (let i = 0; i < ids.length; i++) {
-            if (ids[i] === _id) {
-                return this._index[_id];
-            }
-        }
-        return {}
+        return this._index[_id]
     }
 
     async distinct(key, query) {
