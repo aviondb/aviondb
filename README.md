@@ -49,7 +49,37 @@ This is the Javascript implementation and it works both in **Browsers** and **No
 npm install git+https://github.com/dappkit/ipfsdb.git
 ```
 
-// TODO: Add usage example
+### Example
+```javascript
+const ipfsDb = require("ipfsdb")
+const db = await ipfsDb.create()
+
+var collection = await db.createCollection("employees"); //Collection interface
+
+//Hypothetical employee profile
+await collection.insertOne({
+    hourly_pay: 15,
+    name: "Elon",
+    ssn: "562-48-5384",
+    weekly_hours: 40
+})
+
+
+var result = await collection.findOne({
+    ssn: "562-48-5384" //Search by a single field Or many!
+})
+
+result === {
+    _id: "5e8cf7e1b9b93a4c7dc2d69e",
+    hourly_pay: 15,
+    name: "Elon",
+    ssn: "562-48-5384",
+    weekly_hours: 40
+}
+await collection.close(); //Collection will be closed.
+await store.close(); //Closes all collections and binding database.
+```
+
 
 ## API
 See [API.md](https://github.com/dappkit/ipfsdb/blob/master/API.md) for the full documentation.

@@ -27,6 +27,8 @@ The following APIs documented are in a usable state. More APIs are available, ho
         + [distinct(key, [query])](#collectiondistinct)
         + [getHeadHash()](#collectiongetHeadHash)
         + [syncFromHeadHash(hash, [stopWrites])](#collectionsyncFromHeadHash)
+- [Static Methods](#static-methods)
+    * [create(ipfs, identity, address, options)](#create)
 
 
 ## Public Instance Methods
@@ -629,3 +631,23 @@ If optional `stopWrites` is set to `true`; All write operations will be paused u
 ```javascript
 await collection.syncFromHeadHash("zdpuAtmXUPRPueZocCXRaHwh8Hn6AnByMqupdE3iMboNWa1c1");
 ```
+
+
+## Static methods
+
+### create
+> Creates a new instance of IpfsDb.
+
+Syntax: `IpfsDB.create(ipfs, identity, address, options)`
+
+Returns a `Promise` that resolves to a database instance.
+
+Alternatively ipfsdb can be created from an orbitdb instance.
+
+#### Example
+
+```javascript
+const IpfsDB = require('ipfsdb')
+var db = await IpfsDB.create(ipfs, identity, address, options)
+```
+
