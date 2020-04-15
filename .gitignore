@@ -1,4 +1,5 @@
 *-lock.json
+npm-shrinkwrap.json
 gulpfile.js
 node_modules
 orbitdb
