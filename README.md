@@ -29,7 +29,12 @@ This is the Javascript implementation and it works both in **Browsers** and **No
 ## Table of Contents
 
 <!-- toc -->
-
+- [Install](#install)
+  - [Using NodeJS](#using-nodejs)
+  - [In a web browser](#in-a-web-browser)
+	- [In a web browser through Browserify](#through-browserify)
+	- [In a web browser through Webpack](#through-webpack)
+	- [In a web browser through CDN](#from-cdn)
 - [Usage](#usage)
 - [API](#api)
 - [Development](#development)
@@ -43,43 +48,89 @@ This is the Javascript implementation and it works both in **Browsers** and **No
 
 <!-- tocstop -->
 
-## Usage
+## Install
 
-### Install
+This module uses node.js, and can be installed through npm:
+
+### Using NodeJS
 
 ```
+// Using npm
+npm install --save aviondb
+
+// Using Gtihub
 npm install git+https://github.com/dappkit/aviondb.git
 ```
 
+We support both the Current and Active LTS versions of Node.js. Please see [nodejs.org](https://nodejs.org/) for what these currently are. The minimum required version of Node.js is now 8.6.0 due to the usage of `...` spread syntax. LTS versions (even numbered versions 8, 10, etc) are preferred.
+
+### In a web browser
+
+#### **through Browserify**
+Same as in Node.js, you just have to [browserify](http://browserify.org/) to bundle the code before serving it.
+ > Note: The code uses `es6`, so you have to use [babel](https://babeljs.io/) to convert the code into `es5` before using `browserify`. 
+
+#### **through webpack**
+Same as in Node.js, you just have to [webpack](https://webpack.js.org/) to bundle the the code before serving it.
+ > Note: The code uses `es6`, so you have to use [babel](https://babeljs.io/) to convert the code into `es5` before using `webpack`.
+
+#### **from CDN**
+
+Instead of a local installation (and browserification) you may request a remote copy of IPFS API from unpkg CDN.
+
+To always request the latest version, use the following:
+```html
+<!-- loading the minified version -->
+<script src="https://unpkg.com/aviondb/dist/src/Store.min.js"></script>
+```
+
+CDN-based AvionDB provides the `AvionDB` constructor as a method of the global `window` object. Example:
+
+```javascript
+// create an AvionDB instance
+const aviondb = await AvionDB.create(ipfs) 
+```
+
+
+## Usage
+
+
 ### Example
 ```javascript
-const AvionDB = require("aviondb")
-const db = await AvionDB.create()
+const AvionDB = require("aviondb");
+const IPFS = require("ipfs");
+const ipfs = new IPFS();
 
-var collection = await db.createCollection("employees"); //Collection interface
+const runExample = async () => {
+  // Initialize AvionDB Instance
+  await ipfs.ready;
+  const aviondb = await AvionDB.create(ipfs);
+  
+  aviondb.load(); // Loads the existing collections
 
-//Hypothetical employee profile
-await collection.insertOne({
+  var collection = await aviondb.createCollection("employees"); // Collection interface
+
+  // Hypothetical employee profile
+  await collection.insertOne({
     hourly_pay: 15,
     name: "Elon",
     ssn: "562-48-5384",
-    weekly_hours: 40
-})
+    weekly_hours: 40,
+  });
 
+  var result = await collection.findOne({
+    ssn: "562-48-5384", // Search by a single field Or many!
+  });
 
-var result = await collection.findOne({
-    ssn: "562-48-5384" //Search by a single field Or many!
-})
+  console.log(result); // Returns the matching document
 
-result === {
-    _id: "5e8cf7e1b9b93a4c7dc2d69e",
-    hourly_pay: 15,
-    name: "Elon",
-    ssn: "562-48-5384",
-    weekly_hours: 40
-}
-await collection.close(); //Collection will be closed.
-await store.close(); //Closes all collections and binding database.
+  await collection.close(); // Collection will be closed.
+  await aviondb.drop(); // Drops the database 
+  await aviondb.close(); // Closes all collections and binding database.
+  await ipfs.stop();
+};
+
+runExample();
 ```
 
 
