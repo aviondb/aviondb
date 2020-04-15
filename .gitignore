@@ -3,6 +3,7 @@ gulpfile.js
 node_modules
 orbitdb
 ipfs
+cache
 coverage
 
 # Don't track builds in git

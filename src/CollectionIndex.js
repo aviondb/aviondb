@@ -6,10 +6,6 @@ class CollectionIndex {
         this._index = {}
         this.loaded = false;
     }
-
-    get(key) {
-        return this._index[key]
-    }
     async find(query) {
         let res = parseAndFind(query, this._index, false)
         return res

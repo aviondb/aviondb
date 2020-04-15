@@ -31,7 +31,7 @@ class Collection extends OrbitdbStore {
         if (typeof doc !== "object")
             throw new Error("Object documents are only supported")
         
-        return (await this.insert([doc]))[0];
+        return (await this.insert([doc]));
     }
     find(query) {
         return this._index.find(query);

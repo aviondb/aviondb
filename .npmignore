@@ -19,6 +19,7 @@ images/
 benchmarks
 test
 ipfs
+cache
 docker
 conf
 Makefile

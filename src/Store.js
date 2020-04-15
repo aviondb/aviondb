@@ -1,5 +1,8 @@
 const OrbitdbStore = require("orbit-db-store")
 const OrbitDB = require('orbit-db')
+const Cache = require("orbit-db-cache");
+const leveldown = require('leveldown')
+const IdentityProvider = require("orbit-db-identity-provider");
 const Index = require('./StoreIndex')
 const debug =  require('debug')("aviondb:store")
 
@@ -110,9 +113,22 @@ class Store extends OrbitdbStore {
     }
     static async create(ipfs, testIdentity, address, options) {
         OrbitDB.addDatabaseType("aviondb.collection", require('./Collection'))
+        const storage = require('orbit-db-storage-adapter')(leveldown)
+        var cacheStore = await storage.createStore("cache");
+        await cacheStore.open();
+        const cache = new Cache(cacheStore);
         var orbitdb = await OrbitDB.createInstance(ipfs);
-        var Options = Object.assign({}, options, { orbitdb })
-
+        var Options = Object.assign({}, options, { orbitdb }, { cache })
+        
+        if (!testIdentity) {
+            testIdentity = await IdentityProvider.createIdentity({
+                id: Array(4).fill(null).map(() => Math.random().toString(36).substr(2)).join(''),
+            });
+        }
+        if (!address) {
+            address = Array(4).fill(null).map(() => Math.random().toString(36).substr(2)).join('');
+        }
+        
         return new Store(ipfs, testIdentity, address, Options)
     }
 }
