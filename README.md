@@ -1,8 +1,8 @@
 ## AvionDB
 
 ![npm version](https://badge.fury.io/js/aviondb.svg)
-<img src="https://img.shields.io/badge/Node.js-%3E%3D8.0.0-orange.svg?style=flat-square" /></a>
-[![Build Status](https://travis-ci.com/dappkit/aviondb.svg?branch=master)](https://travis-ci.com/dappkit/aviondb)
+<img src="https://img.shields.io/badge/Node.js-%3E%3D8.6.0-orange.svg?style=flat-square" /></a>
+[![Build Status](https://travis-ci.com/dappkit/ipfsdb.svg?branch=master)](https://travis-ci.com/dappkit/ipfsdb)
 <a href="https://david-dm.org/dappkit/aviondb"><img src="https://david-dm.org/dappkit/aviondb.svg?style=flat-square"/></a>
 <a href="https://bundlephobia.com/result?p=aviondb"><img src="https://flat.badgen.net/bundlephobia/minzip/aviondb"></a>
 [![Discord](https://img.shields.io/discord/616677539812868097?color=blueviolet&label=discord)](https://discord.gg/88YpNuQ)
