@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>AvionDB Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+    <script src="https://unpkg.com/aviondb/dist/aviondb.min.js"></script>
+  </head>
+  <body>
+    Open your console logs to see AvionDB in action!
+  </body>
+  <script type="text/javascript">
+    async function runExample() {
+      // Initialize the libs
+      const ipfs = await window.Ipfs.create();
+      const aviondb = await AvionDB.create(ipfs);
+
+      await aviondb.load(); // Loads the existing collections
+
+      var collection = await aviondb.createCollection("employees"); // Collection interface
+
+      // Hypothetical employee profile
+      await collection.insertOne({
+        hourly_pay: 15,
+        name: "Elon",
+        ssn: "562-48-5384",
+        weekly_hours: 40,
+      });
+
+      var result = await collection.findOne({
+        ssn: "562-48-5384", // Search by a single field Or many!
+      });
+
+      console.log(result); // Returns the matching document
+
+      await collection.close(); // Collection will be closed.
+      await aviondb.drop(); // Drops the database
+      await aviondb.close(); // Closes all collections and binding database.
+    }
+    runExample();
+  </script>
+</html>

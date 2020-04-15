@@ -15,7 +15,9 @@ dist/*.map
 images/
 
 .git
+.github
 .prettierignore
+.travis.yml
 benchmarks
 test
 ipfs
@@ -24,6 +26,8 @@ docker
 conf
 Makefile
 gulpfile.js
+webpack.config.js
+package-lock.json
 API.md
 CHANGELOG.md
 CONTRIBUTING.md

@@ -81,7 +81,7 @@ Instead of a local installation (and browserification) you may request a remote 
 To always request the latest version, use the following:
 ```html
 <!-- loading the minified version -->
-<script src="https://unpkg.com/aviondb/dist/src/Store.min.js"></script>
+<script src="https://unpkg.com/aviondb/dist/aviondb.min.js"></script>
 ```
 
 CDN-based AvionDB provides the `AvionDB` constructor as a method of the global `window` object. Example:
@@ -91,6 +91,7 @@ CDN-based AvionDB provides the `AvionDB` constructor as a method of the global `
 const aviondb = await AvionDB.create(ipfs) 
 ```
 
+**See [examples/index.html](./examples/index.html) to check out a fully functioning example for AvionDB with browser.**
 
 ## Usage
 
