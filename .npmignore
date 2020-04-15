@@ -11,7 +11,6 @@ examples/
 dist/*.map
 
 # Don't distribute screenshot
-# See examples at https://github.com/orbitdb/orbit-db
 images/
 
 .git
