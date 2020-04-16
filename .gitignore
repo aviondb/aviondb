@@ -11,8 +11,5 @@ coverage
 # Distribution builds are available via npm
 dist/
 
-# Don't distribute assets
-assets/
-
 # Don't track Visual Studio Code settings
 .vscode
