@@ -10,8 +10,8 @@ examples/
 # Don't distribute source maps
 dist/*.map
 
-# Don't distribute screenshot
-images/
+# Don't distribute assets
+assets/
 
 .git
 .github
