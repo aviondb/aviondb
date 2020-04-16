@@ -14,7 +14,15 @@
 
 ### Architecture
 
-// TODO: Add Diagram & Description
+![AvionDB Architecture](./assets/Architecture.png)
+
+AvionDB uses OrbitDB stores to model MongoDB-like Databases. It creates a notion of:
+
+- Each AvionDB instance can have several [Databases](https://github.com/dappkit/aviondb-specs#databases).
+- Each Database can have several [Collections](https://github.com/dappkit/aviondb-specs#collections).
+- Each Collection can have several [Documents](https://github.com/dappkit/aviondb-specs#documents).
+
+See more details in the [Specs](https://github.com/dappkit/aviondb-specs).
 
 ### Project status & support
 
@@ -23,8 +31,6 @@ Status: **in active development**
 ***NOTE!*** *AvionDB is **alpha-stage** software. It means AvionDB hasn't been security audited and programming APIs and data formats can still change. We encourage you to [reach out to the maintainers](https://discord.gg/88YpNuQ) if you plan to use AvionDB in mission critical systems.*
 
 This is the Javascript implementation and it works both in **Browsers** and **Node.js** with support for Linux, OS X, and windows . The minimum required version of Node.js is now 8.6.0 due to the usage of `...` spread syntax. LTS versions (even numbered versions 8, 10, etc) are preferred.
-
-[//]: <> (To use with older versions of Node.js, we provide an ES5-compatible build through the npm package, located in `dist/es5/` when installed through npm.)
 
 ## Table of Contents
 
