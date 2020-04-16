@@ -115,6 +115,9 @@ const mul = (doc, modification, options) => {
         if (doc[field] && (typeof doc[field] == 'number')) {
             doc[field] *= modification[field];
         }
+        else if (!doc[field]) {
+            doc[field] = 0;
+        }
     }
     return doc
 }
@@ -195,6 +198,9 @@ const addToSet = (doc, modification, options) => {
             if ((!doc[field].includes(modification[field]))) {
                 doc[field].push(modification[field])
             }
+        }
+        else if (!doc[field]) {
+            doc[field] = [modification[field]];
         }
     }
     return doc
