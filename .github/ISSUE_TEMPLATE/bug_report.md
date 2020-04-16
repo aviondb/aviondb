@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG]"
+title: "[BUG]: "
 labels: bug
 assignees: vasa-develop
 
@@ -16,10 +16,10 @@ For questions, suggestions please reach us out on our discord server: https://di
 
 -->
 
-- **Version**:
+**Version**:
 <!-- Please provide the version of AvionDB that you are using -->
 
-- **Platform**:
+**Platform**:
 <!-- Please provide the platform: NodeJS or Browser -->
 
 
@@ -35,6 +35,9 @@ Steps to reproduce the behavior:
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
+
+**Observed behavior**
+A clear and concise description of what actually happened.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
