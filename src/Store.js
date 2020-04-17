@@ -119,7 +119,7 @@ class Store extends OrbitdbStore {
         debug("datastore is loading");
 
         //Load and start collections into memory.
-        for(var name in this.listCollections()) {
+        for(var name of this.listCollections()) {
             await this.openCollection(name)
         }
     }
