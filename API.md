@@ -28,7 +28,8 @@ The following APIs documented are in a usable state. More APIs are available, ho
         + [getHeadHash()](#collectiongetHeadHash)
         + [syncFromHeadHash(hash, [stopWrites])](#collectionsyncFromHeadHash)
 - [Static Methods](#static-methods)
-    * [create(ipfs, identity, address, options)](#create)
+    * [create(name, ipfs, options, orbitDbOptions)](#create)
+    * [open(address, ipfs, options, orbitDbOptions)](#open)
 
 
 ## Public Instance Methods
@@ -1325,16 +1326,58 @@ await collection.syncFromHeadHash("zdpuAtmXUPRPueZocCXRaHwh8Hn6AnByMqupdE3iMboNW
 ### create
 > Creates a new instance of AvionDB.
 
-Syntax: `AvionDB.create(ipfs, identity, address, options)`
+Syntax: `AvionDB.create(name, ipfs, options, orbitDbOptions)`
 
 Returns a `Promise` that resolves to a database instance.
 
+orbitDbOptions support the following options
+- `directory` (string): path to be used for the database files. By default it uses `'./orbitdb'`.
+
+- `peerId` (string): By default it uses the base58 string of the ipfs peer id.
+
+- `keystore` (Keystore Instance) : By default creates an instance of [Keystore](https://github.com/orbitdb/orbit-db-keystore). A custom keystore instance can be used, see [this](https://github.com/orbitdb/orbit-db/blob/master/test/utils/custom-test-keystore.js) for an example.
+
+- `cache` (Cache Instance) : By default creates an instance of [Cache](https://github.com/orbitdb/orbit-db-cache). A custom cache instance can also be used.
+
+- `identity` (Identity Instance): By default it creates an instance of [Identity](https://github.com/orbitdb/orbit-db-identity-provider/blob/master/src/identity.js)
+
+- `offline` (boolean): Start the OrbitDB instance in offline mode. Databases are not be replicated when the instance is started in offline mode. If the OrbitDB instance was started offline mode and you want to start replicating databases, the OrbitDB instance needs to be re-created. Default: `false`.
+
 Alternatively aviondb can be created from an orbitdb instance.
+TODO: add docs on proper process.
 
 #### Example
 
 ```javascript
 const AvionDB = require('aviondb')
-var db = await AvionDB.create(ipfs, identity, address, options)
+var db = await AvionDB.create("DatabaseName", ipfs, options, orbitDbOptions)
 ```
+### create
+> Creates a new instance of AvionDB.
 
+Syntax: `AvionDB.create(name, ipfs, options, orbitDbOptions)`
+
+Returns a `Promise` that resolves to a database instance.
+
+orbitDbOptions support the following options
+- `directory` (string): path to be used for the database files. By default it uses `'./orbitdb'`.
+
+- `peerId` (string): By default it uses the base58 string of the ipfs peer id.
+
+- `keystore` (Keystore Instance) : By default creates an instance of [Keystore](https://github.com/orbitdb/orbit-db-keystore). A custom keystore instance can be used, see [this](https://github.com/orbitdb/orbit-db/blob/master/test/utils/custom-test-keystore.js) for an example.
+
+- `cache` (Cache Instance) : By default creates an instance of [Cache](https://github.com/orbitdb/orbit-db-cache). A custom cache instance can also be used.
+
+- `identity` (Identity Instance): By default it creates an instance of [Identity](https://github.com/orbitdb/orbit-db-identity-provider/blob/master/src/identity.js)
+
+- `offline` (boolean): Start the OrbitDB instance in offline mode. Databases are not be replicated when the instance is started in offline mode. If the OrbitDB instance was started offline mode and you want to start replicating databases, the OrbitDB instance needs to be re-created. Default: `false`.
+
+Alternatively aviondb can be created from an orbitdb instance.
+TODO: add docs on proper process.
+
+#### Example
+
+```javascript
+const AvionDB = require('aviondb')
+var db = await AvionDB.create("/orbitdb/Qmd8TmZrWASypEp4Er9tgWP4kCNQnW4ncSnvjvyHQ3EVSU/DatabaseName", ipfs, options, orbitDbOptions)
+```
