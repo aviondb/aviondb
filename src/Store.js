@@ -6,17 +6,17 @@ const IdentityProvider = require("orbit-db-identity-provider");
 const Index = require('./StoreIndex')
 const debug =  require('debug')("aviondb:store")
 
-OrbitDB.addDatabaseType("aviondb.collection", require('./Collection'))
-OrbitDB.addDatabaseType("aviondb", Store)
 
 class Store extends OrbitdbStore {
-    constructor(ipfs, id, dbname, options) {
+    constructor(ipfs, id, dbname, options = {}) {
         //let opts = Object.assign({}, { })
         let opts = {};
         Object.assign(opts, options)
         super(ipfs, id, dbname, opts)
         this._type = 'aviondb'
-        this._orbitdb = options.orbitdb
+        if(options.orbitdb) {
+            this._orbitdb = options.orbitdb
+        }
 
         this.openCollections = {};
 
@@ -103,10 +103,12 @@ class Store extends OrbitdbStore {
     }
     async load(number, options) {
         super.load(number,options);
-
-
-        //Loads collections into memory; TODO: Load and start collections.
         debug("datastore is loading");
+
+        //Load and start collections into memory.
+        for(var name in this._index._index) {
+            await this.openCollection(name)
+        }
     }
     async close() {
         for(var name in this.openCollections) {
@@ -118,14 +120,16 @@ class Store extends OrbitdbStore {
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
 
         var store = await orbitdb.create(name, "aviondb", options)
-        store.orbitdb = orbitdb
+        store._orbitdb = orbitdb
         return store;
     }
     static async open(address, ipfs, options, orbitDbOptions) {
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.open(address, options);
-        store.orbitdb = orbitdb;
+        store._orbitdb = orbitdb;
         return orbitdb;
     }
 }
+OrbitDB.addDatabaseType("aviondb.collection", require('./Collection'))
+OrbitDB.addDatabaseType("aviondb", Store)
 module.exports = Store;

@@ -52,10 +52,12 @@ describe("DB", function () {
         //ipfs = await startIpfs("js-ipfs", ipfsConfig)
         ipfs = new IPFS(ipfsConfig)
         await ipfs.ready
-        const address = 'test-address'
+        const name = 'test-address'
         const options = Object.assign({}, DefaultOptions, { cache })
-        store = await Store.create(ipfs, testIdentity, address, options)
-        store.load()
+        store = await Store.create(name, ipfs, options, {
+            identity: testIdentity
+        })
+        await store.load()
     })
     after(async () => {
         await store.close()
