@@ -6,6 +6,9 @@ const IdentityProvider = require("orbit-db-identity-provider");
 const Index = require('./StoreIndex')
 const debug =  require('debug')("aviondb:store")
 
+OrbitDB.addDatabaseType("aviondb.collection", require('./Collection'))
+OrbitDB.addDatabaseType("aviondb", Store)
+
 class Store extends OrbitdbStore {
     constructor(ipfs, id, dbname, options) {
         //let opts = Object.assign({}, { })
@@ -111,25 +114,18 @@ class Store extends OrbitdbStore {
         }
         await super.close()
     }
-    static async create(ipfs, testIdentity, address, options) {
-        OrbitDB.addDatabaseType("aviondb.collection", require('./Collection'))
-        const storage = require('orbit-db-storage-adapter')(leveldown)
-        var cacheStore = await storage.createStore("cache");
-        await cacheStore.open();
-        const cache = new Cache(cacheStore);
-        var orbitdb = await OrbitDB.createInstance(ipfs);
-        var Options = Object.assign({}, options, { orbitdb }, { cache })
-        
-        if (!testIdentity) {
-            testIdentity = await IdentityProvider.createIdentity({
-                id: Array(4).fill(null).map(() => Math.random().toString(36).substr(2)).join(''),
-            });
-        }
-        if (!address) {
-            address = Array(4).fill(null).map(() => Math.random().toString(36).substr(2)).join('');
-        }
-        
-        return new Store(ipfs, testIdentity, address, Options)
+    static async create(name, ipfs, options, orbitDbOptions) {
+        var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
+
+        var store = await orbitdb.create(name, "aviondb", options)
+        store.orbitdb = orbitdb
+        return store;
+    }
+    static async open(address, ipfs, options, orbitDbOptions) {
+        var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
+        var store = await orbitdb.open(address, options);
+        store.orbitdb = orbitdb;
+        return orbitdb;
     }
 }
 module.exports = Store;
