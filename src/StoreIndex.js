@@ -1,8 +1,11 @@
 class StoreIndex {
-    constructor(store) {
+    constructor() {
         this._index = {};
-        this.store = store;
+        this.store = null;
        
+    }
+    get(name) {
+        return this._index[name];
     }
     handleEntry(entry) {
         var { payload } = entry;
@@ -29,7 +32,7 @@ class StoreIndex {
     }
     updateIndex(oplog) {
         if(!this.loaded) {
-            oplog.values.reduce((handled, item) => {
+            oplog.values.forEach((item) => {
                 this.handleEntry(item)
             })
         }

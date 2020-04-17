@@ -1,16 +1,12 @@
 const OrbitdbStore = require("orbit-db-store")
 const OrbitDB = require('orbit-db')
-const Cache = require("orbit-db-cache");
-const leveldown = require('leveldown')
-const IdentityProvider = require("orbit-db-identity-provider");
 const Index = require('./StoreIndex')
 const debug =  require('debug')("aviondb:store")
 
 
 class Store extends OrbitdbStore {
     constructor(ipfs, id, dbname, options = {}) {
-        //let opts = Object.assign({}, { })
-        let opts = {};
+        let opts = { Index };
         Object.assign(opts, options)
         super(ipfs, id, dbname, opts)
         this._type = 'aviondb'
@@ -20,7 +16,7 @@ class Store extends OrbitdbStore {
 
         this.openCollections = {};
 
-        this._index = new Index(this)
+        this._index.store = this;
 
         this.events.on("write", (address, entry) => {
             this._index.handleEntry(entry);
@@ -31,18 +27,28 @@ class Store extends OrbitdbStore {
 
         this.events.on("db.createCollection", async (name, address) => {
             if(!this.openCollections[name]) {
-                return await this.openCollection(address);
+                this.openCollections[name] = await this.openCollection(address);
             }
         })
     }
-    async createCollection(name, options = {}) {
+    /**
+     * Opens a collection
+     * @param {String} name Name of collection
+     * @param {*} options 
+     * @param {*} orbitDbOptions options directly passed into orbitdb.create()
+     */
+    async createCollection(name, options = {}, orbitDbOptions = {}) {
+        var {overwrite} = options;
+        if(overwrite) {
+            orbitDbOptions.overwrite = true;
+        }
         if(!name | typeof name !== "string") {
             throw "Name must be a string"
         }
-        if(this._index._index[name]) {
+        if(this._index.get(name) && !overwrite) {
             throw `Collection with name: ${name} already exists.`
         }
-        var collection = await this._orbitdb.create(name, "aviondb.collection");
+        var collection = await this._orbitdb.create(name, "aviondb.collection", orbitDbOptions);
         this.openCollections[name] = collection;
         await this._addOperation({
             op: "collection.create",
@@ -51,15 +57,21 @@ class Store extends OrbitdbStore {
         })
         return collection;
     }
-    async openCollection(name, options = {}) {
+    /**
+     * Opens a collection
+     * @param {String} name Name of collection
+     * @param {*} options 
+     * @param {*} orbitDbOptions options directly passed into orbitdb.open()
+     */
+    async openCollection(name, options = {}, orbitDbOptions = {}) {
         var {create} = options;
         if(!name) {
             throw "Name must be a string";
         } else if (typeof name !== "string") {
             throw "Name must not be undefined";
         }
-        if(!this._index[name] && create !== true) {
-            throw `Collection with name of ${name} does not exist`;
+        if(!this._index.get(name) && create !== true) {
+            throw `Collection with name of "${name}" does not exist`;
         }
         if(this.openCollections[name]) {
             return this.openCollections[name]
@@ -67,9 +79,10 @@ class Store extends OrbitdbStore {
         if(create === true) {
             return await this.createCollection(name);
         } else {
-            var collectionInfo = this._index[name];
-            var collection = await this._orbitdb.open(collectionInfo.address);
+            var collectionInfo = this._index.get(name);
+            var collection = await this._orbitdb.open(collectionInfo.address, options);
             await collection.load();
+            this.openCollections[name] = collection;
             return collection;
         }
     }
@@ -77,7 +90,7 @@ class Store extends OrbitdbStore {
         if(!name | typeof name !== "string") {
             throw "Name must be a string"
         }
-        var collectionInfo = this._index[name];
+        var collectionInfo = this._index._index[name];
         await this._addOperation({
             op: "collection.drop",
             address: collectionInfo.address,
@@ -85,7 +98,7 @@ class Store extends OrbitdbStore {
         })
     }
     listCollections(filter = {}, options = {}) {
-        return Object.keys(this.openCollections)
+        return Object.keys(this._index._index)
     }
     collection(name) {
         if(!name | typeof name !== "string") {
@@ -102,11 +115,11 @@ class Store extends OrbitdbStore {
         }
     }
     async load(number, options) {
-        super.load(number,options);
+        await super.load(number,options);
         debug("datastore is loading");
 
         //Load and start collections into memory.
-        for(var name in this._index._index) {
+        for(var name in this.listCollections()) {
             await this.openCollection(name)
         }
     }
