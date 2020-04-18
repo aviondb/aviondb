@@ -83,6 +83,12 @@ describe("Collection", function () {
         assert.strictEqual(result2[0].age, 35);
         assert.strictEqual(result2[0].name, "kim");
     })
+    it("Find: Negetive", async () => {
+        await store.insertOne({ name: "kim", age: 35 })
+        var result = await store.find({ name: "vasa" })
+        assert.strictEqual(typeof result, "object")
+        assert.strictEqual(result[0], undefined);
+    })
     it("FindOne", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         var result1 = await store.findOne({ name: "kim" })
@@ -94,12 +100,22 @@ describe("Collection", function () {
         assert.strictEqual(result2.age, 35);
         assert.strictEqual(result2.name, "kim");
     })
+    it("FindOne: Negetive", async () => {
+        await store.insertOne({ name: "kim", age: 35 })
+        var result = await store.findOne({ name: "vasa" })
+        assert.strictEqual(result, null)
+    })
     it("FindOneAndUpdate", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         var result = await store.findOneAndUpdate({ name: "kim" }, { $set: { name: "vasa", age: 22 } })
         assert.strictEqual(typeof result, "object")
         assert.strictEqual(result.age, 22);
         assert.strictEqual(result.name, "vasa");
+    })
+    it("FindOneAndUpdate: Negetive", async () => {
+        await store.insertOne({ name: "kim", age: 35 })
+        var result = await store.findOneAndUpdate({ name: "vasa" }, { $set: { name: "elon", age: 48 } })
+        assert.strictEqual(result, null)
     })
     it("FindOneAndDelete", async () => {
         await store.insertOne({ name: "kim", age: 35 })
@@ -108,12 +124,22 @@ describe("Collection", function () {
         assert.strictEqual(result.age, 35);
         assert.strictEqual(result.name, "kim");
     })
+    it("FindOneAndDelete: Negetive", async () => {
+        await store.insertOne({ name: "kim", age: 35 })
+        var result = await store.findOneAndDelete({ name: "vasa" })
+        assert.strictEqual(result, null)
+    })
     it("FindById", async () => {
         await store.insertOne({ _id: "54495ad94c934721ede76d90" ,name: "kim", age: 35 })
         var result = await store.findById("54495ad94c934721ede76d90")
         assert.strictEqual(typeof result, "object")
         assert.strictEqual(result.age, 35);
         assert.strictEqual(result.name, "kim");
+    })
+    it("FindById: Negetive", async () => {
+        await store.insertOne({ _id: "54495ad94c934721ede76d90" ,name: "kim", age: 35 })
+        var result = await store.findById("54495ad94c934721ede76d89")
+        assert.strictEqual(result, undefined)
     })
     it("FindByIdAndDelete", async () => {
         await store.insertOne({ _id: "54495ad94c934721ede76d90" ,name: "kim", age: 35 })
@@ -122,12 +148,22 @@ describe("Collection", function () {
         assert.strictEqual(result.age, 35);
         assert.strictEqual(result.name, "kim");
     })
+    it("FindByIdAndDelete: Negetive", async () => {
+        await store.insertOne({ _id: "54495ad94c934721ede76d90" ,name: "kim", age: 35 })
+        var result = await store.findByIdAndDelete("54495ad94c934721ede76d89")
+        assert.strictEqual(result, undefined);
+    })
     it("FindByIdAndUpdate", async () => {
         await store.insertOne({ _id: "54495ad94c934721ede76d90" ,name: "kim", age: 35 })
         var result = await store.findByIdAndUpdate("54495ad94c934721ede76d90", { $set: { name: "vasa", age: 22 } })
         assert.strictEqual(typeof result, "object")
         assert.strictEqual(result.age, 22);
         assert.strictEqual(result.name, "vasa");
+    })
+    it("FindByIdAndUpdate: Negetive", async () => {
+        await store.insertOne({ _id: "54495ad94c934721ede76d90" ,name: "kim", age: 35 })
+        var result = await store.findByIdAndUpdate("54495ad94c934721ede76d89", { $set: { name: "vasa", age: 22 } })
+        assert.strictEqual(result, undefined);
     })
     it("Update", async () => {
         await store.insertOne({ name: "kim", age: 35 })
@@ -136,12 +172,32 @@ describe("Collection", function () {
         assert.strictEqual(result[0].age, 22);
         assert.strictEqual(result[0].name, "vasa");
     })
+    it("Update: with multi:true", async () => {
+        await store.insert([{ name: "kim", age: 35 }, { name: "vasa", age: 22 }])
+        var result = await store.update({ age: { $gt: 20 } }, { $set: { age: 20 } }, { multi: true })
+        assert.strictEqual(typeof result, "object")
+        assert.strictEqual(result[0].age, 20);
+        assert.strictEqual(result[0].name, "kim");
+        assert.strictEqual(result[1].age, 20);
+        assert.strictEqual(result[1].name, "vasa");
+    })
+    it("Update: Negetive", async () => {
+        await store.insertOne({ name: "kim", age: 35 })
+        var result = await store.update({ name: "vasa" }, { $set: { name: "elon", age: 48 } })
+        assert.strictEqual(typeof result, "object")
+        assert.strictEqual(result[0], undefined);
+    })
     it("UpdateOne", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         var result = await store.updateOne({ name: "kim" }, { $set: { name: "vasa", age: 22 } })
         assert.strictEqual(typeof result, "object")
         assert.strictEqual(result.age, 22);
         assert.strictEqual(result.name, "vasa");
+    })
+    it("UpdateOne: Negetive", async () => {
+        await store.insertOne({ name: "kim", age: 35 })
+        var result = await store.updateOne({ name: "vasa" }, { $set: { name: "elon", age: 48 } })
+        assert.strictEqual(result, null)
     })
     it("UpdateMany", async () => {
         await store.insert([{ name: "kim", age: 35 }, { name: "vasa", age: 22 }])
@@ -152,12 +208,23 @@ describe("Collection", function () {
         assert.strictEqual(result[1].age, 16);
         assert.strictEqual(result[1].name, "vasa");
     })
+    it("UpdateMany", async () => {
+        await store.insert([{ name: "kim", age: 35 }, { name: "vasa", age: 22 }])
+        var result = await store.updateMany({ age: { $lt: 20 } }, { $set: { age: 16 } })
+        assert.strictEqual(typeof result, "object")
+        assert.strictEqual(result[0], undefined);
+    })
     it("DeleteOne", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         var result = await store.deleteOne({ name: "kim" })
         assert.strictEqual(typeof result, "object")
         assert.strictEqual(result.age, 35);
         assert.strictEqual(result.name, "kim");
+    })
+    it("DeleteOne: Negetive", async () => {
+        await store.insertOne({ name: "kim", age: 35 })
+        var result = await store.deleteOne({ name: "vasa" })
+        assert.strictEqual(result, null);
     })
     it("DeleteMany", async () => {
         await store.insertOne({ name: "kim", age: 35 })
@@ -166,11 +233,19 @@ describe("Collection", function () {
         assert.strictEqual(result[0].age, 35);
         assert.strictEqual(result[0].name, "kim");
     })
+    it("DeleteMany", async () => {
+        await store.insertOne([{ name: "kim", age: 35 }, { name: "vasa", age: 22 }])
+        var result = await store.deleteMany({ age: { $lt: 20 } })
+        assert.strictEqual(typeof result, "object");
+        assert.strictEqual(result[0], undefined);
+    })
     it("Distinct", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         await store.insertOne({ name: "vasa", age: 22 })
+        await store.insertOne({ name: "vasa", age: 20 })
         var result = await store.distinct("name")
         assert.strictEqual(typeof result, "object")
+        assert.strictEqual(result.length, 2)
         assert.strictEqual(result[0], "kim");
         assert.strictEqual(result[1], "vasa");
     })
