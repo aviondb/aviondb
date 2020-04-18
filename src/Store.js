@@ -140,7 +140,7 @@ class Store extends OrbitdbStore {
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.open(address, options);
         store._orbitdb = orbitdb;
-        return orbitdb;
+        return store;
     }
 }
 OrbitDB.addDatabaseType("aviondb.collection", require('./Collection'))
