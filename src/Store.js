@@ -43,7 +43,7 @@ class Store extends OrbitdbStore {
             orbitDbOptions.overwrite = true;
         }
         if(!name | typeof name !== "string") {
-            throw "Name must be a string"
+            throw "name must be a string"
         }
         if(this._index.get(name) && !overwrite) {
             throw `Collection with name: ${name} already exists.`
@@ -65,10 +65,8 @@ class Store extends OrbitdbStore {
      */
     async openCollection(name, options = {}, orbitDbOptions = {}) {
         var {create} = options;
-        if(!name) {
-            throw "Name must be a string";
-        } else if (typeof name !== "string") {
-            throw "Name must not be undefined";
+        if(!name | typeof name !== "string") {
+            throw "name must be a string"
         }
         if(!this._index.get(name) && create !== true) {
             throw `Collection with name of "${name}" does not exist`;
@@ -142,6 +140,10 @@ class Store extends OrbitdbStore {
         return store;
     }
     static async init(name, ipfs, options, orbitDbOptions) {
+        if(!name | typeof name !== "string") {
+            throw "name must be a string"
+        }
+
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
 
         // Parse the database address
