@@ -84,6 +84,12 @@ class Store extends OrbitdbStore {
             return collection;
         }
     }
+    /**
+     * 
+     * @param {string} name 
+     * @param {JSON Object} options 
+     * @param {JSON Object} orbitDbOptions 
+     */
     async initCollection(name, options = {}, orbitDbOptions = {}) {
         if(!name | typeof name !== "string") {
             throw "name must be a string"
@@ -97,6 +103,11 @@ class Store extends OrbitdbStore {
             return this.createCollection(name, options, orbitDbOptions);
         }
     }
+    /**
+     * 
+     * @param {string} name 
+     * @param {JSON Object} options 
+     */
     async dropCollection(name, options = {}) {
         if(!name | typeof name !== "string") {
             throw "Name must be a string"
@@ -108,9 +119,18 @@ class Store extends OrbitdbStore {
             name
         })
     }
+    /**
+     * 
+     * @param {JSON Object} filter 
+     * @param {JSON Object} options 
+     */
     listCollections(filter = {}, options = {}) {
         return Object.keys(this._index._index)
     }
+    /**
+     * 
+     * @param {string} name 
+     */
     collection(name) {
         if(!name | typeof name !== "string") {
             throw "Name must be a string"
@@ -120,6 +140,10 @@ class Store extends OrbitdbStore {
         }
         return this.openCollections[name];
     }
+    /**
+     * 
+     * @param {string} name 
+     */
     async closeCollection(name) {
         if(this.openCollections[name]) {
             await this.openCollections[name].close();
@@ -140,6 +164,13 @@ class Store extends OrbitdbStore {
         }
         await super.close()
     }
+    /**
+     * 
+     * @param {name} address 
+     * @param {ipfs Object} ipfs 
+     * @param {JSON Object} options 
+     * @param {JSON Object} orbitDbOptions 
+     */
     static async create(name, ipfs, options, orbitDbOptions) {
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.create(name, "aviondb", options)
@@ -147,6 +178,13 @@ class Store extends OrbitdbStore {
         await store.load()
         return store;
     }
+    /**
+     * 
+     * @param {name} address 
+     * @param {ipfs Object} ipfs 
+     * @param {JSON Object} options 
+     * @param {JSON Object} orbitDbOptions 
+     */
     static async open(address, ipfs, options, orbitDbOptions) {
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.open(address, options);
@@ -154,6 +192,13 @@ class Store extends OrbitdbStore {
         await store.load()
         return store;
     }
+    /**
+     * 
+     * @param {string} name 
+     * @param {ipfs Object} ipfs 
+     * @param {JSON Object} options 
+     * @param {JSON Object} orbitDbOptions 
+     */
     static async init(name, ipfs, options, orbitDbOptions) {
         if(!name | typeof name !== "string") {
             throw "name must be a string"
