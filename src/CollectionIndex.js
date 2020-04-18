@@ -76,7 +76,7 @@ class CollectionIndex {
     }
     updateIndex(oplog) {
         if(!this.loaded) {
-            oplog.values.reduce((handled, item) => {
+            oplog.values.forEach((item) => {
                 this.handleEntry(item)
             })
         }
