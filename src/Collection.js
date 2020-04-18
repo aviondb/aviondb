@@ -263,13 +263,13 @@ class Collection extends OrbitdbStore {
     async deleteMany(filter = {}) {
         var docs = await this.find(filter);
         var ids = docs.map(item => (item._id));
-        if (result.length > 0) {            
+        if (ids.length > 0) {            
             await this._addOperation({
                 op: "DELETE",
                 value: ids
             })
         }
-        return records;
+        return docs;
     }
 
     distinct(key, query) {
