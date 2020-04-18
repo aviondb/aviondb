@@ -38,6 +38,9 @@ class Store extends OrbitdbStore {
      * @param {*} orbitDbOptions options directly passed into orbitdb.create()
      */
     async createCollection(name, options = {}, orbitDbOptions = {}) {
+        orbitDbOptions.meta = {
+            parent: this.address.root
+        }
         var {overwrite} = options;
         if(overwrite) {
             orbitDbOptions.overwrite = true;
