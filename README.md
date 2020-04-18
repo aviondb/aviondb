@@ -111,18 +111,18 @@ const ipfs = new IPFS();
 const runExample = async () => {
   // Initialize AvionDB Instance
   await ipfs.ready;
-  const aviondb = await AvionDB.create("DatabaseName", ipfs);
-  
-  await aviondb.load(); // Loads the existing collections
+  const aviondb = await AvionDB.init("DatabaseName", ipfs); // Creates a db named "DatabaseName"
 
-  var collection = await aviondb.createCollection("employees"); // Collection interface
+  var collection = await aviondb.initCollection("employees"); // Collection interface
+
+  await aviondb.listCollections() // ['employees'] Returns the List of collection names
 
   // Hypothetical employee profile
   await collection.insertOne({
     hourly_pay: 15,
     name: "Elon",
     ssn: "562-48-5384",
-    weekly_hours: 40,
+    weekly_hours: 100,
   });
 
   var result = await collection.findOne({
