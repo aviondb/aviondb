@@ -84,6 +84,19 @@ class Store extends OrbitdbStore {
             return collection;
         }
     }
+    async initCollection(name, options = {}, orbitDbOptions = {}) {
+        if(!name | typeof name !== "string") {
+            throw "name must be a string"
+        }
+        // Collection exists
+        if(this._index.get(name)) {
+            return this.openCollection(name, options, orbitDbOptions);
+        }
+        // Collection does not exist
+        if(!this._index.get(name)) {
+            return this.createCollection(name, options, orbitDbOptions);
+        }
+    }
     async dropCollection(name, options = {}) {
         if(!name | typeof name !== "string") {
             throw "Name must be a string"
