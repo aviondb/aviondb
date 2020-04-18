@@ -141,6 +141,24 @@ class Store extends OrbitdbStore {
         store._orbitdb = orbitdb;
         return store;
     }
+    static async init(name, ipfs, options, orbitDbOptions) {
+        var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
+
+        // Parse the database address
+        const dbAddress = await orbitdb._determineAddress(name, "aviondb", options);
+
+        var cache = await orbitdb._requestCache(dbAddress, orbitdb.directory)
+
+        // Check if we have the database
+        const haveDB = await orbitdb._haveLocalData(cache, dbAddress)
+
+        if (haveDB) {
+            return this.open(dbAddress, ipfs, options, orbitDbOptions);   
+        }
+        else {
+            return this.create(name, ipfs, options, orbitDbOptions);            
+        }
+    }
 }
 OrbitDB.addDatabaseType("aviondb.collection", require('./Collection'))
 OrbitDB.addDatabaseType("aviondb", Store)
