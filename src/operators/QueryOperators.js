@@ -17,7 +17,7 @@ module.exports = parseAndFind = (query, docs, findOne = false) => {
                 return docs[i];
             }
         }
-        return {}
+        return null
     }
 }
 
