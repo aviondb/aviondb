@@ -11,11 +11,11 @@
     async function runExample() {
       // Initialize the libs
       const ipfs = await window.Ipfs.create();
-      const aviondb = await AvionDB.create(ipfs);
+      const aviondb = await AvionDB.init("SpaceX", ipfs);
 
       await aviondb.load(); // Loads the existing collections
 
-      var collection = await aviondb.createCollection("employees"); // Collection interface
+      var collection = await aviondb.initCollection("employees"); // Collection interface
 
       // Hypothetical employee profile
       await collection.insertOne({
@@ -35,6 +35,6 @@
       await aviondb.drop(); // Drops the database
       await aviondb.close(); // Closes all collections and binding database.
     }
-    runExample();
+    //runExample();
   </script>
 </html>

@@ -6,7 +6,9 @@ The following APIs documented are in a usable state. More APIs are available, ho
 <!-- toc -->
 
 - [Public Instance Methods](#public-instance-methods)
-    * [createCollection(name, [options])](#aviondbcreateCollection)
+    * [initCollection(name, [options], [orbitDbOptions])](#aviondbinitCollection)    
+    * [createCollection(name, [options], [orbitDbOptions])](#aviondbcreateCollection)
+    * [openCollection(name, [options], [orbitDbOptions])](#aviondbopenCollection)
     * [dropCollection(name, [options])](#aviondbdropCollection)
     * [listCollections([filter], [options])](#aviondblistCollections)
     * [collection(name)](#aviondbcollection)
@@ -28,23 +30,47 @@ The following APIs documented are in a usable state. More APIs are available, ho
         + [getHeadHash()](#collectiongetHeadHash)
         + [syncFromHeadHash(hash, [stopWrites])](#collectionsyncFromHeadHash)
 - [Static Methods](#static-methods)
-    * [create(name, ipfs, options, orbitDbOptions)](#create)
-    * [open(address, ipfs, options, orbitDbOptions)](#open)
+    * [init(name, ipfs, [options], [orbitDbOptions])](#init)
+    * [create(name, ipfs, [options], [orbitDbOptions])](#create)
+    * [open(address, ipfs, [options], [orbitDbOptions])](#open)
 
 
 ## Public Instance Methods
 
-### aviondb.createCollection
-> Creates and opens a database collection.
+### aviondb.initCollection
+> Creates if the collection does not exist, or opens an existing database collection.
 
-Syntax: `aviondb.createCollection(name, [options])`
+Syntax: `aviondb.initCollection(name, [options], [orbitDbOptions])`
 
 Returns a `Promise` that resolves to a [Collection Instance](#Collection-Instance).
 
+**NOTE: It is recommended to use `initCollection` instead of `createCollection` and `openCollection` for better developer experience.**
+
 ```javascript
-var collection = await aviondb.createCollection("Accounts");
+var collection = await aviondb.createCollection("CollectionName");
 ```
 
+### aviondb.createCollection
+> Creates and opens a database collection.
+
+Syntax: `aviondb.createCollection(name, [options], [orbitDbOptions])`
+
+Returns a `Promise` that resolves to a [Collection Instance](#Collection-Instance). Throws error if a collection with `name` is already exists.
+
+```javascript
+var collection = await aviondb.createCollection("CollectionName");
+```
+
+### aviondb.openCollection
+> Opens an existing database collection.
+
+Syntax: `aviondb.openCollection(name, [options], [orbitDbOptions])`
+
+Returns a `Promise` that resolves to a [Collection Instance](#Collection-Instance). Throws error if a collection with `name` does not exist.
+
+```javascript
+var collection = await aviondb.openCollection("CollectionName");
+```
 
 ### aviondb.dropCollection
 > Deletes collection removing all stored data
@@ -1323,14 +1349,46 @@ await collection.syncFromHeadHash("zdpuAtmXUPRPueZocCXRaHwh8Hn6AnByMqupdE3iMboNW
 
 ## Static methods
 
+### init
+> Creates a new instance of AvionDB if not present already. If an instance with `name` is exists, then opens and returns the instance. 
+
+Syntax: `AvionDB.init(name, ipfs, options, orbitDbOptions)`
+
+Returns a `Promise` that resolves to a database instance.
+
+**NOTE: It is recommended to use `init` instead of `create` & `open` for better developer experience.**
+
+`orbitDbOptions` support the following options
+- `directory` (string): path to be used for the database files. By default it uses `'./orbitdb'`.
+
+- `peerId` (string): By default it uses the base58 string of the ipfs peer id.
+
+- `keystore` (Keystore Instance) : By default creates an instance of [Keystore](https://github.com/orbitdb/orbit-db-keystore). A custom keystore instance can be used, see [this](https://github.com/orbitdb/orbit-db/blob/master/test/utils/custom-test-keystore.js) for an example.
+
+- `cache` (Cache Instance) : By default creates an instance of [Cache](https://github.com/orbitdb/orbit-db-cache). A custom cache instance can also be used.
+
+- `identity` (Identity Instance): By default it creates an instance of [Identity](https://github.com/orbitdb/orbit-db-identity-provider/blob/master/src/identity.js)
+
+- `offline` (boolean): Start the OrbitDB instance in offline mode. Databases are not be replicated when the instance is started in offline mode. If the OrbitDB instance was started offline mode and you want to start replicating databases, the OrbitDB instance needs to be re-created. Default: `false`.
+
+Alternatively aviondb can be created from an orbitdb instance.
+TODO: add docs on proper process.
+
+#### Example
+
+```javascript
+const AvionDB = require('aviondb')
+var db = await AvionDB.init("DatabaseName", ipfs, options, orbitDbOptions)
+```
+
 ### create
 > Creates a new instance of AvionDB.
 
 Syntax: `AvionDB.create(name, ipfs, options, orbitDbOptions)`
 
-Returns a `Promise` that resolves to a database instance.
+Returns a `Promise` that resolves to a database instance. Throws error if a database with `name` exists already.
 
-orbitDbOptions support the following options
+`orbitDbOptions` support the following options
 - `directory` (string): path to be used for the database files. By default it uses `'./orbitdb'`.
 
 - `peerId` (string): By default it uses the base58 string of the ipfs peer id.
@@ -1356,11 +1414,11 @@ var db = await AvionDB.create("DatabaseName", ipfs, options, orbitDbOptions)
 ### open
 > Opens an existing instance of AvionDB.
 
-Syntax: `AvionDB.open(name, ipfs, options, orbitDbOptions)`
+Syntax: `AvionDB.open(address, ipfs, options, orbitDbOptions)`
 
-Returns a `Promise` that resolves to a database instance.
+Returns a `Promise` that resolves to a database instance. Throws error if a database with `address` does not exist already.
 
-orbitDbOptions support the following options
+`orbitDbOptions` support the following options
 - `directory` (string): path to be used for the database files. By default it uses `'./orbitdb'`.
 
 - `peerId` (string): By default it uses the base58 string of the ipfs peer id.

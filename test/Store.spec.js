@@ -54,7 +54,7 @@ describe("DB", function () {
         await ipfs.ready
         const name = 'test-address'
         const options = Object.assign({}, DefaultOptions, { cache })
-        store = await Store.create(name, ipfs, options, {
+        store = await Store.init(name, ipfs, options, {
             identity: testIdentity
         })
         await store.load()
@@ -71,9 +71,9 @@ describe("DB", function () {
         await cacheStore.open()
         await identityStore.open()
     })
-    it("Create Collection", async () => {
+    it("Init Collection", async () => {
         await ipfs.ready
-        var collection = await store.createCollection("Accounts")
+        var collection = await store.initCollection("Accounts")
         await collection.insertOne({
             name: "vasa"
         })
@@ -85,7 +85,7 @@ describe("DB", function () {
     })
     it("List Collections", async () => { 
         await ipfs.ready
-        var collection = await store.createCollection("Users")
+        var collection = await store.initCollection("Users")
         await collection.insertOne({
             name: "vasa"
         })

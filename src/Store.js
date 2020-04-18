@@ -21,7 +21,7 @@ class Store extends OrbitdbStore {
         this.events.on("write", (address, entry) => {
             this._index.handleEntry(entry);
         });
-        this.events.on("replicate.progres", (address, hash, entry) => {
+        this.events.on("replicate.progress", (address, hash, entry) => {
             this._index.handleEntry(entry);
         })
 
@@ -46,7 +46,7 @@ class Store extends OrbitdbStore {
             orbitDbOptions.overwrite = true;
         }
         if(!name | typeof name !== "string") {
-            throw "Name must be a string"
+            throw "name must be a string"
         }
         if(this._index.get(name) && !overwrite) {
             throw `Collection with name: ${name} already exists.`
@@ -68,10 +68,8 @@ class Store extends OrbitdbStore {
      */
     async openCollection(name, options = {}, orbitDbOptions = {}) {
         var {create} = options;
-        if(!name) {
-            throw "Name must be a string";
-        } else if (typeof name !== "string") {
-            throw "Name must not be undefined";
+        if(!name | typeof name !== "string") {
+            throw "name must be a string"
         }
         if(!this._index.get(name) && create !== true) {
             throw `Collection with name of "${name}" does not exist`;
@@ -89,6 +87,30 @@ class Store extends OrbitdbStore {
             return collection;
         }
     }
+    /**
+     * 
+     * @param {string} name 
+     * @param {JSON Object} options 
+     * @param {JSON Object} orbitDbOptions 
+     */
+    async initCollection(name, options = {}, orbitDbOptions = {}) {
+        if(!name | typeof name !== "string") {
+            throw "name must be a string"
+        }
+        // Collection exists
+        if(this._index.get(name)) {
+            return await this.openCollection(name, options, orbitDbOptions);
+        }
+        // Collection does not exist
+        if(!this._index.get(name)) {
+            return await this.createCollection(name, options, orbitDbOptions);
+        }
+    }
+    /**
+     * 
+     * @param {string} name 
+     * @param {JSON Object} options 
+     */
     async dropCollection(name, options = {}) {
         if(!name | typeof name !== "string") {
             throw "Name must be a string"
@@ -100,9 +122,18 @@ class Store extends OrbitdbStore {
             name
         })
     }
+    /**
+     * 
+     * @param {JSON Object} filter 
+     * @param {JSON Object} options 
+     */
     listCollections(filter = {}, options = {}) {
         return Object.keys(this._index._index)
     }
+    /**
+     * 
+     * @param {string} name 
+     */
     collection(name) {
         if(!name | typeof name !== "string") {
             throw "Name must be a string"
@@ -112,6 +143,10 @@ class Store extends OrbitdbStore {
         }
         return this.openCollections[name];
     }
+    /**
+     * 
+     * @param {string} name 
+     */
     async closeCollection(name) {
         if(this.openCollections[name]) {
             await this.openCollections[name].close();
@@ -132,17 +167,62 @@ class Store extends OrbitdbStore {
         }
         await super.close()
     }
+    /**
+     * 
+     * @param {name} address 
+     * @param {ipfs Object} ipfs 
+     * @param {JSON Object} options 
+     * @param {JSON Object} orbitDbOptions 
+     */
     static async create(name, ipfs, options, orbitDbOptions) {
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.create(name, "aviondb", options)
         store._orbitdb = orbitdb
+        await store.load()
         return store;
     }
+    /**
+     * 
+     * @param {name} address 
+     * @param {ipfs Object} ipfs 
+     * @param {JSON Object} options 
+     * @param {JSON Object} orbitDbOptions 
+     */
     static async open(address, ipfs, options, orbitDbOptions) {
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.open(address, options);
         store._orbitdb = orbitdb;
+        await store.load()
         return store;
+    }
+    /**
+     * 
+     * @param {string} name 
+     * @param {ipfs Object} ipfs 
+     * @param {JSON Object} options 
+     * @param {JSON Object} orbitDbOptions 
+     */
+    static async init(name, ipfs, options, orbitDbOptions) {
+        if(!name | typeof name !== "string") {
+            throw "name must be a string"
+        }
+
+        var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
+
+        // Parse the database address
+        const dbAddress = await orbitdb._determineAddress(name, "aviondb", options);
+
+        var cache = await orbitdb._requestCache(dbAddress, orbitdb.directory)
+
+        // Check if we have the database
+        const haveDB = await orbitdb._haveLocalData(cache, dbAddress)
+
+        if (haveDB) {
+            return await Store.open(dbAddress, ipfs, options, orbitDbOptions);   
+        }
+        else {
+            return await Store.create(name, ipfs, options, orbitDbOptions);            
+        }
     }
 }
 OrbitDB.addDatabaseType("aviondb.collection", require('./Collection'))

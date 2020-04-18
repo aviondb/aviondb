@@ -12,7 +12,7 @@ class Collection extends OrbitdbStore {
         this.events.on("write", (address, entry) => {
             this._index.handleEntry(entry);
         });
-        this.events.on("replicate.progres", (address, hash, entry) => {
+        this.events.on("replicate.progress", (address, hash, entry) => {
             this._index.handleEntry(entry);
         })
     }
@@ -41,7 +41,7 @@ class Collection extends OrbitdbStore {
     }
     async findOneAndUpdate(filter = {}, modification) {
         var doc = await this.findOne(filter);
-        if (doc._id) {  
+        if (doc) {  
             await this._addOperation({
                 op: "UPDATE",
                 value: [doc._id],
@@ -56,7 +56,7 @@ class Collection extends OrbitdbStore {
      */
     async findOneAndDelete(filter = {}) {
         var doc = await this.findOne(filter)
-        if (doc._id) {            
+        if (doc) {            
             await this._addOperation({
                 op: "DELETE",
                 value: [doc._id]
@@ -85,7 +85,7 @@ class Collection extends OrbitdbStore {
 
     async findByIdAndDelete(_id) {
         var doc = this._index.findById(_id);
-        if (doc._id) {
+        if (doc) {
             await this._addOperation({
                 op: "DELETE",
                 value: [doc._id]
@@ -106,7 +106,7 @@ class Collection extends OrbitdbStore {
 
     async findByIdAndUpdate(_id, modification, options = {}) {
         var doc = await this._index.findById(_id);
-        if (doc._id) {
+        if (doc) {
             await this._addOperation({
                 op: "UPDATE",
                 value: [doc._id],
@@ -149,15 +149,18 @@ class Collection extends OrbitdbStore {
         var ids = [];
         var docs = [];
         if (options.multi) {
-            docs.push(...(await collection.find(filter)))
+            docs.push(...(await this.find(filter)))
             ids.push(...(docs.map(item => (item._id))))
         }
         if (options.upsert && ids.length === 0) {
             // TODO: implement upsert condition for $setOnInsert operator
         }
-        if (Object.keys(options).length === 0 && options.constructor === Object) {
-            docs.push(await this.findOne(filter))
-            ids.push(...(docs.map(item => (item._id))))
+        else if (Object.keys(options).length === 0 && options.constructor === Object) {
+            let doc = await this.findOne(filter); 
+            if (doc) {
+                docs.push(doc)
+                ids.push(...(docs.map(item => (item._id))))
+            }
         }
         await this._addOperation({
             op: "UPDATE",
@@ -190,7 +193,7 @@ class Collection extends OrbitdbStore {
 
     async updateOne(filter = {}, modification, options = {}) {
         var doc = await this.findOne(filter)
-        if (doc._id) {            
+        if (doc) {            
             await this._addOperation({
                 op: "UPDATE",
                 value: [doc._id],
@@ -241,14 +244,14 @@ class Collection extends OrbitdbStore {
      */
 
     async deleteOne(filter = {}) {
-        var result = await this.findOne(filter);
-        if (Object.keys(result).length > 0) {            
+        var doc = await this.findOne(filter);
+        if (doc) {            
             await this._addOperation({
                 op: "DELETE",
-                value: [result._id]
+                value: [doc._id]
             })
         }
-        return result;
+        return doc;
     }
 
     /**
@@ -258,15 +261,15 @@ class Collection extends OrbitdbStore {
      */
 
     async deleteMany(filter = {}) {
-        var records = await this.find(filter);
-        var result = records.map(item => (item._id));
-        if (result.length > 0) {            
+        var docs = await this.find(filter);
+        var ids = docs.map(item => (item._id));
+        if (ids.length > 0) {            
             await this._addOperation({
                 op: "DELETE",
-                value: result
+                value: ids
             })
         }
-        return records;
+        return docs;
     }
 
     distinct(key, query) {
