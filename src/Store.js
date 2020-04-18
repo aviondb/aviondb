@@ -131,12 +131,14 @@ class Store extends OrbitdbStore {
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.create(name, "aviondb", options)
         store._orbitdb = orbitdb
+        await store.load()
         return store;
     }
     static async open(address, ipfs, options, orbitDbOptions) {
         var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.open(address, options);
         store._orbitdb = orbitdb;
+        await store.load()
         return store;
     }
     static async init(name, ipfs, options, orbitDbOptions) {
