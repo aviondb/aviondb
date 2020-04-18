@@ -74,17 +74,25 @@ describe("Collection", function () {
     })
     it("Find", async () => {
         await store.insertOne({ name: "kim", age: 35 })
-        var result = await store.find({ name: "kim" })
-        assert.strictEqual(typeof result, "object")
-        assert.strictEqual(result[0].age, 35);
-        assert.strictEqual(result[0].name, "kim");
+        var result1 = await store.find({ name: "kim" })
+        var result2 = await store.find({})
+        assert.strictEqual(typeof result1, "object")
+        assert.strictEqual(typeof result2, "object")
+        assert.strictEqual(result1[0].age, 35);
+        assert.strictEqual(result1[0].name, "kim");
+        assert.strictEqual(result2[0].age, 35);
+        assert.strictEqual(result2[0].name, "kim");
     })
     it("FindOne", async () => {
         await store.insertOne({ name: "kim", age: 35 })
-        var result = await store.findOne({ name: "kim" })
-        assert.strictEqual(typeof result, "object")
-        assert.strictEqual(result.age, 35);
-        assert.strictEqual(result.name, "kim");
+        var result1 = await store.findOne({ name: "kim" })
+        var result2 = await store.findOne({})
+        assert.strictEqual(typeof result1, "object")
+        assert.strictEqual(typeof result2, "object")
+        assert.strictEqual(result1.age, 35);
+        assert.strictEqual(result1.name, "kim");
+        assert.strictEqual(result2.age, 35);
+        assert.strictEqual(result2.name, "kim");
     })
     it("FindOneAndUpdate", async () => {
         await store.insertOne({ name: "kim", age: 35 })
