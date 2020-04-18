@@ -1352,10 +1352,11 @@ TODO: add docs on proper process.
 const AvionDB = require('aviondb')
 var db = await AvionDB.create("DatabaseName", ipfs, options, orbitDbOptions)
 ```
-### create
-> Creates a new instance of AvionDB.
 
-Syntax: `AvionDB.create(name, ipfs, options, orbitDbOptions)`
+### open
+> Opens an existing instance of AvionDB.
+
+Syntax: `AvionDB.open(name, ipfs, options, orbitDbOptions)`
 
 Returns a `Promise` that resolves to a database instance.
 
@@ -1379,5 +1380,5 @@ TODO: add docs on proper process.
 
 ```javascript
 const AvionDB = require('aviondb')
-var db = await AvionDB.create("/orbitdb/Qmd8TmZrWASypEp4Er9tgWP4kCNQnW4ncSnvjvyHQ3EVSU/DatabaseName", ipfs, options, orbitDbOptions)
+var db = await AvionDB.open("/orbitdb/Qmd8TmZrWASypEp4Er9tgWP4kCNQnW4ncSnvjvyHQ3EVSU/DatabaseName", ipfs, options, orbitDbOptions)
 ```
