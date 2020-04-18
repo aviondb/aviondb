@@ -155,10 +155,10 @@ class Store extends OrbitdbStore {
         const haveDB = await orbitdb._haveLocalData(cache, dbAddress)
 
         if (haveDB) {
-            return this.open(dbAddress, ipfs, options, orbitDbOptions);   
+            return Store.open(dbAddress, ipfs, options, orbitDbOptions);   
         }
         else {
-            return this.create(name, ipfs, options, orbitDbOptions);            
+            return Store.create(name, ipfs, options, orbitDbOptions);            
         }
     }
 }
