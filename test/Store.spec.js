@@ -90,7 +90,7 @@ describe("DB", function () {
             name: "vasa"
         })
         var collections = store.listCollections()
-        assert.strictEqual(arraysEqual(collections, ['Accounts', 'Users']), true)
+        assert.strictEqual(arraysEqual(collections, ['Users']), true)
     })
 })
 
