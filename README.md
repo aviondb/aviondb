@@ -82,7 +82,7 @@ Same as in Node.js, you just have to [webpack](https://webpack.js.org/) to bundl
 
 #### **from CDN**
 
-Instead of a local installation (and browserification) you may request a remote copy of IPFS API from unpkg CDN.
+Instead of a local installation (and browserification) you may request a remote copy of AvionDB from unpkg CDN.
 
 To always request the latest version, use the following:
 ```html
