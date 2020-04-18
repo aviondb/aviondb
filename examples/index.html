@@ -11,7 +11,7 @@
     async function runExample() {
       // Initialize the libs
       const ipfs = await window.Ipfs.create();
-      const aviondb = await AvionDB.create(ipfs);
+      const aviondb = await AvionDB.create("SpaceX", ipfs);
 
       await aviondb.load(); // Loads the existing collections
 
