@@ -96,11 +96,11 @@ class Store extends OrbitdbStore {
         }
         // Collection exists
         if(this._index.get(name)) {
-            return this.openCollection(name, options, orbitDbOptions);
+            return await this.openCollection(name, options, orbitDbOptions);
         }
         // Collection does not exist
         if(!this._index.get(name)) {
-            return this.createCollection(name, options, orbitDbOptions);
+            return await this.createCollection(name, options, orbitDbOptions);
         }
     }
     /**
@@ -215,10 +215,10 @@ class Store extends OrbitdbStore {
         const haveDB = await orbitdb._haveLocalData(cache, dbAddress)
 
         if (haveDB) {
-            return Store.open(dbAddress, ipfs, options, orbitDbOptions);   
+            return await Store.open(dbAddress, ipfs, options, orbitDbOptions);   
         }
         else {
-            return Store.create(name, ipfs, options, orbitDbOptions);            
+            return await Store.create(name, ipfs, options, orbitDbOptions);            
         }
     }
 }
