@@ -149,7 +149,7 @@ class Collection extends OrbitdbStore {
         var ids = [];
         var docs = [];
         if (options.multi) {
-            docs.push(...(await collection.find(filter)))
+            docs.push(...(await this.find(filter)))
             ids.push(...(docs.map(item => (item._id))))
         }
         if (options.upsert && ids.length === 0) {
