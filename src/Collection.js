@@ -12,7 +12,7 @@ class Collection extends OrbitdbStore {
         this.events.on("write", (address, entry) => {
             this._index.handleEntry(entry);
         });
-        this.events.on("replicate.progres", (address, hash, entry) => {
+        this.events.on("replicate.progress", (address, hash, entry) => {
             this._index.handleEntry(entry);
         })
     }
