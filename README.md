@@ -64,7 +64,7 @@ This module uses node.js, and can be installed through npm:
 // Using npm
 npm install --save aviondb
 
-// Using Gtihub
+// Using Github
 npm install git+https://github.com/dappkit/aviondb.git
 ```
 
@@ -194,7 +194,7 @@ If you want or are planning to create an implementation in a language that is no
 
 As far as code goes, we would be happy to accept PRs! If you want to work on something, it'd be good to talk beforehand to make sure nobody else is working on it. You can reach us [on Discord](https://discord.gg/88YpNuQ), or in the [issues section](https://github.com/dappkit/aviondb/issues).
 
-If you want to code but don't know where to start, check out the issues labelled ["help wanted"](https://github.com/dappkit/aviondb/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+sort%3Areactions-%2B1-desc).
+If you want to code but don't know where to start, check out the issues labelled ["help wanted"](https://github.com/dappkit/aviondb/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+sort%3Areactions-%2B1-desc), ["discussion"](https://github.com/dappkit/aviondb/issues?q=is%3Aopen+is%3Aissue+label%3A%22discussion%22+sort%3Areactions-%2B1-desc).
 
 Please note that we have a [Code of Conduct](CODE_OF_CONDUCT.md), and that all activity in the [@dappkit](https://github.com/dappkit) organization falls under it. Read it when you get the chance, as being part of this community means that you agree to abide by it. Thanks.
 
