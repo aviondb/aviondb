@@ -13,7 +13,8 @@
       const ipfs = await window.Ipfs.create();
       const aviondb = await AvionDB.init("SpaceX", ipfs);
 
-      await aviondb.load(); // Loads the existing collections
+      //await aviondb.load(); // Loads the existing collections
+      //Not required as AvionDB.open() calls aviondb.load() automatically. However if avionDB is created directly from an orbitdb instance it must be called.
 
       var collection = await aviondb.initCollection("employees"); // Collection interface
 
