@@ -113,7 +113,7 @@ const runExample = async () => {
   await ipfs.ready;
   const aviondb = await AvionDB.init("DatabaseName", ipfs); // Creates a db named "DatabaseName"
   
-  //aviondb.load()
+  //await aviondb.load()
   //Not required as AvionDB.open() calls aviondb.load() automatically. However if avionDB is created directly from an orbitdb instance it must be called.
   
   var collection = await aviondb.initCollection("employees"); // Collection interface
