@@ -1,12 +1,17 @@
-module.exports = parseAndFind = (query, docs, findOne = false) => { 
+module.exports = parseAndFind = (query, options, docs, findOne = false) => { 
     var docs = Object.values(docs);
     if (!findOne) {
         if (Object.keys(query).length === 0) {
             return docs
         }
-        return docs.filter(doc => { 
-            return evaluateQuery(doc, query)
-        })
+        let filteredDocs = []
+        let condition = (i) => (options.limit ? i < options.limit : true)
+        for (let i = 0; (i < docs.length) && (condition(i)); i++) {
+            if (evaluateQuery(docs[i], query)) {
+                filteredDocs.push(docs[i]);
+            }
+        }
+        return filteredDocs
     }
     else {
         if (Object.keys(query).length === 0) {

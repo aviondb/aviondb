@@ -6,17 +6,17 @@ class CollectionIndex {
         this._index = {}
         this.loaded = false;
     }
-    async find(query) {
-        let res = parseAndFind(query, this._index, false)
+    async find(query, projection, options = {}, callback) {
+        let res = parseAndFind(query, options, this._index, false)
         return res
     }
 
-    async findOne(query) {
-        let res = parseAndFind(query, this._index, true)
+    async findOne(query, projection, options = {}, callback) {
+        let res = parseAndFind(query, options, this._index, true)
         return res
     }
 
-    async findById(_id) {
+    async findById(_id, projection, options = {}, callback) {
         return this._index[_id]
     }
 
