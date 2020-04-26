@@ -16,7 +16,7 @@ class Collection extends OrbitdbStore {
             this._index.handleEntry(entry);
         })
     }
-    insert(docs) {
+    insert(docs, options, callback) {
         for (var doc of docs) {
             if (!doc._id) {
                 doc._id = ObjectId.generate()
@@ -27,19 +27,19 @@ class Collection extends OrbitdbStore {
             value: docs
         })
     }
-    async insertOne(doc) {
+    async insertOne(doc, options, callback) {
         if (typeof doc !== "object")
             throw new Error("Object documents are only supported")
         
         return (await this.insert([doc]));
     }
-    find(query) {
-        return this._index.find(query);
+    find(query, projection, options, callback) {
+        return this._index.find(query, projection, options, callback);
     }
-    findOne(query) {
+    findOne(query, projection, options, callback) {
         return this._index.findOne(query);
     }
-    async findOneAndUpdate(filter = {}, modification) {
+    async findOneAndUpdate(filter = {}, modification, options, callback) {
         var doc = await this.findOne(filter);
         if (doc) {  
             await this._addOperation({
@@ -54,7 +54,7 @@ class Collection extends OrbitdbStore {
      * Deletes a single document based on the filter and sort criteria, returning the deleted document.
      * @param {Object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
      */
-    async findOneAndDelete(filter = {}) {
+    async findOneAndDelete(filter = {}, options, callback) {
         var doc = await this.findOne(filter)
         if (doc) {            
             await this._addOperation({
@@ -72,8 +72,10 @@ class Collection extends OrbitdbStore {
      * @returns {JSON Object}
      */
 
-    findById(_id) {
-        return this._index.findById(_id);
+    
+    
+    findById(_id, projection, options, callback) {
+        return this._index.findById(_id, projection, options, callback);
     }
 
     /**
@@ -83,7 +85,7 @@ class Collection extends OrbitdbStore {
      * @returns {JSON Object} return the deleted record
      */
 
-    async findByIdAndDelete(_id) {
+    async findByIdAndDelete(_id, options, callback) {
         var doc = this._index.findById(_id);
         if (doc) {
             await this._addOperation({
@@ -104,7 +106,7 @@ class Collection extends OrbitdbStore {
      * @returns {JSON Object} return the updated record
      */
 
-    async findByIdAndUpdate(_id, modification, options = {}) {
+    async findByIdAndUpdate(_id, modification, options = {}, callback) {
         var doc = await this._index.findById(_id);
         if (doc) {
             await this._addOperation({
@@ -243,7 +245,7 @@ class Collection extends OrbitdbStore {
      * @param {JSON Object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available. 
      */
 
-    async deleteOne(filter = {}) {
+    async deleteOne(filter = {}, options, callback) {
         var doc = await this.findOne(filter);
         if (doc) {            
             await this._addOperation({
@@ -260,7 +262,7 @@ class Collection extends OrbitdbStore {
      * @param {JSON Object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
      */
 
-    async deleteMany(filter = {}) {
+    async deleteMany(filter = {}, options, callback) {
         var docs = await this.find(filter);
         var ids = docs.map(item => (item._id));
         if (ids.length > 0) {            
