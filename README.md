@@ -48,11 +48,13 @@ This is the Javascript implementation and it works both in **Browsers** and **No
   * [Benchmarks](#benchmarks)
 - [Frequently Asked Questions](#frequently-asked-questions)
   * [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
+  * [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
+  * [What mongodb features does aviondb support?](#what-mongodb-features-does-aviondb-support)
+  * [Other questions?](#other-questions)
 - [Contributing](#contributing)
 - [Sponsors](#sponsors)
 - [License](#license)
 
-<!-- tocstop -->
 
 ## Install
 
@@ -176,8 +178,6 @@ See [benchmarks/](https://github.com/dappkit/aviondb/tree/master/test/benchmarks
 
 ## Frequently Asked Questions
 
-// TODO: Add FAQ Page
-
 ### Are there implementations in other languages?
 
 We are working to implement AvionDB for following languages:
@@ -190,6 +190,21 @@ We are working to implement AvionDB for following languages:
 The best place to find out what is out there and what is being actively worked on is likely by asking in the [Discord](https://discord.gg/88YpNuQ). 
 
 If you want or are planning to create an implementation in a language that is not listed here, then feel free to reach us out and discuss about it in the [Discord](https://discord.gg/88YpNuQ).
+
+### Where can I see your Roadmap?
+
+You can find our Roadmap [here](https://github.com/dappkit/aviondb/issues/10). The features in the Roadmap are taken from 2 separate issues([#7](https://github.com/dappkit/aviondb/issues/7), [#8](https://github.com/dappkit/aviondb/issues/8)) which individually maintain a list of feature proposals related to OrbitDB-specific improvements & AvionDB-specific improvements respectively.
+
+The Roadmap is an open discussion, feel free to add your suggestions, comments.
+
+### What mongodb features does aviondb support?
+
+You can find all the supported MongoDB-like features in our [API docs](https://github.com/dappkit/aviondb/blob/master/API.md).
+
+### Other Questions?
+
+If you didn't find the answer to your question(s), feel free to reach us out on [Discord](https://discord.gg/88YpNuQ).
+
 
 ## Contributing
 
