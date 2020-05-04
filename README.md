@@ -106,42 +106,69 @@ const aviondb = await AvionDB.create("DatabaseName", ipfs)
 
 ### Example
 ```javascript
+// Import modules
 const AvionDB = require("aviondb");
 const IPFS = require("ipfs");
 const ipfs = new IPFS();
-
+ 
 const runExample = async () => {
-  // Initialize AvionDB Instance
   await ipfs.ready;
-  const aviondb = await AvionDB.init("DatabaseName", ipfs); // Creates a db named "DatabaseName"
+    
+  // Creates a db named "DatabaseName"
+  const aviondb = await AvionDB.init("DatabaseName", ipfs); 
   
-  //await aviondb.load()
-  //Not required as AvionDB.open() calls aviondb.load() automatically. However if avionDB is created directly from an orbitdb instance it must be called.
-  
-  var collection = await aviondb.initCollection("employees"); // Collection interface
-
-  await aviondb.listCollections() // ['employees'] Returns the List of collection names
-
-  // Hypothetical employee profile
+  // Creates a Collection named "employees"
+  const collection = await aviondb.initCollection("employees");
+ 
+  // Returns the List of collection names
+  await aviondb.listCollections() 
+  // prints ['employees'] 
+ 
+  // Adding an employee document
   await collection.insertOne({
-    hourly_pay: 15,
+    hourly_pay: "$15",
     name: "Elon",
     ssn: "562-48-5384",
     weekly_hours: 100,
   });
-
-  var result = await collection.findOne({
-    ssn: "562-48-5384", // Search by a single field Or many!
+ 
+  // We also support multi-insert using collection.insert()
+  // See https://github.com/dappkit/aviondb/blob/master/API.md
+    
+    
+  // Search by a single field Or many!
+  var employee = await collection.findOne({
+    ssn: "562-48-5384", 
   });
+ 
+  // We also support find(), findById()
+  // See https://github.com/dappkit/aviondb/blob/master/API.md
+    
+  // Returns the matching document
+  console.log(employee); 
+  // Prints the above added JSON document
+    
+    
+  // Update a document
+  var updatedEmployee = await collection.update(
+   { ssn: "562-48-5384" },
+   { $set: { hourly_pay: '$100' } }
+  );
+    
+  // We also support updateMany(), findOneAndUpdate()
+  // See https://github.com/dappkit/aviondb/blob/master/API.md
 
-  console.log(result); // Returns the matching document
+  // Returns the updated document
+  console.log(updatedEmployee); 
+  // Prints the updated JSON document
 
+    
   await collection.close(); // Collection will be closed.
   await aviondb.drop(); // Drops the database 
   await aviondb.close(); // Closes all collections and binding database.
   await ipfs.stop();
 };
-
+ 
 runExample();
 ```
 
