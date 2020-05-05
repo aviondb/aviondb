@@ -15,6 +15,7 @@ assets/
 
 .git
 .github
+.aviondb
 .prettierignore
 .travis.yml
 benchmarks

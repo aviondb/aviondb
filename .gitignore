@@ -6,6 +6,7 @@ orbitdb
 ipfs
 cache
 coverage
+.aviondb
 
 # Don't track builds in git
 # Distribution builds are available via npm
