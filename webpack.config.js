@@ -4,7 +4,7 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  entry: './src/Store.js',
+  entry: './src/index.js',
   output: {
     libraryTarget: 'var',
     library: 'AvionDB',
