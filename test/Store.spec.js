@@ -1,4 +1,4 @@
-const Store = require('../src/Store')
+const Store = require('../src/index')
 const Cache = require('orbit-db-cache')
 const Keystore = require('orbit-db-keystore')
 const IdentityProvider = require('orbit-db-identity-provider')
@@ -54,6 +54,7 @@ describe("DB", function () {
         await ipfs.ready
         const name = 'test-address'
         const options = Object.assign({}, DefaultOptions, { cache })
+        Store.setDatabaseConfig({ path: "./.aviondb" })
         store = await Store.init(name, ipfs, options, {
             identity: testIdentity
         })
@@ -70,6 +71,11 @@ describe("DB", function () {
         await store.drop()
         await cacheStore.open()
         await identityStore.open()
+    })
+    it("List Databases", async () => { 
+        await ipfs.ready       
+        const databases = await Store.listDatabases()
+        assert.strictEqual(arraysEqual(databases, ['test-address']), true)
     })
     it("Init Collection", async () => {
         await ipfs.ready
