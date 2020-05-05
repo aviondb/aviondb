@@ -33,6 +33,8 @@ The following APIs documented are in a usable state. More APIs are available, ho
     * [init(name, ipfs, [options], [orbitDbOptions])](#init)
     * [create(name, ipfs, [options], [orbitDbOptions])](#create)
     * [open(address, ipfs, [options], [orbitDbOptions])](#open)
+    * [listDatabases()](#listDatabases)
+    * [setDatabaseConfig([options])](#setDatabaseConfig)
 
 
 ## Public Instance Methods
@@ -1439,4 +1441,36 @@ TODO: add docs on proper process.
 ```javascript
 const AvionDB = require('aviondb')
 var db = await AvionDB.open("/orbitdb/Qmd8TmZrWASypEp4Er9tgWP4kCNQnW4ncSnvjvyHQ3EVSU/DatabaseName", ipfs, options, orbitDbOptions)
+```
+
+### listDatabases
+
+> Lists the existing databases.
+
+Syntax: `AvionDB.listDatabases()`
+
+Returns a `Promise` that resolves to an Array of existing database names.
+
+#### Example
+
+```javascript
+const AvionDB = require('aviondb')
+var db = await AvionDB.init("DatabaseName", ipfs, options, orbitDbOptions)
+await AvionDB.listDatabases()
+// prints ['DatabaseName']
+```
+
+### setDatabaseConfig
+
+> Sets configuration for AvionDB.
+
+Syntax: `AvionDB.setDatabaseConfig(options)`
+
+#### Example
+
+```javascript
+const AvionDB = require('aviondb')
+
+// Sets a custom path for aviondb database list 
+AvionDB.setDatabaseConfig({ path: "./custom/database/path" })
 ```

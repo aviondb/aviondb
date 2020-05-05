@@ -117,6 +117,10 @@ const runExample = async () => {
   // Creates a db named "DatabaseName"
   const aviondb = await AvionDB.init("DatabaseName", ipfs); 
   
+  // Returns the List of database names
+  await AvionDB.listDatabases()
+  // prints ['DatabaseName']
+
   // Creates a Collection named "employees"
   const collection = await aviondb.initCollection("employees");
  
