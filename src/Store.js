@@ -2,7 +2,7 @@ const OrbitdbStore = require("orbit-db-store")
 const OrbitDB = require('orbit-db')
 const Index = require('./StoreIndex')
 const debug =  require('debug')("aviondb:store")
-
+var orbitdb;
 
 class Store extends OrbitdbStore {
     constructor(ipfs, id, dbname, options = {}) {
@@ -175,7 +175,6 @@ class Store extends OrbitdbStore {
      * @param {JSON Object} orbitDbOptions 
      */
     static async create(name, ipfs, options, orbitDbOptions) {
-        var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.create(name, "aviondb", options)
         store._orbitdb = orbitdb
         await store.load()
@@ -189,7 +188,6 @@ class Store extends OrbitdbStore {
      * @param {JSON Object} orbitDbOptions 
      */
     static async open(address, ipfs, options, orbitDbOptions) {
-        var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
         var store = await orbitdb.open(address, options);
         store._orbitdb = orbitdb;
         await store.load()
@@ -207,7 +205,7 @@ class Store extends OrbitdbStore {
             throw "name must be a string"
         }
 
-        var orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
+        orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
 
         // Parse the database address
         const dbAddress = await orbitdb._determineAddress(name, "aviondb", options);
