@@ -32,6 +32,7 @@ class CollectionIndex {
         }
         var out = {};
         for (var entry of Object.values(index)) {
+            //TODO: Allow for sub object keys. I.e key.subkey
             if (entry[key]) {
                 out[entry[key]] = null;
             }
