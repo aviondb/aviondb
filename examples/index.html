@@ -9,6 +9,7 @@
   </body>
   <script type="text/javascript">
   const runExample = async () => {
+    const ipfs = await window.Ipfs.create();
     await ipfs.ready;
       
     // Creates a db named "DatabaseName"
