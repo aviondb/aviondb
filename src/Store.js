@@ -99,12 +99,10 @@ class Store extends OrbitdbStore {
         }
         // Collection exists
         if (this._index.get(name)) {
-            console.log("OPENING")
             return await this.openCollection(name, options, orbitDbOptions);
         }
         // Collection does not exist
         if (!this._index.get(name)) {
-            console.log("CREATING")
             return await this.createCollection(name, options, orbitDbOptions);
         }
     }
