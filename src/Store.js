@@ -81,7 +81,7 @@ class Store extends OrbitdbStore {
             return await this.createCollection(name);
         } else {
             var collectionInfo = this._index.get(name);
-            var collection = await this._orbitdb.open(collectionInfo.address, options);
+            var collection = await this._orbitdb.open(collectionInfo.address, orbitDbOptions);
             await collection.load();
             this.openCollections[name] = collection;
             return collection;
