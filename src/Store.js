@@ -98,11 +98,13 @@ class Store extends OrbitdbStore {
             throw "name must be a string"
         }
         // Collection exists
-        if(this._index.get(name)) {
+        if (this._index.get(name)) {
+            console.log("OPENING")
             return await this.openCollection(name, options, orbitDbOptions);
         }
         // Collection does not exist
-        if(!this._index.get(name)) {
+        if (!this._index.get(name)) {
+            console.log("CREATING")
             return await this.createCollection(name, options, orbitDbOptions);
         }
     }
@@ -175,6 +177,9 @@ class Store extends OrbitdbStore {
      * @param {JSON Object} orbitDbOptions 
      */
     static async create(name, ipfs, options, orbitDbOptions) {
+        if (!orbitdb) {
+            orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
+        }
         var store = await orbitdb.create(name, "aviondb", options)
         store._orbitdb = orbitdb
         await store.load()
@@ -188,6 +193,9 @@ class Store extends OrbitdbStore {
      * @param {JSON Object} orbitDbOptions 
      */
     static async open(address, ipfs, options, orbitDbOptions) {
+        if (!orbitdb) {
+            orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
+        }
         var store = await orbitdb.open(address, options);
         store._orbitdb = orbitdb;
         await store.load()
