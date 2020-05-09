@@ -1,4 +1,10 @@
-## AvionDB
+<p align="center">
+  <a href="https://dappkit.io" title="AvionDB">
+    <img src="https://bafzbeiekuueascn2ltb23u4d3v2osrratsppwcur3ermbd2g6v62vmv56u.textile.space/aviondb/assets/github.png" alt="AvionDB JS Implementation" width="512" />
+  </a>
+</p>
+
+<h3 align="center">AvionDB: A Distributed, MongoDB-like Database</h3>
 
 ![npm version](https://badge.fury.io/js/aviondb.svg)
 <img src="https://img.shields.io/badge/Node.js-%3E%3D8.6.0-orange.svg?style=flat-square" /></a>
@@ -7,10 +13,6 @@
 <a href="https://bundlephobia.com/result?p=aviondb"><img src="https://flat.badgen.net/bundlephobia/minzip/aviondb"></a>
 [![Discord](https://img.shields.io/discord/616677539812868097?color=blueviolet&label=discord)](https://discord.gg/88YpNuQ)
 
-
-> AvionDB aims to bring MongoDB-like developer interface to Web 3.0.
-
-### We are working on the initial Specs. See [AvionDB Specs doc](https://github.com/dappkit/aviondb-specs/blob/master/README.md)
 
 ### Architecture
 
@@ -46,6 +48,7 @@ This is the Javascript implementation and it works both in **Browsers** and **No
 - [Development](#development)
   * [Run Tests](#run-tests)
   * [Benchmarks](#benchmarks)
+- [Specs](#specs)
 - [Frequently Asked Questions](#frequently-asked-questions)
   * [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
   * [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
@@ -205,6 +208,11 @@ npm run benchmarks:update
 ```
 
 See [benchmarks/](https://github.com/dappkit/aviondb/tree/master/test/benchmarks) for more info on benchmarks.
+
+
+## Specs
+
+We are working on the initial Specs. See [AvionDB Specs doc](https://github.com/dappkit/aviondb-specs/blob/master/README.md)
 
 
 ## Frequently Asked Questions
