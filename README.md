@@ -6,13 +6,14 @@
 
 <h3 align="center">AvionDB: A Distributed, MongoDB-like Database</h3>
 
-![npm version](https://badge.fury.io/js/aviondb.svg)
+<p align="center">
+<a href="https://badge.fury.io/js/aviondb.svg">
 <img src="https://img.shields.io/badge/Node.js-%3E%3D8.6.0-orange.svg?style=flat-square" /></a>
-[![Build Status](https://travis-ci.com/dappkit/aviondb.svg?branch=master)](https://travis-ci.com/dappkit/aviondb)
+<a href="https://travis-ci.com/dappkit/aviondb"><img src="https://travis-ci.com/dappkit/aviondb.svg?branch=master" /></a>
 <a href="https://david-dm.org/dappkit/aviondb"><img src="https://david-dm.org/dappkit/aviondb.svg?style=flat-square"/></a>
 <a href="https://bundlephobia.com/result?p=aviondb"><img src="https://flat.badgen.net/bundlephobia/minzip/aviondb"></a>
-[![Discord](https://img.shields.io/discord/616677539812868097?color=blueviolet&label=discord)](https://discord.gg/88YpNuQ)
-
+<a href="https://discord.gg/88YpNuQ"><img src="https://img.shields.io/discord/616677539812868097?color=blueviolet&label=discord"></a>
+</p>
 
 ### Architecture
 
