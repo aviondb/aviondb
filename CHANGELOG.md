@@ -46,3 +46,4 @@ This is the first "test" release of AvionDB 🎉 You can find all the supported 
 ### Features
 - [Support for Cursor Methods](https://github.com/dappkit/aviondb/issues/12)
 - [Support to List Databases](https://github.com/dappkit/aviondb/commit/8017114038ed8200f9748e8714ae6f04c8675d97)
+- [Support to import & export collection data in various data formats](https://github.com/dappkit/aviondb/commit/23456b557ffde23bdeffa598d3097b816aeb1325)
