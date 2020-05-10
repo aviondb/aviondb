@@ -295,6 +295,26 @@ console.log(results);
     - the `age` field value is less than `30` and greater than `10` 
     - the `balance` field value is greater than or equal to `1000`
 
+#### Supported Cursor Methods
+
+- **`$limit`**
+
+    Syntax: `{ limit: <number> }`
+
+    The `limit` specifies the maximum _number_ of records that should be returned from a query.
+
+    #### Examples
+
+    Consider the following example:
+
+    ```js
+        await collection.insert([{ name: "kim", age: 35 },{ name: "vasa", age: 22 }])
+        var result = await collection.find({ age: { $gt: 10 } }, null, { limit: 1 })
+        // result will only have the 1st matching record
+    ```
+
+    This query will only return first `1` matching record as specified by the `limit` method.
+
 
 ### collection.findOne
 > Queries the collection returning first result matching record.
