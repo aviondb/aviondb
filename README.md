@@ -54,6 +54,7 @@ This is the Javascript implementation and it works both in **Browsers** and **No
   * [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
   * [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
   * [What mongodb features does aviondb support?](#what-mongodb-features-does-aviondb-support)
+  * [How can I use AvionDB in my Application?](#how-can-i-use-aviondb-in-my-application)
   * [Other questions?](#other-questions)
 - [Contributing](#contributing)
 - [Sponsors](#sponsors)
@@ -240,6 +241,26 @@ The Roadmap is an open discussion, feel free to add your suggestions, comments.
 ### What mongodb features does aviondb support?
 
 You can find all the supported MongoDB-like features in our [API docs](https://github.com/dappkit/aviondb/blob/master/API.md).
+
+### How can I use AvionDB in my Application?
+
+You can see the following examples to get started with AvionDB:
+
+- [**aviondb-firebase**](https://github.com/dappkit/aviondb-firebase)
+
+  An example using Firebase for AvionDB Access Control. In this example, we used Firebase email/password authentication as an Access Control for AvionDB (a distributed, MongoDB-like database). So, if you would try to write to AvionDB without logging in, the database will not allow you to do so internally.
+
+    - Check out the app [here](https://bit.ly/aviondb-firebase)
+    - Check out the code [here](https://github.com/dappkit/aviondb-firebase)
+
+- [**aviondb-onboard**](https://github.com/dappkit/aviondb-onboard): 
+
+  An example using Blocknaive's OnBoard.js Auth based Access Controller for AvionDB & OrbitDB. This allows you to integrate [AvionDB](https://github.com/dappkit/aviondb) with [@metamask_io](https://twitter.com/metamask_io), [@TorusLabs](https://twitter.com/TorusLabs), [@authereum](https://twitter.com/authereum), [@dapper_labs](https://twitter.com/dapper_labs), [@coinbase](https://twitter.com/coinbase), [@TrustWalletApp](https://twitter.com/TrustWalletApp), [@Trezor](https://twitter.com/Trezor), [@Ledger](https://twitter.com/Ledger), [@fortmatic](https://twitter.com/fortmatic), [@portis_io](https://twitter.com/portis_io), [@Squarelink_Inc](https://twitter.com/Squarelink_Inc), [@WalletConnect](https://twitter.com/WalletConnect), [@opera](https://twitter.com/opera), [@ethstatus](https://twitter.com/ethstatus), [@unilogin](https://twitter.com/unilogin), [@imTokenOfficial](https://twitter.com/imTokenOfficial).
+
+    - Check out the app [here](https://bit.ly/aviondb-blocknative)
+    - Check out the code [here](https://github.com/dappkit/aviondb-onboard)
+
+
 
 ### Other Questions?
 
