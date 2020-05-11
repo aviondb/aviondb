@@ -260,6 +260,9 @@ You can see the following examples to get started with AvionDB:
     - Check out the app [here](https://bit.ly/aviondb-blocknative)
     - Check out the code [here](https://github.com/dappkit/aviondb-onboard)
 
+- [**aviondb-jwt**](https://github.com/dappkit/aviondb-jwt): 
+
+  Coming Soon
 
 
 ### Other Questions?
