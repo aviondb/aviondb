@@ -253,14 +253,14 @@ You can see the following examples to get started with AvionDB:
     - Check out the app [here](https://bit.ly/aviondb-firebase)
     - Check out the code [here](https://github.com/dappkit/aviondb-firebase)
 
-- [**aviondb-onboard**](https://github.com/dappkit/aviondb-onboard): 
+- [**aviondb-onboard**](https://github.com/dappkit/aviondb-onboard)
 
   An example using Blocknaive's OnBoard.js Auth based Access Controller for AvionDB & OrbitDB. This allows you to integrate [AvionDB](https://github.com/dappkit/aviondb) with [@metamask_io](https://twitter.com/metamask_io), [@TorusLabs](https://twitter.com/TorusLabs), [@authereum](https://twitter.com/authereum), [@dapper_labs](https://twitter.com/dapper_labs), [@coinbase](https://twitter.com/coinbase), [@TrustWalletApp](https://twitter.com/TrustWalletApp), [@Trezor](https://twitter.com/Trezor), [@Ledger](https://twitter.com/Ledger), [@fortmatic](https://twitter.com/fortmatic), [@portis_io](https://twitter.com/portis_io), [@Squarelink_Inc](https://twitter.com/Squarelink_Inc), [@WalletConnect](https://twitter.com/WalletConnect), [@opera](https://twitter.com/opera), [@ethstatus](https://twitter.com/ethstatus), [@unilogin](https://twitter.com/unilogin), [@imTokenOfficial](https://twitter.com/imTokenOfficial).
 
     - Check out the app [here](https://bit.ly/aviondb-blocknative)
     - Check out the code [here](https://github.com/dappkit/aviondb-onboard)
 
-- [**aviondb-jwt**](https://github.com/dappkit/aviondb-jwt): 
+- [**aviondb-jwt**](https://github.com/dappkit/aviondb-jwt)
 
   Coming Soon
 
