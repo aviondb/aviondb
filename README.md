@@ -172,10 +172,10 @@ const runExample = async () => {
   // Prints the updated JSON document
 
     
-  await collection.close(); // Collection will be closed.
-  await aviondb.drop(); // Drops the database 
-  await aviondb.close(); // Closes all collections and binding database.
-  await ipfs.stop();
+  // await collection.close(); // Collection will be closed.
+  // await aviondb.drop(); // Drops the database 
+  // await aviondb.close(); // Closes all collections and binding database.
+  // await ipfs.stop();
 };
  
 runExample();
