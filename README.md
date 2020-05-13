@@ -262,7 +262,13 @@ You can see the following examples to get started with AvionDB:
 
 - [**aviondb-jwt**](https://github.com/dappkit/aviondb-jwt)
 
-  Coming Soon
+  An example using [JWT](https://jwt.io/) based Access Controller for AvionDB & OrbitDB. You can join the discussion [here](https://github.com/dappkit/aviondb/issues/16).
+  **Coming Soon**
+
+- [**aviondb-webauthn**](https://github.com/dappkit/aviondb-webauthn)
+
+  An example using [WebAuthn](https://webauthn.io/) based Access Controller for AvionDB & OrbitDB. You can join the discussion [here](https://github.com/dappkit/aviondb/issues/18)
+  **Coming Soon**
 
 
 ### Other Questions?
