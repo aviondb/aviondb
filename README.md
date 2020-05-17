@@ -246,6 +246,13 @@ You can find all the supported MongoDB-like features in our [API docs](https://g
 
 You can see the following examples to get started with AvionDB:
 
+- [**aviondb-p2p-sync**](https://github.com/dappkit/aviondb-p2p-sync)
+
+  A TodoList example using showing how you can sync/replicate AvionDB data across multiple devices. In this example, we synced a todolist from a desktop browser to a mobile browser using a QR Code. 
+
+  - Check out the app [here](https://bit.ly/aviondb-p2p-sync)
+  - Check out the code [here](https://github.com/dappkit/aviondb-p2p-sync)
+
 - [**aviondb-firebase**](https://github.com/dappkit/aviondb-firebase)
 
   An example using Firebase for AvionDB Access Control. In this example, we used Firebase email/password authentication as an Access Control for AvionDB (a distributed, MongoDB-like database). So, if you would try to write to AvionDB without logging in, the database will not allow you to do so internally.
