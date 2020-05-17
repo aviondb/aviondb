@@ -15,6 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/dappkit/aviondb.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "author": "Dappkit",
   "license": "MIT",
   "bugs": {
