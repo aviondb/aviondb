@@ -226,7 +226,7 @@ We are working to implement AvionDB for following languages:
 - NodeJS & Browser JS
 - Typescript
 - Golang
-- Python
+- Rust
 
 The best place to find out what is out there and what is being actively worked on is likely by asking in the [Discord](https://discord.gg/88YpNuQ). 
 
