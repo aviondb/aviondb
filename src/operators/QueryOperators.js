@@ -4,11 +4,18 @@ module.exports = parseAndFind = (query, options, docs, findOne = false) => {
         if (Object.keys(query).length === 0) {
             return docs
         }
-        let filteredDocs = []
-        let condition = (i) => (options.limit ? i < options.limit : true)
-        for (let i = 0; (i < docs.length) && (condition(i)); i++) {
+        let filteredDocs = [] , skipped = 0;
+        options.skip = options.skip || 0;
+        let condition = (len) => options.limit ? options.limit === len : false
+        for (let i = 0; (i < docs.length); i++) {
             if (evaluateQuery(docs[i], query)) {
-                filteredDocs.push(docs[i]);
+                if (skipped >= options.skip) {
+                    filteredDocs.push(docs[i]);
+                }
+                if (condition(filteredDocs.length)) { 
+                    return filteredDocs
+                }
+                ++skipped
             }
         }
         return filteredDocs
