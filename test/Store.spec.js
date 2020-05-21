@@ -84,7 +84,7 @@ describe("DB", function () {
             name: "vasa"
         })
         assert.strict(collection.address instanceof require("orbit-db/src/orbit-db-address"), true)
-        assert.strictEqual(collection instanceof require('../src/Collection'), true)
+        assert.strictEqual(collection instanceof require('../src/core/Collection'), true)
     })
     it("Drop Collection", async () => {
         //TODO: Create test here
