@@ -1,6 +1,6 @@
 {
   "name": "aviondb",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "AvionDB aims to bring MongoDB-like developer interface to Web 3.0.",
   "main": "src/index.js",
   "scripts": {
@@ -15,6 +15,9 @@
     "type": "git",
     "url": "git+https://github.com/dappkit/aviondb.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "author": "Dappkit",
   "license": "MIT",
   "bugs": {
@@ -23,7 +26,8 @@
   "homepage": "https://github.com/dappkit/aviondb#readme",
   "contributors": [
     "vasa-develop",
-    "vaultec81"
+    "vaultec81",
+    "ethdev279"
   ],
   "devDependencies": {
     "datastore-level": "^0.14.1",

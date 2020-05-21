@@ -95,6 +95,18 @@ describe("Collection", function () {
         assert.strictEqual(typeof result, "object")
         assert.strictEqual(result.length, 1);
     })
+    it("Find: Skip", async () => {
+        await store.insert([{ name: "kim", age: 35 }, { name: "vasa", age: 22 }])
+        var result = await store.find({ age: { $gt: 10 } }, null, { skip: 1 })
+        assert.strictEqual(typeof result, "object")
+        assert.strictEqual(result.length, 1);
+    })
+    it("Find: Limit & Skip", async () => {
+        await store.insert([{ name: "kim", age: 35 }, { name: "vasa", age: 22 }])
+        var result = await store.find({ age: { $gt: 10 } }, null, { limit: 1, skip: 1 })
+        assert.strictEqual(typeof result, "object")
+        assert.strictEqual(result.length, 1);
+    })
     it("FindOne", async () => {
         await store.insertOne({ name: "kim", age: 35 })
         var result1 = await store.findOne({ name: "kim" })

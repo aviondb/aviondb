@@ -1,16 +1,19 @@
-## AvionDB
+<p align="center">
+  <a href="https://dappkit.io" title="AvionDB">
+    <img src="https://bafzbeiekuueascn2ltb23u4d3v2osrratsppwcur3ermbd2g6v62vmv56u.textile.space/aviondb/assets/github.png" alt="AvionDB JS Implementation" width="512" />
+  </a>
+</p>
 
-![npm version](https://badge.fury.io/js/aviondb.svg)
+<h3 align="center">AvionDB: A Distributed, MongoDB-like Database</h3>
+
+<p align="center">
+<a href="https://badge.fury.io/js/aviondb.svg">
 <img src="https://img.shields.io/badge/Node.js-%3E%3D8.6.0-orange.svg?style=flat-square" /></a>
-[![Build Status](https://travis-ci.com/dappkit/aviondb.svg?branch=master)](https://travis-ci.com/dappkit/aviondb)
+<a href="https://travis-ci.com/dappkit/aviondb"><img src="https://travis-ci.com/dappkit/aviondb.svg?branch=master" /></a>
 <a href="https://david-dm.org/dappkit/aviondb"><img src="https://david-dm.org/dappkit/aviondb.svg?style=flat-square"/></a>
 <a href="https://bundlephobia.com/result?p=aviondb"><img src="https://flat.badgen.net/bundlephobia/minzip/aviondb"></a>
-[![Discord](https://img.shields.io/discord/616677539812868097?color=blueviolet&label=discord)](https://discord.gg/88YpNuQ)
-
-
-> AvionDB aims to bring MongoDB-like developer interface to Web 3.0.
-
-### We are working on the initial Specs. See [AvionDB Specs doc](https://github.com/dappkit/aviondb-specs/blob/master/README.md)
+<a href="https://discord.gg/88YpNuQ"><img src="https://img.shields.io/discord/616677539812868097?color=blueviolet&label=discord"></a>
+</p>
 
 ### Architecture
 
@@ -46,10 +49,13 @@ This is the Javascript implementation and it works both in **Browsers** and **No
 - [Development](#development)
   * [Run Tests](#run-tests)
   * [Benchmarks](#benchmarks)
+- [Specs](#specs)
+- [Community Repos](#community-repos)
 - [Frequently Asked Questions](#frequently-asked-questions)
   * [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
   * [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
   * [What mongodb features does aviondb support?](#what-mongodb-features-does-aviondb-support)
+  * [How can I use AvionDB in my Application?](#how-can-i-use-aviondb-in-my-application)
   * [Other questions?](#other-questions)
 - [Contributing](#contributing)
 - [Sponsors](#sponsors)
@@ -167,14 +173,16 @@ const runExample = async () => {
   // Prints the updated JSON document
 
     
-  await collection.close(); // Collection will be closed.
-  await aviondb.drop(); // Drops the database 
-  await aviondb.close(); // Closes all collections and binding database.
-  await ipfs.stop();
+  // await collection.close(); // Collection will be closed.
+  // await aviondb.drop(); // Drops the database 
+  // await aviondb.close(); // Closes all collections and binding database.
+  // await ipfs.stop();
 };
  
 runExample();
 ```
+
+See [FAQs](#how-can-i-use-aviondb-in-my-application) Section for more examples on how to use AvionDB in your project.
 
 
 ## API
@@ -207,6 +215,15 @@ npm run benchmarks:update
 See [benchmarks/](https://github.com/dappkit/aviondb/tree/master/test/benchmarks) for more info on benchmarks.
 
 
+## Specs
+
+We are working on the initial Specs. See [AvionDB Specs doc](https://github.com/dappkit/aviondb-specs/blob/master/README.md)
+
+## Community Repos
+
+- [Movie-Reviews-CRUD-Application](https://github.com/BCDevs/movies-avionDB): A Kickstarter Application to understand how AvionDB Works by Implementing one.
+
+
 ## Frequently Asked Questions
 
 ### Are there implementations in other languages?
@@ -216,7 +233,7 @@ We are working to implement AvionDB for following languages:
 - NodeJS & Browser JS
 - Typescript
 - Golang
-- Python
+- Rust
 
 The best place to find out what is out there and what is being actively worked on is likely by asking in the [Discord](https://discord.gg/88YpNuQ). 
 
@@ -231,6 +248,42 @@ The Roadmap is an open discussion, feel free to add your suggestions, comments.
 ### What mongodb features does aviondb support?
 
 You can find all the supported MongoDB-like features in our [API docs](https://github.com/dappkit/aviondb/blob/master/API.md).
+
+### How can I use AvionDB in my Application?
+
+You can see the following examples to get started with AvionDB:
+
+- [**aviondb-p2p-sync**](https://github.com/dappkit/aviondb-p2p-sync)
+
+  A TodoList example using showing how you can sync/replicate AvionDB data across multiple devices. In this example, we synced a todolist from a desktop browser to a mobile browser using a QR Code. 
+
+  - Check out the app [here](https://bit.ly/aviondb-p2p-sync)
+  - Check out the code [here](https://github.com/dappkit/aviondb-p2p-sync)
+
+- [**aviondb-firebase**](https://github.com/dappkit/aviondb-firebase)
+
+  An example using Firebase for AvionDB Access Control. In this example, we used Firebase email/password authentication as an Access Control for AvionDB (a distributed, MongoDB-like database). So, if you would try to write to AvionDB without logging in, the database will not allow you to do so internally.
+
+    - Check out the app [here](https://bit.ly/aviondb-firebase)
+    - Check out the code [here](https://github.com/dappkit/aviondb-firebase)
+
+- [**aviondb-onboard**](https://github.com/dappkit/aviondb-onboard)
+
+  An example using Blocknaive's OnBoard.js Auth based Access Controller for AvionDB & OrbitDB. This allows you to integrate [AvionDB](https://github.com/dappkit/aviondb) with [@metamask_io](https://twitter.com/metamask_io), [@TorusLabs](https://twitter.com/TorusLabs), [@authereum](https://twitter.com/authereum), [@dapper_labs](https://twitter.com/dapper_labs), [@coinbase](https://twitter.com/coinbase), [@TrustWalletApp](https://twitter.com/TrustWalletApp), [@Trezor](https://twitter.com/Trezor), [@Ledger](https://twitter.com/Ledger), [@fortmatic](https://twitter.com/fortmatic), [@portis_io](https://twitter.com/portis_io), [@Squarelink_Inc](https://twitter.com/Squarelink_Inc), [@WalletConnect](https://twitter.com/WalletConnect), [@opera](https://twitter.com/opera), [@ethstatus](https://twitter.com/ethstatus), [@unilogin](https://twitter.com/unilogin), [@imTokenOfficial](https://twitter.com/imTokenOfficial).
+
+    - Check out the app [here](https://bit.ly/aviondb-blocknative)
+    - Check out the code [here](https://github.com/dappkit/aviondb-onboard)
+
+- [**aviondb-jwt**](https://github.com/dappkit/aviondb-jwt)
+
+  An example using [JWT](https://jwt.io/) based Access Controller for AvionDB & OrbitDB. You can join the discussion [here](https://github.com/dappkit/aviondb/issues/16).
+  **Coming Soon**
+
+- [**aviondb-webauthn**](https://github.com/dappkit/aviondb-webauthn)
+
+  An example using [WebAuthn](https://webauthn.io/) based Access Controller for AvionDB & OrbitDB. You can join the discussion [here](https://github.com/dappkit/aviondb/issues/18)
+  **Coming Soon**
+
 
 ### Other Questions?
 
