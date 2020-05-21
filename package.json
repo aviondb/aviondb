@@ -26,7 +26,8 @@
   "homepage": "https://github.com/dappkit/aviondb#readme",
   "contributors": [
     "vasa-develop",
-    "vaultec81"
+    "vaultec81",
+    "ethdev279"
   ],
   "devDependencies": {
     "datastore-level": "^0.14.1",

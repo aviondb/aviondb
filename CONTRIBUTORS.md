@@ -10,3 +10,4 @@ Note: This list is opt-out. If you'd rather not be here, send an email to [vasa@
 
  - [@vasa-develop](https://github.com/vasa-develop)
  - [@vaultec81](https://github.com/vaultec81)
+ - [@ethdev279](https://github.com/ethdev279)
