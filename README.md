@@ -182,6 +182,8 @@ const runExample = async () => {
 runExample();
 ```
 
+See [FAQs](#how-can-i-use-aviondb-in-my-application) Section for more examples on how to use AvionDB in your project.
+
 
 ## API
 See [API.md](https://github.com/dappkit/aviondb/blob/master/API.md) for the full documentation.
@@ -219,7 +221,7 @@ We are working on the initial Specs. See [AvionDB Specs doc](https://github.com/
 
 ## Community Repos
 
-[Movie-Reviews-CRUD-Application](https://github.com/BCDevs/movies-avionDB) -A Kickstarter Application to understand how AvionDB Works by Implementing one.
+- [Movie-Reviews-CRUD-Application](https://github.com/BCDevs/movies-avionDB): A Kickstarter Application to understand how AvionDB Works by Implementing one.
 
 
 ## Frequently Asked Questions
