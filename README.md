@@ -50,7 +50,7 @@ This is the Javascript implementation and it works both in **Browsers** and **No
   * [Run Tests](#run-tests)
   * [Benchmarks](#benchmarks)
 - [Specs](#specs)
-- [Community Repos](#comunity-repos)
+- [Community Repos](#community-repos)
 - [Frequently Asked Questions](#frequently-asked-questions)
   * [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
   * [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
