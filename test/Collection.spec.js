@@ -1,4 +1,4 @@
-const Store = require('../src/Collection')
+const Store = require('../src/core/Collection')
 const Cache = require('orbit-db-cache')
 const Keystore = require('orbit-db-keystore')
 const IdentityProvider = require('orbit-db-identity-provider')
