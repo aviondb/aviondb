@@ -50,6 +50,7 @@ This is the Javascript implementation and it works both in **Browsers** and **No
   * [Run Tests](#run-tests)
   * [Benchmarks](#benchmarks)
 - [Specs](#specs)
+- [Community Repos](#comunity-repos)
 - [Frequently Asked Questions](#frequently-asked-questions)
   * [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
   * [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
@@ -215,6 +216,10 @@ See [benchmarks/](https://github.com/dappkit/aviondb/tree/master/test/benchmarks
 ## Specs
 
 We are working on the initial Specs. See [AvionDB Specs doc](https://github.com/dappkit/aviondb-specs/blob/master/README.md)
+
+## Community Repos
+
+[Movie-Reviews-CRUD-Application](https://github.com/BCDevs/movies-avionDB) -A Kickstarter Application to understand how AvionDB Works by Implementing one.
 
 
 ## Frequently Asked Questions
