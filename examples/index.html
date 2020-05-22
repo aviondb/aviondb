@@ -10,17 +10,16 @@
   <script type="text/javascript">
   const runExample = async () => {
     const ipfs = await window.Ipfs.create();
-    await ipfs.ready;
-      
+
     // Creates a db named "DatabaseName"
-    const aviondb = await AvionDB.init("DatabaseName", ipfs);
-    
+    const aviondb = await AvionDB.init("DatabaseName1", ipfs);
+
     // Returns the List of database names
     await AvionDB.listDatabases()
     // prints ['DatabaseName'] 
 
     // Creates a Collection named "employees"
-    const collection = await aviondb.initCollection("employees");
+    const collection = await aviondb.initCollection("employees1");
   
     // Returns the List of collection names
     await aviondb.listCollections() 

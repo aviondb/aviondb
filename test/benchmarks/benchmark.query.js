@@ -1,11 +1,10 @@
 'use strict'
 
 const IPFS = require('ipfs')
-const IPFSRepo = require('ipfs-repo')
-const DatastoreLevel = require('datastore-level')
 const OrbitDB = require('orbit-db')
 const Crypto = require('crypto')
 const rimraf = require('rimraf')
+const { config } = require('orbit-db-test-utils');
 
 //Remove the orbitdb folder, if present
 rimraf.sync("./orbitdb");
@@ -18,8 +17,8 @@ let lastTenSeconds = 0
 let numberOfEntries = 5000;
 
 // Main loop
-const queryLoop = async (db) => {  
-  await db.findById("5e8cf7e1b9b93a4c7dc2d69e")
+const queryLoop = async (db) => {
+  await db.find({ _id: "5e8cf7e1b9b93a4c7dc2d69e" })
   totalQueries++
   lastTenSeconds ++
   queriesPerSecond ++
@@ -29,24 +28,11 @@ const queryLoop = async (db) => {
 // Start
 console.log("Starting IPFS daemon...")
 
-const repoConf = {
-  storageBackends: {
-    blocks: DatastoreLevel,
-  },
-}
-
-const ipfs = new IPFS({
-  repo: new IPFSRepo('./orbitdb/benchmarks/ipfs', repoConf),
-  start: false,
-  EXPERIMENTAL: {
-    sharding: false,
-    dht: false,
-  },
+const ipfsConfig = Object.assign({}, config.defaultIpfsConfig, {
+    repo: config.defaultIpfsConfig.repo + '-entry' + new Date().getTime()
 })
 
-ipfs.on('error', (err) => console.error(err))
-
-ipfs.on('ready', async () => {
+IPFS.create(ipfsConfig).then(async ipfs => { 
   const run = async () => {
     try {
       OrbitDB.addDatabaseType("aviondb.collection", require('../../src/core/Collection'))
@@ -101,4 +87,6 @@ ipfs.on('ready', async () => {
   }
 
   run()
+}).catch(error => { 
+  console.error(error)
 })

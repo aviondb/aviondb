@@ -18,6 +18,7 @@ assets/
 .aviondb
 .prettierignore
 .travis.yml
+.npmrc
 benchmarks
 test
 ipfs
