@@ -1,11 +1,10 @@
 'use strict'
 
 const IPFS = require('ipfs')
-const IPFSRepo = require('ipfs-repo')
-const DatastoreLevel = require('datastore-level')
 const OrbitDB = require('orbit-db')
 const Crypto = require('crypto')
 const rimraf = require('rimraf')
+const { config } = require('orbit-db-test-utils');
 
 //Remove the orbitdb folder, if present
 rimraf.sync("./orbitdb");
@@ -30,20 +29,11 @@ const queryLoop = async (db) => {
 // Start
 console.log("Starting IPFS daemon...")
 
-const repoConf = {
-    storageBackends: {
-        blocks: DatastoreLevel,
-    },
-}
+const ipfsConfig = Object.assign({}, config.defaultIpfsConfig, {
+    repo: config.defaultIpfsConfig.repo + '-entry' + new Date().getTime()
+})
 
-IPFS.create({
-    repo: new IPFSRepo('./orbitdb/benchmarks/ipfs', repoConf),
-    start: false,
-    EXPERIMENTAL: {
-        sharding: false,
-        dht: false,
-    },
-}).then(async ipfs => { 
+IPFS.create(ipfsConfig).then(async ipfs => { 
     const run = async () => {
         try {
             OrbitDB.addDatabaseType("aviondb.collection", require('../../src/core/Collection'))
