@@ -115,10 +115,9 @@ const aviondb = await AvionDB.create("DatabaseName", ipfs)
 // Import modules
 const AvionDB = require("aviondb");
 const IPFS = require("ipfs");
-const ipfs = new IPFS();
  
 const runExample = async () => {
-  await ipfs.ready;
+  const ipfs = await IPFS.create();
     
   // Creates a db named "DatabaseName"
   const aviondb = await AvionDB.init("DatabaseName", ipfs); 
