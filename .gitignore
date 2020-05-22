@@ -6,6 +6,7 @@ ipfs
 cache
 coverage
 .aviondb
+.npmrc
 
 # Don't track builds in git
 # Distribution builds are available via npm
