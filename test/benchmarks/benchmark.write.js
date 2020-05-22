@@ -37,18 +37,7 @@ const repoConf = {
     },
 }
 
-const ipfs = new IPFS({
-    repo: new IPFSRepo('./orbitdb/benchmarks/ipfs', repoConf),
-    start: false,
-    EXPERIMENTAL: {
-        sharding: false,
-        dht: false,
-    },
-})
-
-ipfs.on('error', (err) => console.error(err))
-
-ipfs.on('ready', async () => {
+IPFS.create().then(async ipfs => { 
     const run = async () => {
         try {
             OrbitDB.addDatabaseType("aviondb.collection", require('../../src/core/Collection'))
@@ -80,4 +69,6 @@ ipfs.on('ready', async () => {
     }
 
     run()
+}).catch(error => { 
+    console.log(error)
 })

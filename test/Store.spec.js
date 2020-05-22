@@ -50,8 +50,7 @@ describe("DB", function () {
 
         testIdentity = await IdentityProvider.createIdentity({ id: 'userA', keystore })
         //ipfs = await startIpfs("js-ipfs", ipfsConfig)
-        ipfs = new IPFS(ipfsConfig)
-        await ipfs.ready
+        ipfs = await IPFS.create(ipfsConfig)
         const name = 'test-address'
         const options = Object.assign({}, DefaultOptions, { cache })
         Store.setDatabaseConfig({ path: "./.aviondb" })

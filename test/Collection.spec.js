@@ -4,6 +4,7 @@ const Keystore = require('orbit-db-keystore')
 const IdentityProvider = require('orbit-db-identity-provider')
 const assert = require('assert')
 const ObjectId = require("bson-objectid")
+const IPFS = require('ipfs')
 
 var DefaultOptions = {};
 // Test utils
@@ -36,8 +37,8 @@ describe("Collection", function () {
         const cache = new Cache(cacheStore)
 
         testIdentity = await IdentityProvider.createIdentity({ id: 'userA', keystore })
-        ipfs = await startIpfs("js-ipfs", ipfsConfig)
-
+        //ipfs = await startIpfs("js-ipfs", ipfsConfig)
+        ipfs = await IPFS.create(ipfsConfig)
         const address = 'test-address'
         const options = Object.assign({}, DefaultOptions, { cache })
         store = new Store(ipfs, testIdentity, address, options)
