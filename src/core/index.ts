@@ -1,6 +1,6 @@
-import { Store } from "./Store";
+import Store from "./Store";
 import EnvironmentAdapter from "./EnvironmentAdapter";
-import { Collection } from "./Collection";
+import Collection from "./Collection";
 const { Key } = require("interface-datastore");
 let datastore = EnvironmentAdapter.datastore(EnvironmentAdapter.repoPath());
 
@@ -40,4 +40,4 @@ class AvionDB extends Store {
 
 AvionDB.Collection = Collection;
 
-export { AvionDB };
+export default AvionDB;
