@@ -38,25 +38,27 @@ This is the Javascript implementation and it works both in **Browsers** and **No
 ## Table of Contents
 
 <!-- toc -->
+- [Table of Contents](#table-of-contents)
 - [Install](#install)
   - [Using NodeJS](#using-nodejs)
   - [In a web browser](#in-a-web-browser)
-	- [In a web browser through Browserify](#through-browserify)
-	- [In a web browser through Webpack](#through-webpack)
-	- [In a web browser through CDN](#from-cdn)
+    - [**through Browserify**](#through-browserify)
+    - [**through webpack**](#through-webpack)
+    - [**from CDN**](#from-cdn)
 - [Usage](#usage)
+  - [Example](#example)
 - [API](#api)
 - [Development](#development)
-  * [Run Tests](#run-tests)
-  * [Benchmarks](#benchmarks)
+  - [Run Tests](#run-tests)
+  - [Benchmarks](#benchmarks)
 - [Specs](#specs)
 - [Community Repos](#community-repos)
 - [Frequently Asked Questions](#frequently-asked-questions)
-  * [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
-  * [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
-  * [What mongodb features does aviondb support?](#what-mongodb-features-does-aviondb-support)
-  * [How can I use AvionDB in my Application?](#how-can-i-use-aviondb-in-my-application)
-  * [Other questions?](#other-questions)
+  - [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
+  - [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
+  - [What mongodb features does aviondb support?](#what-mongodb-features-does-aviondb-support)
+  - [How can I use AvionDB in my Application?](#how-can-i-use-aviondb-in-my-application)
+  - [Other Questions?](#other-questions)
 - [Contributing](#contributing)
 - [Sponsors](#sponsors)
 - [License](#license)
@@ -119,8 +121,9 @@ const IPFS = require("ipfs");
 const runExample = async () => {
   const ipfs = await IPFS.create();
     
-  // Creates a db named "DatabaseName"
-  const aviondb = await AvionDB.init("DatabaseName", ipfs); 
+  // Creates a db named "DatabaseName" in the ".aviondb" directory in the project root.
+  // If no path option is defined, $HOME/.aviondb is used for the database directory (e.g. "C:/Users/John/.aviondb" or "~/.aviondb").
+  const aviondb = await AvionDB.init("DatabaseName", ipfs, { path: './.aviondb' }); 
   
   // Returns the List of database names
   await AvionDB.listDatabases()
