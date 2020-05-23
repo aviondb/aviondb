@@ -11,7 +11,7 @@ class AvionDB extends Store {
         return Promise.resolve(aviondb)
     }
     static async listDatabases() {
-        var dbs = datastore.query({ prefix: "/db" });
+        var dbs = datastore.query({});
         var list = []
         for await (var db of dbs) {
             let arr = JSON.parse(db.value.toString()).address.split('/')
