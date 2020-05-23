@@ -6,6 +6,7 @@ ipfs
 cache
 coverage
 .aviondb
+.testdb
 .npmrc
 
 # Don't track builds in git

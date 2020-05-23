@@ -4,9 +4,10 @@ const Keystore = require('orbit-db-keystore')
 const IdentityProvider = require('orbit-db-identity-provider')
 const assert = require('assert')
 const IPFS = require('ipfs')
+const Path = require('path');
 //TODO: proper fix for using ipfs in tests requiring node to be online
 
-var DefaultOptions = {};
+var DefaultOptions = { path: './.testdb' };
 // Test utils
 const {
     config,
@@ -29,11 +30,11 @@ describe("DB", function () {
         config: {
             Addresses: {
                 API: '/ip4/127.0.0.1/tcp/0',
-                "Swarm":["/ip4/0.0.0.0/tcp/0"],
+                "Swarm": ["/ip4/0.0.0.0/tcp/0"],
                 Gateway: '/ip4/0.0.0.0/tcp/0'
             },
             Bootstrap: [],
-            Discovery: { "MDNS":{"Enabled":true,"Interval":0},"webRTCStar":{"Enabled":false}} 
+            Discovery: { "MDNS": { "Enabled": true, "Interval": 0 }, "webRTCStar": { "Enabled": false } }
         },
         EXPERIMENTAL: {
             pubsub: true
@@ -53,7 +54,6 @@ describe("DB", function () {
         ipfs = await IPFS.create(ipfsConfig)
         const name = 'test-address'
         const options = Object.assign({}, DefaultOptions, { cache })
-        Store.setDatabaseConfig({ path: "./.aviondb" })
         store = await Store.init(name, ipfs, options, {
             identity: testIdentity
         })
@@ -71,11 +71,17 @@ describe("DB", function () {
         await cacheStore.open()
         await identityStore.open()
     })
-    it("List Databases", async () => { 
-        await ipfs.ready       
+    it("Get Config Path", async () => {
+        await ipfs.ready
+        assert.strictEqual(Store.getDatabaseConfig().path, Path.join(__dirname, '../.testdb', 'db'));
+    })
+
+    it("List Databases", async () => {
+        await ipfs.ready
         const databases = await Store.listDatabases()
         assert.strictEqual(arraysEqual(databases, ['test-address']), true)
     })
+
     it("Init Collection", async () => {
         await ipfs.ready
         var collection = await store.initCollection("Accounts")
@@ -88,7 +94,7 @@ describe("DB", function () {
     it("Drop Collection", async () => {
         //TODO: Create test here
     })
-    it("List Collections", async () => { 
+    it("List Collections", async () => {
         await ipfs.ready
         var collection = await store.initCollection("Users")
         await collection.insertOne({
@@ -100,17 +106,19 @@ describe("DB", function () {
 })
 
 const arraysEqual = (a, b) => {
-  if (a === b) return true;
-  if (a == null || b == null) return false;
-  if (a.length != b.length) return false;
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
 
-  // If you don't care about the order of the elements inside
-  // the array, you should sort both arrays here.
-  // Please note that calling sort on an array will modify that array.
-  // you might want to clone your array first.
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+    // Please note that calling sort on an array will modify that array.
+    // you might want to clone your array first.
 
-  for (var i = 0; i < a.length; ++i) {
-    if (a[i] !== b[i]) return false;
-  }
-  return true;
+    for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
 }
+
+
