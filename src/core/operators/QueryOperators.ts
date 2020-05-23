@@ -1,44 +1,41 @@
-module.exports = {
-  parseAndFind: (
-    query: Object = {},
-    options: any,
-    documents: any,
-    findOne: boolean = false
-  ) => {
-    const docs = Object.values(documents);
-    if (!findOne) {
-      if (Object.keys(query).length === 0) {
-        return docs;
-      }
-      const filteredDocs = [];
-      let skipped = 0;
-      options.skip = options.skip || 0;
-      const condition = (len) =>
-        options.limit ? options.limit === len : false;
-      for (let i = 0; i < docs.length; i++) {
-        if (evaluateQuery(docs[i], query)) {
-          if (skipped >= options.skip) {
-            filteredDocs.push(docs[i]);
-          }
-          if (condition(filteredDocs.length)) {
-            return filteredDocs;
-          }
-          ++skipped;
-        }
-      }
-      return filteredDocs;
-    } else {
-      if (Object.keys(query).length === 0) {
-        return docs[0];
-      }
-      for (let i = 0; i < docs.length; i++) {
-        if (evaluateQuery(docs[i], query)) {
-          return docs[i];
-        }
-      }
-      return null;
+const parseAndFind = (
+  query: Object = {},
+  options: any,
+  documents: any,
+  findOne: boolean = false
+) => {
+  const docs = Object.values(documents);
+  if (!findOne) {
+    if (Object.keys(query).length === 0) {
+      return docs;
     }
-  },
+    const filteredDocs = [];
+    let skipped = 0;
+    options.skip = options.skip || 0;
+    const condition = (len) => (options.limit ? options.limit === len : false);
+    for (let i = 0; i < docs.length; i++) {
+      if (evaluateQuery(docs[i], query)) {
+        if (skipped >= options.skip) {
+          filteredDocs.push(docs[i]);
+        }
+        if (condition(filteredDocs.length)) {
+          return filteredDocs;
+        }
+        ++skipped;
+      }
+    }
+    return filteredDocs;
+  } else {
+    if (Object.keys(query).length === 0) {
+      return docs[0];
+    }
+    for (let i = 0; i < docs.length; i++) {
+      if (evaluateQuery(docs[i], query)) {
+        return docs[i];
+      }
+    }
+    return null;
+  }
 };
 
 // Possible optimization
@@ -405,4 +402,4 @@ function jsonEqual(a, b) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
-export {};
+export { parseAndFind };

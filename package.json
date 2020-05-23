@@ -5,7 +5,7 @@
   "main": "src/core/index.ts",
   "scripts": {
     "build": "node ./node_modules/eslint/bin/eslint ./src/**/*.ts --fix && webpack --mode production",
-    "test": "mocha",
+    "test": "ts-mocha -p ./tsconfig.json ./test/**/*.spec.ts",
     "test:coverage": "codecov",
     "benchmark:write": "node ./test/benchmarks/benchmark.write.js",
     "benchmark:query": "node ./test/benchmarks/benchmark.query.js",
@@ -32,6 +32,7 @@
   ],
   "devDependencies": {
     "@sindresorhus/tsconfig": "^0.7.0",
+    "@types/mocha": "^7.0.2",
     "@typescript-eslint/eslint-plugin": "^3.0.0",
     "@typescript-eslint/parser": "^3.0.0",
     "datastore-level": "^0.14.1",
@@ -43,7 +44,9 @@
     "orbit-db-test-utils": "^0.9.4",
     "rimraf": "^3.0.2",
     "ts-loader": "^7.0.4",
+    "ts-mocha": "^7.0.0",
     "typescript": "^3.8.0",
+    "typings": "^2.1.1",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },

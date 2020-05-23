@@ -509,4 +509,4 @@ class Collection extends OrbitdbStore {
   }
 }
 
-export default Collection;
+export { Collection };

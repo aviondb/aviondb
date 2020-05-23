@@ -1,43 +1,42 @@
-module.exports = {
-  parseAndUpdate: (doc, modification, options) => {
-    Object.keys(modification).forEach((operator) => {
-      switch (operator) {
-        case "$inc":
-          doc = inc(doc, modification[operator], options);
-          break;
-        case "$min":
-          doc = min(doc, modification[operator], options);
-          break;
-        case "$max":
-          doc = max(doc, modification[operator], options);
-          break;
-        case "$mul":
-          doc = mul(doc, modification[operator], options);
-          break;
-        case "$set":
-          doc = set(doc, modification[operator], options);
-          break;
-        case "$unset":
-          doc = unset(doc, modification[operator], options);
-          break;
-        case "$rename":
-          doc = rename(doc, modification[operator], options);
-          break;
-        case "$addToSet":
-          doc = addToSet(doc, modification[operator], options);
-          break;
-        case "$pop":
-          doc = pop(doc, modification[operator], options);
-          break;
-        case "$pullAll":
-          doc = pullAll(doc, modification[operator], options);
-          break;
-        default:
-          throw new Error(`${operator} update operator is not supported`);
-      }
-    });
-  },
+const parseAndUpdate = (doc, modification, options) => {
+  Object.keys(modification).forEach((operator) => {
+    switch (operator) {
+      case "$inc":
+        doc = inc(doc, modification[operator], options);
+        break;
+      case "$min":
+        doc = min(doc, modification[operator], options);
+        break;
+      case "$max":
+        doc = max(doc, modification[operator], options);
+        break;
+      case "$mul":
+        doc = mul(doc, modification[operator], options);
+        break;
+      case "$set":
+        doc = set(doc, modification[operator], options);
+        break;
+      case "$unset":
+        doc = unset(doc, modification[operator], options);
+        break;
+      case "$rename":
+        doc = rename(doc, modification[operator], options);
+        break;
+      case "$addToSet":
+        doc = addToSet(doc, modification[operator], options);
+        break;
+      case "$pop":
+        doc = pop(doc, modification[operator], options);
+        break;
+      case "$pullAll":
+        doc = pullAll(doc, modification[operator], options);
+        break;
+      default:
+        throw new Error(`${operator} update operator is not supported`);
+    }
+  });
 };
+
 // Fields
 
 /**
@@ -367,4 +366,4 @@ const arraysEqual = (a, b) => {
   return true;
 };
 
-export {};
+export { parseAndUpdate };

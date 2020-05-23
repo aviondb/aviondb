@@ -1,5 +1,5 @@
 'use strict'
 
-const Aviondb = require('./core')
+import { AvionDB } from './core';
 
-module.exports = Aviondb;
+export { AvionDB };

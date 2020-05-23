@@ -1,10 +1,16 @@
-const OrbitdbStore = require("orbit-db-store");
-const OrbitDB = require("orbit-db");
+import * as OrbitdbStore from "orbit-db-store";
+import * as OrbitDB from "orbit-db";
 const Index = require("./StoreIndex");
 const debug = require("debug")("aviondb:store");
 let orbitdb;
 
 class Store extends OrbitdbStore {
+  _type: string;
+  _orbitdb: any;
+  openCollections: {};
+  _index: any;
+  events: any;
+  address: any;
   constructor(ipfs, id, dbname: string, options: any = {}) {
     const opts = { Index };
     Object.assign(opts, options);
@@ -63,6 +69,9 @@ class Store extends OrbitdbStore {
       name,
     });
     return collection;
+  }
+  _addOperation(arg0: { op: string; address: any; name: string }) {
+    throw new Error("Method not implemented.");
   }
   /**
    * Opens a collection
