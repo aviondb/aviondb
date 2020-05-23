@@ -1398,7 +1398,10 @@ Returns a `Promise` that resolves to a database instance.
 
 **NOTE: It is recommended to use `init` instead of `create` & `open` for better developer experience.**
 
-`orbitDbOptions` support the following options
+`options` supports the following parameters:
+- `path`: (string): path to be used to store aviondb files. By default it's `$HOME/.aviondb` for Linux based systems & `C:/Users/Username/.aviondb` for Windows based systems.
+
+`orbitDbOptions` supports the following options
 - `directory` (string): path to be used for the database files. By default it uses `'./orbitdb'`.
 
 - `peerId` (string): By default it uses the base58 string of the ipfs peer id.
@@ -1428,7 +1431,7 @@ Syntax: `AvionDB.create(name, ipfs, options, orbitDbOptions)`
 
 Returns a `Promise` that resolves to a database instance. Throws error if a database with `name` exists already.
 
-`orbitDbOptions` support the following options
+`orbitDbOptions` supports the following options
 - `directory` (string): path to be used for the database files. By default it uses `'./orbitdb'`.
 
 - `peerId` (string): By default it uses the base58 string of the ipfs peer id.
@@ -1458,7 +1461,7 @@ Syntax: `AvionDB.open(address, ipfs, options, orbitDbOptions)`
 
 Returns a `Promise` that resolves to a database instance. Throws error if a database with `address` does not exist already.
 
-`orbitDbOptions` support the following options
+`orbitDbOptions` supports the following options
 - `directory` (string): path to be used for the database files. By default it uses `'./orbitdb'`.
 
 - `peerId` (string): By default it uses the base58 string of the ipfs peer id.
