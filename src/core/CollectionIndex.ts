@@ -56,18 +56,6 @@ class CollectionIndex {
         this.handleDelete(payload);
         break;
       }
-      case "SC_INSERT": {
-        this.handleSchemaInsert(payload);
-        break;
-      }
-      case "SC_UPDATE": {
-        this.handleSchemaUpdate(payload);
-        break;
-      }
-      case "SC_DELETE": {
-        this.handleSchemaDelete(payload);
-        break;
-      }
     }
   }
   async handleInsert(payload) {
@@ -89,9 +77,6 @@ class CollectionIndex {
       delete this._index[_id];
     }
   }
-  async handleSchemaInsert(payload) {}
-  handleSchemaUpdate(payload) {}
-  handleSchemaDelete(payload) {}
   updateIndex(oplog) {
     if (!this.loaded) {
       oplog.values.forEach((item) => {

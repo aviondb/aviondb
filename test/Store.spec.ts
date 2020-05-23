@@ -1,4 +1,5 @@
-import { AvionDB as Store } from "../src/index";
+import AvionDB from "../src/index";
+import Collection from "../src/core/Collection";
 const Cache = require("orbit-db-cache");
 const Keystore = require("orbit-db-keystore");
 const IdentityProvider = require("orbit-db-identity-provider");
@@ -65,7 +66,7 @@ describe("DB", function () {
     ipfs = await IPFS.create(ipfsConfig);
     const name = "test-address";
     const options = Object.assign({}, DefaultOptions, { cache });
-    store = await Store.init(name, ipfs, options, {
+    store = await AvionDB.init(name, ipfs, options, {
       identity: testIdentity,
     });
     await store.load();
@@ -85,42 +86,37 @@ describe("DB", function () {
   it("Get Config Path", async () => {
     await ipfs.ready;
     assert.strictEqual(
-      Store.getDatabaseConfig().path,
+      AvionDB.getDatabaseConfig().path,
       Path.join(__dirname, "../.testdb", "db")
     );
   });
 
   it("List Databases", async () => {
     await ipfs.ready;
-    const databases = await Store.listDatabases();
+    const databases = await AvionDB.listDatabases();
     assert.strictEqual(arraysEqual(databases, ["test-address"]), true);
   });
 
   it("Init Collection", async () => {
     await ipfs.ready;
-    var collection = await store.initCollection("Accounts");
+    const collection = await store.initCollection("Accounts");
     await collection.insertOne({
       name: "vasa",
     });
-    assert.strict(
-      collection.address instanceof require("orbit-db/src/orbit-db-address"),
-      true
-    );
-    assert.strictEqual(
-      collection instanceof require("../src/core/Collection"),
-      true
-    );
+    const addr = require("orbit-db/src/orbit-db-address");
+    assert.strict(collection.address instanceof addr, true);
+    assert.strictEqual(collection instanceof Collection, true);
   });
   it("Drop Collection", async () => {
     //TODO: Create test here
   });
   it("List Collections", async () => {
     await ipfs.ready;
-    var collection = await store.initCollection("Users");
+    const collection = await store.initCollection("Users");
     await collection.insertOne({
       name: "vasa",
     });
-    var collections = store.listCollections();
+    const collections = store.listCollections();
     assert.strictEqual(arraysEqual(collections, ["Users"]), true);
   });
 });
@@ -135,7 +131,7 @@ const arraysEqual = (a, b) => {
   // Please note that calling sort on an array will modify that array.
   // you might want to clone your array first.
 
-  for (var i = 0; i < a.length; ++i) {
+  for (let i = 0; i < a.length; ++i) {
     if (a[i] !== b[i]) return false;
   }
   return true;

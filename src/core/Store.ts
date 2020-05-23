@@ -1,6 +1,6 @@
 import * as OrbitdbStore from "orbit-db-store";
 import * as OrbitDB from "orbit-db";
-import { Collection } from "./Collection";
+import Collection from "./Collection";
 const Index = require("./StoreIndex");
 const debug = require("debug")("aviondb:store");
 let orbitdb;
@@ -64,6 +64,7 @@ class Store extends OrbitdbStore {
       orbitDbOptions
     );
     this.openCollections[name] = collection;
+    //@ts-ignore
     await this._addOperation({
       op: "collection.create",
       address: collection.address.toString(),
@@ -71,9 +72,7 @@ class Store extends OrbitdbStore {
     });
     return collection;
   }
-  _addOperation(arg0: { op: string; address: any; name: string }) {
-    throw new Error("Method not implemented.");
-  }
+
   /**
    * Opens a collection
    * @param {String} name Name of collection
@@ -133,6 +132,7 @@ class Store extends OrbitdbStore {
       throw "Name must be a string";
     }
     const collectionInfo = this._index._index[name];
+    //@ts-ignore
     await this._addOperation({
       op: "collection.drop",
       address: collectionInfo.address,
@@ -253,4 +253,4 @@ class Store extends OrbitdbStore {
 OrbitDB.addDatabaseType("aviondb.collection", Collection);
 OrbitDB.addDatabaseType("aviondb", Store);
 
-export { Store };
+export default Store;
