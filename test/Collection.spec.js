@@ -45,9 +45,9 @@ describe("Collection", function () {
     })
     after(async () => {
         await store.close()
-        await stopIpfs(ipfs)
+        await ipfs.stop()
         await identityStore.close()
-        await cacheStore.close()
+        //await cacheStore.close()
     })
     afterEach(async () => {
         await store.drop()
