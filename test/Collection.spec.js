@@ -6,7 +6,7 @@ const assert = require('assert')
 const ObjectId = require("bson-objectid")
 const IPFS = require('ipfs')
 
-var DefaultOptions = {};
+var DefaultOptions: any = {};
 // Test utils
 const {
     config,
