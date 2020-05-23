@@ -2,14 +2,15 @@
   "name": "aviondb",
   "version": "0.2.2",
   "description": "AvionDB aims to bring MongoDB-like developer interface to Web 3.0.",
-  "main": "src/core/index.js",
+  "main": "src/core/index.ts",
   "scripts": {
-    "build": "webpack --mode production",
-    "test": "mocha",
+    "build": "node ./node_modules/eslint/bin/eslint ./src/**/*.ts --fix && webpack --mode production",
+    "test": "ts-mocha -p ./tsconfig.json ./test/**/*.spec.ts",
     "test:coverage": "codecov",
     "benchmark:write": "node ./test/benchmarks/benchmark.write.js",
     "benchmark:query": "node ./test/benchmarks/benchmark.query.js",
-    "benchmark:update": "node ./test/benchmarks/benchmark.update.js"
+    "benchmark:update": "node ./test/benchmarks/benchmark.update.js",
+    "lint": "node ./node_modules/eslint/bin/eslint ./src/**/*.ts --fix"
   },
   "repository": {
     "type": "git",
@@ -31,11 +32,22 @@
     "ethdev279"
   ],
   "devDependencies": {
+    "@sindresorhus/tsconfig": "^0.7.0",
+    "@types/mocha": "^7.0.2",
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
     "datastore-level": "^0.14.1",
+    "eslint": "^7.1.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
     "ipfs": "^0.44.0",
-    "mocha": "^7.1.1",
+    "mocha": "^7.2.0",
     "orbit-db-test-utils": "^0.9.4",
     "rimraf": "^3.0.2",
+    "ts-loader": "^7.0.4",
+    "ts-mocha": "^7.0.0",
+    "typescript": "^3.8.0",
+    "typings": "^2.1.1",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },

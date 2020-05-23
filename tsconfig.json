@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "lib": ["es2018", "dom", "dom.iterable"],
+    "module": "commonjs",
+    "target": "es6"
+  },
+  "exclude": ["node_modules"]
+}

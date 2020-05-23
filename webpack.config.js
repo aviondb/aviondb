@@ -4,7 +4,16 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-  entry: './src/core/index.js',
+  entry: './src/core/index.ts',
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ]
+  },
   output: {
     libraryTarget: 'var',
     library: 'AvionDB',
@@ -29,6 +38,7 @@ module.exports = {
     })
   ],
   resolve: {
+    extensions: ['.ts', '.js'],
     modules: [
       'node_modules',
       path.resolve(__dirname, './node_modules')
@@ -38,6 +48,7 @@ module.exports = {
     }
   },
   resolveLoader: {
+    extensions: ['.ts', '.js'],
     modules: [
       'node_modules',
       path.resolve(__dirname, './node_modules')
