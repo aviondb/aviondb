@@ -418,10 +418,12 @@ class Collection extends OrbitdbStore {
         yield entry;
       }
     }
-    streamGenerator.totalLength = deserialized_object.length;
+
+    const objTotalLength: number = deserialized_object.length;
 
     await this.importStream(
       streamGenerator(),
+      objTotalLength,
       { batchSize: options.batchSize },
       progressCallback
     );
@@ -432,8 +434,8 @@ class Collection extends OrbitdbStore {
    * @param {{type: String, batchSize: Number}} options
    * @param {Function} progressCallback
    */
-  async importStream(stream, options, progressCallback) {
-    const totalLength = stream.totalLength; //Assumes array at the moment.
+  async importStream(stream, length: number, options, progressCallback) {
+    const totalLength = length; //Assumes array at the moment.
     let currentLength = 0;
     let queue = [];
     for await (const entry of stream) {

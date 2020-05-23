@@ -4,13 +4,13 @@
   "description": "AvionDB aims to bring MongoDB-like developer interface to Web 3.0.",
   "main": "src/core/index.ts",
   "scripts": {
-    "build": "node ./node_modules/eslint/bin/eslint ./src/**/*.ts --fix && webpack --mode production",
+    "build": "node ./node_modules/eslint/bin/eslint -c ./.eslintrc.json ./src/**/*.ts --fix && webpack --mode production",
     "test": "ts-mocha -p ./tsconfig.json ./test/**/*.spec.ts",
     "test:coverage": "codecov",
-    "benchmark:write": "node ./test/benchmarks/benchmark.write.js",
-    "benchmark:query": "node ./test/benchmarks/benchmark.query.js",
-    "benchmark:update": "node ./test/benchmarks/benchmark.update.js",
-    "lint": "node ./node_modules/eslint/bin/eslint ./src/**/*.ts --fix"
+    "benchmark:write": "ts-node ./test/benchmarks/benchmark.write.ts",
+    "benchmark:query": "ts-node ./test/benchmarks/benchmark.query.ts",
+    "benchmark:update": "ts-node ./test/benchmarks/benchmark.update.ts",
+    "lint": "node ./node_modules/eslint/bin/eslint -c ./.eslintrc.json ./src/**/*.ts --fix"
   },
   "repository": {
     "type": "git",
@@ -46,7 +46,8 @@
     "rimraf": "^3.0.2",
     "ts-loader": "^7.0.4",
     "ts-mocha": "^7.0.0",
-    "typescript": "^3.8.0",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3",
     "typings": "^2.1.1",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"

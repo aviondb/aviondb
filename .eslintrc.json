@@ -16,10 +16,11 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
     "no-unused-vars": 0,
     "prefer-const": "warn",
     "no-var": "error",
-    "block-scoped-var": "off",
-    "no-undef":"off"
+    "no-undef": "off"
   }
 }

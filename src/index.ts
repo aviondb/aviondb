@@ -1,5 +1,5 @@
-'use strict'
+"use strict";
 
-import AvionDB from './core';
+import AvionDB from "./core";
 
 export default AvionDB;
