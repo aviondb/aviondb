@@ -7,7 +7,7 @@ class AvionDB extends Store {
     static async init(name, ipfs, options, orbitDbOptions) {
         let aviondb = await super.init(name, ipfs, options, orbitDbOptions);
         var buf = Buffer.from(JSON.stringify({ address: aviondb.id }));
-        await datastore.put(new Key(`/db/${name}`), buf)
+        await datastore.put(new Key(`${name}`), buf)
         return Promise.resolve(aviondb)
     }
     static async listDatabases() {
