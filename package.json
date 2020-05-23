@@ -44,7 +44,7 @@
     "cids": "^0.8.1",
     "datastore-fs": "^1.0.0",
     "debug": "^4.1.1",
-    "interface-datastore": "^0.8.3",
+    "interface-datastore": "^1.0.2",
     "ipld-dag-cbor": "^0.15.2",
     "orbit-db": "^0.24.1",
     "orbit-db-store": "^3.3.0"
