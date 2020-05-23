@@ -6,7 +6,7 @@ class CollectionIndex {
         this._index = {}
         this.loaded = false;
     }
-    async find(query, projection, options = {}, callback) {
+    async find(query = {}, projection, options = {}, callback) {
         let res = parseAndFind(query, options, this._index, false)
         return res
     }
