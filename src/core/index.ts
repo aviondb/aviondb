@@ -5,7 +5,7 @@ const { Key } = require("interface-datastore");
 let datastore = EnvironmentAdapter.datastore(EnvironmentAdapter.repoPath());
 
 class AvionDB extends Store {
-  static Collection: typeof Collection;
+  static Collection = Collection;
 
   static async init(name, ipfs, options: any = {}, orbitDbOptions) {
     if (options.path) {
@@ -37,7 +37,5 @@ class AvionDB extends Store {
     return datastore;
   }
 }
-
-AvionDB.Collection = Collection;
 
 export default AvionDB;
