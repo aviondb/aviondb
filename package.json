@@ -61,5 +61,6 @@
     "ipld-dag-cbor": "^0.15.2",
     "orbit-db": "^0.24.1",
     "orbit-db-store": "^3.3.0"
-  }
+  },
+  "type": "module"
 }
