@@ -2,9 +2,10 @@
   "name": "aviondb",
   "version": "0.2.2",
   "description": "AvionDB aims to bring MongoDB-like developer interface to Web 3.0.",
-  "main": "src/core/index.ts",
+  "main": "dist/aviondb.min.js",
   "scripts": {
-    "build": "node ./node_modules/eslint/bin/eslint -c ./.eslintrc.json ./src/**/*.ts --fix && webpack --mode production",
+    "build": "npm run lint && webpack --mode production",
+    "prepublishOnly": "npm run build",
     "test": "ts-mocha -p ./tsconfig.json ./test/**/*.spec.ts",
     "test:coverage": "codecov",
     "benchmark:write": "ts-node ./test/benchmarks/benchmark.write.ts",
