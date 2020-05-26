@@ -2,7 +2,8 @@
   "name": "aviondb",
   "version": "0.2.2",
   "description": "AvionDB aims to bring MongoDB-like developer interface to Web 3.0.",
-  "main": "dist/aviondb.min.js",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "build": "npm run lint && webpack --mode production",
     "prepublishOnly": "npm run build",
