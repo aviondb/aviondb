@@ -11,7 +11,7 @@ const parseAndFind = (
     if (Object.keys(query).length === 0) {
       return docs;
     }
-    var filteredDocs = [];
+    let filteredDocs = [];
     let skipped = 0;
     options.skip = options.skip || 0;
     const condition = (len) => (options.limit ? options.limit === len : false);
