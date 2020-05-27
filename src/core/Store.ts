@@ -55,7 +55,7 @@ class Store extends OrbitdbStore {
     name: string,
     options: CollectionOptions = { overwrite: false },
     orbitDbOptions: OrbitDBOptions = {}
-  ) {
+  ): Promise<Collection> {
     orbitDbOptions.meta = {
       parent: this.address.root,
     };
@@ -94,7 +94,7 @@ class Store extends OrbitdbStore {
     name: string,
     options: CollectionOptions = { create: false },
     orbitDbOptions?: OrbitDBOptions
-  ) {
+  ): Promise<Collection> {
     const { create } = options;
     if (!name || typeof name !== "string") {
       throw "name must be a string";
@@ -128,7 +128,7 @@ class Store extends OrbitdbStore {
     name: string,
     options?: CollectionOptions,
     orbitDbOptions?: OrbitDBOptions
-  ) {
+  ): Promise<Collection | undefined> {
     if (!name || typeof name !== "string") {
       throw "name must be a string";
     }
@@ -163,14 +163,14 @@ class Store extends OrbitdbStore {
    * @param {JSON Object} filter
    * @param {JSON Object} options
    */
-  listCollections(filter: any = {}, options: any = {}) {
+  listCollections(filter: any = {}, options: any = {}): Array<string> {
     return Object.keys(this._index._index);
   }
   /**
    *
    * @param {string} name
    */
-  collection(name: string) {
+  collection(name: string): Promise<Collection> {
     if (!name || typeof name !== "string") {
       throw "Name must be a string";
     }
@@ -215,7 +215,7 @@ class Store extends OrbitdbStore {
     ipfs: any,
     options?: StoreOptions,
     orbitDbOptions?: OrbitDBOptions
-  ) {
+  ): Promise<Store> {
     if (!orbitdb) {
       orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
     }
@@ -236,7 +236,7 @@ class Store extends OrbitdbStore {
     ipfs: any,
     options?: StoreOptions,
     orbitDbOptions?: OrbitDBOptions
-  ) {
+  ): Promise<Store> {
     if (!orbitdb) {
       orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
     }
@@ -257,7 +257,7 @@ class Store extends OrbitdbStore {
     ipfs: any,
     options?: StoreOptions,
     orbitDbOptions?: OrbitDBOptions
-  ) {
+  ): Promise<Store> {
     if (!name || typeof name !== "string") {
       throw "name must be a string";
     }

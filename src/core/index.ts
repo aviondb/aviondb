@@ -17,7 +17,7 @@ class AvionDB extends Store {
     ipfs: any,
     options: StoreOptions,
     orbitDbOptions: OrbitDBOptions
-  ) {
+  ): Promise<AvionDB> {
     if (options.path) {
       this.setDatabaseConfig({ path: options.path });
     }
@@ -27,7 +27,7 @@ class AvionDB extends Store {
     return Promise.resolve(aviondb);
   }
 
-  static async listDatabases() {
+  static async listDatabases(): Promise<Array<string>> {
     const dbs = datastore.query({});
     const list = [];
     for await (const db of dbs) {

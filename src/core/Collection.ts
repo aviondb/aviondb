@@ -46,7 +46,7 @@ class Collection extends OrbitdbStore {
     docs: Array<DocumentInterface>,
     options?: InsertOptions,
     callback?: Function
-  ) {
+  ): Promise<string> {
     for (const doc of docs) {
       if (!doc._id) {
         doc._id = ObjectId.generate();
@@ -69,7 +69,7 @@ class Collection extends OrbitdbStore {
     doc: DocumentInterface,
     options?: InsertOneOptions,
     callback?: Function
-  ) {
+  ): Promise<string> {
     if (typeof doc !== "object")
       throw new Error("Object documents are only supported");
 
@@ -90,7 +90,7 @@ class Collection extends OrbitdbStore {
     projection?: object | string,
     options?: FindOptionsInterface,
     callback?: Function
-  ) {
+  ): Promise<Array<DocumentInterface>> {
     return this._index.find(query, projection, options, callback);
   }
 
@@ -108,7 +108,7 @@ class Collection extends OrbitdbStore {
     projection?: object | string,
     options?: object,
     callback?: Function
-  ) {
+  ): Promise<DocumentInterface> {
     return this._index.findOne(query);
   }
 
@@ -126,7 +126,7 @@ class Collection extends OrbitdbStore {
     modification: object,
     options?: FindOneAndUpdateOptionsInterface,
     callback?: Function
-  ) {
+  ): Promise<DocumentInterface> {
     const doc = await this.findOne(filter);
     if (doc) {
       await this._addOperation({
@@ -148,7 +148,7 @@ class Collection extends OrbitdbStore {
     filter: object = {},
     options?: FindOneAndDeleteOptionsInterface,
     callback?: Function
-  ) {
+  ): Promise<DocumentInterface> {
     const doc = await this.findOne(filter);
     if (doc) {
       await this._addOperation({
@@ -173,7 +173,7 @@ class Collection extends OrbitdbStore {
     projection?: object | string,
     options?: object,
     callback?: Function
-  ) {
+  ): Promise<DocumentInterface> {
     return this._index.findById(_id, projection, options, callback);
   }
 
@@ -190,7 +190,7 @@ class Collection extends OrbitdbStore {
     _id: object | string | number,
     options?: object,
     callback?: Function
-  ) {
+  ): Promise<DocumentInterface> {
     const doc = this._index.findById(_id);
     if (doc) {
       await this._addOperation({
@@ -217,7 +217,7 @@ class Collection extends OrbitdbStore {
     modification: object,
     options: object = {},
     callback?: Function
-  ) {
+  ): Promise<DocumentInterface> {
     const doc = await this._index.findById(_id);
     if (doc) {
       await this._addOperation({
@@ -264,7 +264,7 @@ class Collection extends OrbitdbStore {
     modification: object,
     options: UpdateOptionsInterface = {},
     callback?: Function
-  ) {
+  ): Promise<Array<DocumentInterface>> {
     const ids = [];
     const docs = [];
     if (options.multi) {
@@ -318,7 +318,7 @@ class Collection extends OrbitdbStore {
     modification: object,
     options: UpdateOneOptionsInterface = {},
     callback?: Function
-  ) {
+  ): Promise<DocumentInterface> {
     const doc = await this.findOne(filter);
     if (doc) {
       await this._addOperation({
@@ -358,7 +358,7 @@ class Collection extends OrbitdbStore {
     modification: object,
     options: UpdateManyOptionsInterface = {},
     callback?: Function
-  ) {
+  ): Promise<Array<DocumentInterface>> {
     const docs = await this.find(filter);
     const ids = docs.map((item: DocumentInterface) => item._id);
     await this._addOperation({
@@ -382,7 +382,7 @@ class Collection extends OrbitdbStore {
     filter: object = {},
     options?: DeleteOneOptionsInterface,
     callback?: Function
-  ) {
+  ): Promise<DocumentInterface> {
     const doc = await this.findOne(filter);
     if (doc) {
       await this._addOperation({
@@ -405,7 +405,7 @@ class Collection extends OrbitdbStore {
     filter: object = {},
     options?: DeleteManyOptionsInterface,
     callback?: Function
-  ) {
+  ): Promise<Array<DocumentInterface>> {
     const docs = await this.find(filter);
     const ids = docs.map((item: DocumentInterface) => item._id);
     if (ids.length > 0) {
@@ -417,7 +417,10 @@ class Collection extends OrbitdbStore {
     return docs;
   }
 
-  distinct(key: object | string | number, query: object) {
+  distinct(
+    key: object | string | number,
+    query: object
+  ): Promise<Array<DocumentInterface>> {
     return this._index.distinct(key, query);
   }
   /**
@@ -425,7 +428,7 @@ class Collection extends OrbitdbStore {
    * returns null if oplog is empty
    * @returns {string}
    */
-  async getHeadHash() {
+  async getHeadHash(): Promise<string | null> {
     try {
       return await this._oplog.toMultihash();
     } catch {
@@ -439,7 +442,10 @@ class Collection extends OrbitdbStore {
    * @param {boolean} stopWrites
    * @returns {Promise<null>}
    */
-  async syncFromHeadHash(hash: string, stopWrites?: boolean) {
+  async syncFromHeadHash(
+    hash: string,
+    stopWrites?: boolean
+  ): Promise<undefined> {
     if (new CID(hash).equals(new CID(await this.getHeadHash()))) {
       //Nothing to do
       return;
@@ -561,7 +567,9 @@ class Collection extends OrbitdbStore {
    * Exports records in collection
    * @param {ExportOptionsInterface} options
    */
-  async export(options: ExportOptionsInterface = {}) {
+  async export(
+    options: ExportOptionsInterface = {}
+  ): Promise<string | DocumentInterface[]> {
     if (!options.limit) {
       options.limit = 0; // No limit.
     }

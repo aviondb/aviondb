@@ -1,5 +1,6 @@
 import { parseAndUpdate } from "./operators/UpdateOperators";
 import { parseAndFind } from "./operators/QueryOperators";
+import {} from "./interfaces";
 
 class CollectionIndex {
   _index: {};
@@ -8,7 +9,7 @@ class CollectionIndex {
     this._index = {};
     this.loaded = false;
   }
-  async find(query?, projection?, options: any = {}, callback?) {
+  async find(query: object, projection?: object, options: any = {}, callback?) {
     const res = parseAndFind(query, options, this._index, false);
     return res;
   }
