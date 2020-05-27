@@ -1,13 +1,23 @@
 import Store from "./Store";
 import EnvironmentAdapter from "./EnvironmentAdapter";
 import Collection from "./Collection";
+import {
+  OrbitDBOptions,
+  StoreOptions,
+  DatabaseConfigOptions,
+} from "./interfaces";
 const { Key } = require("interface-datastore");
 let datastore = EnvironmentAdapter.datastore(EnvironmentAdapter.repoPath());
 
 class AvionDB extends Store {
   static Collection = Collection;
 
-  static async init(name, ipfs, options: any = {}, orbitDbOptions) {
+  static async init(
+    name: string,
+    ipfs: any,
+    options: StoreOptions,
+    orbitDbOptions: OrbitDBOptions
+  ) {
     if (options.path) {
       this.setDatabaseConfig({ path: options.path });
     }
@@ -27,13 +37,13 @@ class AvionDB extends Store {
     return list;
   }
 
-  static setDatabaseConfig(options: any = {}) {
+  static setDatabaseConfig(options: DatabaseConfigOptions) {
     datastore = EnvironmentAdapter.datastore(
       EnvironmentAdapter.repoPath(options.path)
     );
   }
 
-  static getDatabaseConfig(options: any = {}) {
+  static getDatabaseConfig() {
     return datastore;
   }
 }
