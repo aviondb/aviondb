@@ -1,6 +1,6 @@
 {
   "name": "aviondb",
-  "version": "0.2.2",
+  "version": "0.2.3-rc.0",
   "description": "AvionDB aims to bring MongoDB-like developer interface to Web 3.0.",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -17,9 +17,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dappkit/aviondb.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "author": "Dappkit",
   "license": "MIT",
