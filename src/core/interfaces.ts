@@ -35,13 +35,13 @@ export interface DocumentInterface {
   _id: object | string | number;
 }
 
-export interface QueryOptionsInterface {
+export interface FindOptionsInterface {
   limit?: number;
   skip?: number;
   sort?: object;
 }
 
-export interface FindOneAndUpdateInterface {
+export interface FindOneAndUpdateOptionsInterface {
   projection?: object;
   sort?: object;
   maxTimeMS?: number;
@@ -51,14 +51,14 @@ export interface FindOneAndUpdateInterface {
   arrayFilters?: Array<object>;
 }
 
-export interface FindOneAndDeleteInterface {
+export interface FindOneAndDeleteOptionsInterface {
   projection?: object;
   sort?: object;
   maxTimeMS?: number;
   collation?: object;
 }
 
-export interface UpdateInterface {
+export interface UpdateOptionsInterface {
   upsert?: boolean;
   multi?: boolean;
   writeConcern?: object;
@@ -67,7 +67,7 @@ export interface UpdateInterface {
   hint?: object | string;
 }
 
-export interface UpdateOneInterface {
+export interface UpdateOneOptionsInterface {
   upsert?: boolean;
   writeConcern?: object;
   collation?: object;
@@ -75,7 +75,7 @@ export interface UpdateOneInterface {
   hint?: object | string;
 }
 
-export interface UpdateManyInterface {
+export interface UpdateManyOptionsInterface {
   upsert?: boolean;
   writeConcern?: object;
   collation?: object;
@@ -83,12 +83,12 @@ export interface UpdateManyInterface {
   hint?: object | string;
 }
 
-export interface DeleteOneInterface {
+export interface DeleteOneOptionsInterface {
   writeConcern?: object;
   collation?: object;
 }
 
-export interface DeleteManyInterface {
+export interface DeleteManyOptionsInterface {
   writeConcern?: object;
   collation?: object;
 }

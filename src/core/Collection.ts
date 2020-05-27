@@ -2,14 +2,14 @@ import {
   InsertOptions,
   InsertOneOptions,
   DocumentInterface,
-  QueryOptionsInterface,
-  FindOneAndUpdateInterface,
-  FindOneAndDeleteInterface,
-  UpdateInterface,
-  UpdateOneInterface,
-  UpdateManyInterface,
-  DeleteOneInterface,
-  DeleteManyInterface,
+  FindOptionsInterface,
+  FindOneAndUpdateOptionsInterface,
+  FindOneAndDeleteOptionsInterface,
+  UpdateOptionsInterface,
+  UpdateOneOptionsInterface,
+  UpdateManyOptionsInterface,
+  DeleteOneOptionsInterface,
+  DeleteManyOptionsInterface,
   ImportOptionsInterface,
   ImportStreamOptionsInterface,
   ExportOptionsInterface,
@@ -81,14 +81,14 @@ class Collection extends OrbitdbStore {
    *
    * @param {object} query
    * @param {object|string} projection
-   * @param {QueryOptionsInterface} options
+   * @param {FindOptionsInterface} options
    * @param {Function} callback
    */
 
   find(
     query: object,
     projection?: object | string,
-    options?: QueryOptionsInterface,
+    options?: FindOptionsInterface,
     callback?: Function
   ) {
     return this._index.find(query, projection, options, callback);
@@ -117,14 +117,14 @@ class Collection extends OrbitdbStore {
    *
    * @param {object} query
    * @param {object} modification
-   * @param {FindOneAndUpdateInterface} options
+   * @param {FindOneAndUpdateOptionsInterface} options
    * @param {Function} callback
    */
 
   async findOneAndUpdate(
     filter: object = {},
     modification: object,
-    options?: FindOneAndUpdateInterface,
+    options?: FindOneAndUpdateOptionsInterface,
     callback?: Function
   ) {
     const doc = await this.findOne(filter);
@@ -141,12 +141,12 @@ class Collection extends OrbitdbStore {
    * Deletes a single document based on the filter and sort criteria,
    * returning the deleted document.
    * @param {object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
-   * @param {FindOneAndDeleteInterface} options
+   * @param {FindOneAndDeleteOptionsInterface} options
    * @param {Function} callback
    */
   async findOneAndDelete(
     filter: object = {},
-    options?: FindOneAndDeleteInterface,
+    options?: FindOneAndDeleteOptionsInterface,
     callback?: Function
   ) {
     const doc = await this.findOne(filter);
@@ -255,14 +255,14 @@ class Collection extends OrbitdbStore {
         )
      * @param {object} filter 
      * @param {object} modification 
-     * @param {UpdateInterface} options 
+     * @param {UpdateOptionsInterface} options 
      * @param {Function} callback 
      */
 
   async update(
     filter: object = {},
     modification: object,
-    options: UpdateInterface = {},
+    options: UpdateOptionsInterface = {},
     callback?: Function
   ) {
     const ids = [];
@@ -309,14 +309,14 @@ class Collection extends OrbitdbStore {
      * 
      * @param {object} filter 
      * @param {object} modification 
-     * @param {UpdateOneInterface} options 
+     * @param {UpdateOneOptionsInterface} options 
      * @param {Function} callback 
      */
 
   async updateOne(
     filter: object = {},
     modification: object,
-    options: UpdateOneInterface = {},
+    options: UpdateOneOptionsInterface = {},
     callback?: Function
   ) {
     const doc = await this.findOne(filter);
@@ -349,14 +349,14 @@ class Collection extends OrbitdbStore {
      * 
      * @param {object} filter 
      * @param {object} modification 
-     * @param {UpdateManyInterface} options 
+     * @param {UpdateManyOptionsInterface} options 
      * @param {Function} callback 
      */
 
   async updateMany(
     filter: object = {},
     modification: object,
-    options: UpdateManyInterface = {},
+    options: UpdateManyOptionsInterface = {},
     callback?: Function
   ) {
     const docs = await this.find(filter);
@@ -374,13 +374,13 @@ class Collection extends OrbitdbStore {
    * Deletes a single document based on the filter, returning the deleted document.
    *
    * @param {object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
-   * @param {DeleteOneInterface} options
+   * @param {DeleteOneOptionsInterface} options
    * @param {Function} callback
    */
 
   async deleteOne(
     filter: object = {},
-    options?: DeleteOneInterface,
+    options?: DeleteOneOptionsInterface,
     callback?: Function
   ) {
     const doc = await this.findOne(filter);
@@ -397,13 +397,13 @@ class Collection extends OrbitdbStore {
    * Deletes all the documents based on the filter, returning the deleted documents.
    *
    * @param {object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
-   * @param {DeleteManyInterface} options
+   * @param {DeleteManyOptionsInterface} options
    * @param {Function} callback
    */
 
   async deleteMany(
     filter: object = {},
-    options?: DeleteManyInterface,
+    options?: DeleteManyOptionsInterface,
     callback?: Function
   ) {
     const docs = await this.find(filter);
