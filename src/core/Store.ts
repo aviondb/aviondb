@@ -4,11 +4,11 @@ import Collection from "./Collection";
 import { StoreOptions, CollectionOptions, OrbitDBOptions } from "./interfaces";
 const Index = require("./StoreIndex");
 const debug = require("debug")("aviondb:store");
-let orbitdb: any;
+let orbitdb: OrbitDB;
 
 class Store extends OrbitdbStore {
   _type: string;
-  _orbitdb: any;
+  _orbitdb: OrbitDB;
   openCollections: any;
   _index: any;
   events: any;

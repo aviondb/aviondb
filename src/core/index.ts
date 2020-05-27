@@ -22,7 +22,11 @@ class AvionDB extends Store {
       this.setDatabaseConfig({ path: options.path });
     }
     const aviondb = await super.init(name, ipfs, options, orbitDbOptions);
-    const buf = Buffer.from(JSON.stringify({ address: aviondb.id }));
+    const buf = Buffer.from(
+      JSON.stringify({
+        address: `/orbitdb/${aviondb.address.root}/${aviondb.address.path}`,
+      })
+    );
     await datastore.put(new Key(`${name}`), buf);
     return Promise.resolve(aviondb);
   }

@@ -38,7 +38,7 @@ class CollectionIndex {
     return this._index[_id];
   }
 
-  async distinct(key: object | string | number, query: object) {
+  async distinct(key: string | number, query: object) {
     if (!key) {
       throw "Key must not be undefined";
     }
@@ -74,20 +74,20 @@ class CollectionIndex {
       }
     }
   }
-  async handleInsert(payload: Payload) {
+  async handleInsert(payload: any) {
     const { value } = payload;
     for (const doc of value) {
       const _id = doc._id;
       this._index[_id] = doc;
     }
   }
-  handleUpdate(payload: Payload) {
+  handleUpdate(payload: any) {
     const { value, modification, options } = payload;
     for (const _id of value) {
       parseAndUpdate(this._index[_id], modification, options);
     }
   }
-  handleDelete(payload: Payload) {
+  handleDelete(payload: any) {
     const { value } = payload;
     for (const _id of value) {
       delete this._index[_id];
