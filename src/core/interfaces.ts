@@ -32,7 +32,7 @@ export interface InsertOneOptions {
 }
 
 export interface DocumentInterface {
-  _id: string;
+  _id: object | string | number;
 }
 
 export interface QueryOptionsInterface {
