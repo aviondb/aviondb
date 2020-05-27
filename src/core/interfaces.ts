@@ -1,3 +1,14 @@
+export interface Payload {
+  op: string;
+  value: DocumentInterface[] | (string | number | object)[];
+  modification?: object;
+  options?:
+    | object
+    | UpdateOptionsInterface
+    | UpdateOneOptionsInterface
+    | UpdateManyOptionsInterface;
+}
+
 export interface OrbitDBOptions {
   directory?: string;
   peerId?: string;

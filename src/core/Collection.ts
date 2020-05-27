@@ -21,17 +21,20 @@ const CollectionIndex = require("./CollectionIndex");
 const DagCbor = require("ipld-dag-cbor");
 
 class Collection extends OrbitdbStore {
-  constructor(ipfs, id, dbname, options) {
+  constructor(ipfs: any, id: any, dbname: string, options: object) {
     const opts = Object.assign({}, { Index: CollectionIndex });
     Object.assign(opts, options);
     super(ipfs, id, dbname, opts);
     this._type = "aviondb.collection";
-    this.events.on("write", (address, entry) => {
+    this.events.on("write", (address: string, entry: object) => {
       this._index.handleEntry(entry);
     });
-    this.events.on("replicate.progress", (address, hash, entry) => {
-      this._index.handleEntry(entry);
-    });
+    this.events.on(
+      "replicate.progress",
+      (address: string, hash: string, entry: object) => {
+        this._index.handleEntry(entry);
+      }
+    );
   }
 
   /**
@@ -169,7 +172,7 @@ class Collection extends OrbitdbStore {
    * @returns {JSON Object}
    */
   findById(
-    _id: object | string | number,
+    _id: string | number,
     projection?: object | string,
     options?: object,
     callback?: Function
@@ -187,7 +190,7 @@ class Collection extends OrbitdbStore {
    */
 
   async findByIdAndDelete(
-    _id: object | string | number,
+    _id: string | number,
     options?: object,
     callback?: Function
   ): Promise<DocumentInterface> {
@@ -213,7 +216,7 @@ class Collection extends OrbitdbStore {
    */
 
   async findByIdAndUpdate(
-    _id: object | string | number,
+    _id: string | number,
     modification: object,
     options: object = {},
     callback?: Function
