@@ -113,17 +113,43 @@ describe("Collection", function () {
     assert.strictEqual(typeof result, "object");
     assert.strictEqual(result.length, 1);
   });
-  it("Find: Limit & Skip", async () => {
+  it("Find: Sort: Ascending", async () => {
     await store.insert([
       { name: "kim", age: 35 },
       { name: "vasa", age: 22 },
     ]);
     const result = await store.find({ age: { $gt: 10 } }, null, {
+      sort: { age: 1 },
+    });
+    assert.strictEqual(typeof result, "object");
+    assert.strictEqual(result[0].name, "vasa");
+    assert.strictEqual(result[1].name, "kim");
+  });
+  it("Find: Sort: Descending", async () => {
+    await store.insert([
+      { name: "kim", age: 35 },
+      { name: "vasa", age: 22 },
+    ]);
+    const result = await store.find({ age: { $gt: 10 } }, null, {
+      sort: { age: -1 },
+    });
+    assert.strictEqual(typeof result, "object");
+    assert.strictEqual(result[0].name, "kim");
+    assert.strictEqual(result[1].name, "vasa");
+  });
+  it("Find: Limit & Skip & Sort", async () => {
+    await store.insert([
+      { name: "kim", age: 35 },
+      { name: "vasa", age: 22 },
+    ]);
+    const result = await store.find({ age: { $gt: 10 } }, null, {
+      sort: { age: 1 },
       limit: 1,
       skip: 1,
     });
     assert.strictEqual(typeof result, "object");
     assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, "kim");
   });
   it("FindOne", async () => {
     await store.insertOne({ name: "kim", age: 35 });

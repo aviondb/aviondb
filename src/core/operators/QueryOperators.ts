@@ -1,3 +1,5 @@
+import * as arrSort from "array-sort";
+
 const parseAndFind = (
   query: Object = {},
   options: any,
@@ -9,19 +11,32 @@ const parseAndFind = (
     if (Object.keys(query).length === 0) {
       return docs;
     }
-    const filteredDocs = [];
+    let filteredDocs = [];
     let skipped = 0;
     options.skip = options.skip || 0;
     const condition = (len) => (options.limit ? options.limit === len : false);
-    for (let i = 0; i < docs.length; i++) {
-      if (evaluateQuery(docs[i], query)) {
-        if (skipped >= options.skip) {
-          filteredDocs.push(docs[i]);
+    if (options.sort) {
+      Object.keys(options.sort).map((field, index) => {
+        filteredDocs = arrSort(index === 0 ? docs : filteredDocs, field, {
+          reverse: options.sort[field] === 1 ? false : true,
+        });
+      });
+      if (options.limit) {
+        return filteredDocs.splice(options.skip, options.limit);
+      } else {
+        return filteredDocs.splice(options.skip);
+      }
+    } else {
+      for (let i = 0; i < docs.length; i++) {
+        if (evaluateQuery(docs[i], query)) {
+          if (skipped >= options.skip) {
+            filteredDocs.push(docs[i]);
+          }
+          if (condition(filteredDocs.length)) {
+            return filteredDocs;
+          }
+          ++skipped;
         }
-        if (condition(filteredDocs.length)) {
-          return filteredDocs;
-        }
-        ++skipped;
       }
     }
     return filteredDocs;
