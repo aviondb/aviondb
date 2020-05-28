@@ -9,6 +9,7 @@ examples/
 
 # Don't distribute source maps
 dist/*.map
+dist/src/*.map
 
 # Don't distribute assets
 assets/
