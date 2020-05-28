@@ -7,41 +7,89 @@ const parseAndFind = (
   findOne: boolean = false
 ) => {
   const docs = Object.values(documents);
+  let filteredDocs = [];
+  let skipped = 0;
+  const doSort = !!options.sort;
+  const sortFirst = !!(Object.keys(options)[0] === "sort");
+  const emptyQuery = Object.keys(query).length === 0;
+  options.skip = options.skip || 0;
+  const condition = (len) => (options.limit ? options.limit === len : false);
   if (!findOne) {
-    if (Object.keys(query).length === 0) {
-      return docs;
-    }
-    let filteredDocs = [];
-    let skipped = 0;
-    options.skip = options.skip || 0;
-    const condition = (len) => (options.limit ? options.limit === len : false);
-    if (options.sort) {
-      Object.keys(options.sort).map((field, index) => {
-        filteredDocs = arrSort(index === 0 ? docs : filteredDocs, field, {
-          reverse: options.sort[field] === 1 ? false : true,
+    if (emptyQuery) {
+      filteredDocs = docs;
+      if (doSort && sortFirst) {
+        Object.keys(options.sort).map((field, index) => {
+          filteredDocs = arrSort(filteredDocs, field, {
+            reverse: options.sort[field] === 1 ? false : true,
+          });
         });
-      });
-      if (options.limit) {
-        return filteredDocs.splice(options.skip, options.limit);
-      } else {
-        return filteredDocs.splice(options.skip);
       }
+      if (options.limit) {
+        filteredDocs = filteredDocs.splice(options.skip, options.limit);
+      } else {
+        filteredDocs = filteredDocs.splice(options.skip);
+      }
+      if (doSort && !sortFirst) {
+        Object.keys(options.sort).map((field, index) => {
+          filteredDocs = arrSort(filteredDocs, field, {
+            reverse: options.sort[field] === 1 ? false : true,
+          });
+        });
+      }
+      return filteredDocs;
     } else {
-      for (let i = 0; i < docs.length; i++) {
-        if (evaluateQuery(docs[i], query)) {
-          if (skipped >= options.skip) {
+      if (doSort && sortFirst) {
+        for (let i = 0; i < docs.length; i++) {
+          if (evaluateQuery(docs[i], query)) {
             filteredDocs.push(docs[i]);
           }
-          if (condition(filteredDocs.length)) {
-            return filteredDocs;
-          }
-          ++skipped;
         }
+        Object.keys(options.sort).map((field, index) => {
+          filteredDocs = arrSort(index === 0 ? docs : filteredDocs, field, {
+            reverse: options.sort[field] === 1 ? false : true,
+          });
+        });
+        if (options.limit) {
+          filteredDocs = filteredDocs.splice(options.skip, options.limit);
+        } else {
+          filteredDocs = filteredDocs.splice(options.skip);
+        }
+        return filteredDocs;
+      } else {
+        for (let i = 0; i < docs.length; i++) {
+          if (evaluateQuery(docs[i], query)) {
+            if (skipped >= options.skip) {
+              filteredDocs.push(docs[i]);
+            }
+            if (condition(filteredDocs.length)) {
+              if (options.sort) {
+                Object.keys(options.sort).map((field, index) => {
+                  filteredDocs = arrSort(
+                    index === 0 ? docs : filteredDocs,
+                    field,
+                    {
+                      reverse: options.sort[field] === 1 ? false : true,
+                    }
+                  );
+                });
+              }
+              return filteredDocs;
+            }
+            ++skipped;
+          }
+        }
+        if (doSort && !sortFirst) {
+          Object.keys(options.sort).map((field, index) => {
+            filteredDocs = arrSort(index === 0 ? docs : filteredDocs, field, {
+              reverse: options.sort[field] === 1 ? false : true,
+            });
+          });
+        }
+        return filteredDocs;
       }
     }
-    return filteredDocs;
   } else {
-    if (Object.keys(query).length === 0) {
+    if (emptyQuery) {
       return docs[0];
     }
     for (let i = 0; i < docs.length; i++) {
