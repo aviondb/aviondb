@@ -1,6 +1,8 @@
 import * as OrbitdbStore from "orbit-db-store";
 import * as OrbitDB from "orbit-db";
 import Collection from "./Collection";
+import { Ipfs } from "ipfs";
+import { IdentityProvider } from "orbit-db-identity-provider";
 const Index = require("./StoreIndex");
 const debug = require("debug")("aviondb:store");
 let orbitdb;
@@ -12,7 +14,7 @@ class Store extends OrbitdbStore {
   _index: any;
   events: any;
   address: any;
-  constructor(ipfs, id, dbname: string, options: any = {}) {
+  constructor(ipfs: Ipfs, id: IdentityProvider, dbname: string, options?: any) {
     const opts = { Index };
     Object.assign(opts, options);
     super(ipfs, id, dbname, opts);
@@ -25,18 +27,24 @@ class Store extends OrbitdbStore {
 
     this._index.store = this;
 
-    this.events.on("write", (address, entry) => {
+    this.events.on("write", (address: string, entry) => {
       this._index.handleEntry(entry);
     });
-    this.events.on("replicate.progress", (address, hash, entry) => {
-      this._index.handleEntry(entry);
-    });
-
-    this.events.on("db.createCollection", async (name, address) => {
-      if (!this.openCollections[name]) {
-        this.openCollections[name] = await this.openCollection(address);
+    this.events.on(
+      "replicate.progress",
+      (address: string, hash: Buffer, entry) => {
+        this._index.handleEntry(entry);
       }
-    });
+    );
+
+    this.events.on(
+      "db.createCollection",
+      async (name: string, address: string) => {
+        if (!this.openCollections[name]) {
+          this.openCollections[name] = await this.openCollection(address);
+        }
+      }
+    );
   }
   /**
    * Opens a collection
@@ -186,16 +194,16 @@ class Store extends OrbitdbStore {
   }
   /**
    *
-   * @param {name} address
-   * @param {ipfs Object} ipfs
-   * @param {JSON Object} options
-   * @param {JSON Object} orbitDbOptions
+   * @param {string} address
+   * @param {Ipfs} ipfs
+   * @param {any} options
+   * @param {any} orbitDbOptions
    */
   static async create(
     name: string,
-    ipfs,
-    options: any = {},
-    orbitDbOptions: any = {}
+    ipfs: Ipfs,
+    options?: any,
+    orbitDbOptions?: any
   ) {
     if (!orbitdb) {
       orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
@@ -207,12 +215,17 @@ class Store extends OrbitdbStore {
   }
   /**
    *
-   * @param {name} address
-   * @param {ipfs Object} ipfs
-   * @param {JSON Object} options
-   * @param {JSON Object} orbitDbOptions
+   * @param {string} address
+   * @param {Ipfs} ipfs
+   * @param {any} options
+   * @param {any} orbitDbOptions
    */
-  static async open(address, ipfs, options, orbitDbOptions) {
+  static async open(
+    address: string,
+    ipfs: Ipfs,
+    options?: any,
+    orbitDbOptions?: any
+  ) {
     if (!orbitdb) {
       orbitdb = await OrbitDB.createInstance(ipfs, orbitDbOptions);
     }
@@ -224,11 +237,16 @@ class Store extends OrbitdbStore {
   /**
    *
    * @param {string} name
-   * @param {ipfs Object} ipfs
-   * @param {JSON Object} options
-   * @param {JSON Object} orbitDbOptions
+   * @param {Ipfs} ipfs
+   * @param {any} options
+   * @param {any} orbitDbOptions
    */
-  static async init(name, ipfs, options, orbitDbOptions) {
+  static async init(
+    name: string,
+    ipfs: Ipfs,
+    options?: any,
+    orbitDbOptions?: any
+  ) {
     if (!name || typeof name !== "string") {
       throw "name must be a string";
     }

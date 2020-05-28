@@ -1,3 +1,4 @@
+import { Ipfs } from "ipfs";
 const OrbitdbStore = require("orbit-db-store");
 const ObjectId = require("bson-objectid");
 const CID = require("cids");
@@ -5,7 +6,7 @@ const CollectionIndex = require("./CollectionIndex");
 const DagCbor = require("ipld-dag-cbor");
 
 class Collection extends OrbitdbStore {
-  constructor(ipfs, id, dbname, options) {
+  constructor(ipfs: Ipfs, id, dbname: string, options: any) {
     const opts = Object.assign({}, { Index: CollectionIndex });
     Object.assign(opts, options);
     super(ipfs, id, dbname, opts);
