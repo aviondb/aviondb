@@ -12,6 +12,7 @@ The following APIs documented are in a usable state. More APIs are available, ho
   - [openCollection(name, [options], [orbitDbOptions])](#aviondbopenCollection)
   - [dropCollection(name, [options])](#aviondbdropCollection)
   - [listCollections([filter], [options])](#aviondblistCollections)
+  - [closeCollection(name)](#aviondbcloseCollection)
   - [collection(name)](#aviondbcollection)
   - [Collection Instance](#Collection-Instance)
     - [insert(docs)](#collectioninsert)
@@ -36,6 +37,7 @@ The following APIs documented are in a usable state. More APIs are available, ho
   - [open(address, ipfs, [options], [orbitDbOptions])](#open)
   - [listDatabases()](#listDatabases)
   - [setDatabaseConfig([options])](#setDatabaseConfig)
+  - [getDatabaseConfig()](#getDatabaseConfig)
 
 ## Public Instance Methods
 
@@ -107,6 +109,20 @@ Returns a `Promise` that resolves to an array of collection manifests.
 var collectionList = await aviondb.listCollection();
 console.log(collectionList);
 // [ 'Users', 'Products' ]
+```
+
+### aviondb.closeCollection
+
+> Closes an open collection.
+
+Syntax: `aviondb.closeCollection(name)`
+
+This closes the collection. You can open the collection again by [`openCollection()`](#aviondbopenCollection)
+
+#### Example
+
+```javascript
+await aviondb.closeCollection("Products");
 ```
 
 ### aviondb.collection
@@ -1475,7 +1491,7 @@ TODO: add docs on proper process.
 #### Example
 
 ```javascript
-const AvionDB = require("aviondb");
+import AvionDB from "aviondb";
 var db = await AvionDB.init("DatabaseName", ipfs, options, orbitDbOptions);
 ```
 
@@ -1507,7 +1523,7 @@ TODO: add docs on proper process.
 #### Example
 
 ```javascript
-const AvionDB = require("aviondb");
+import AvionDB from "aviondb";
 var db = await AvionDB.create("DatabaseName", ipfs, options, orbitDbOptions);
 ```
 
@@ -1539,7 +1555,7 @@ TODO: add docs on proper process.
 #### Example
 
 ```javascript
-const AvionDB = require("aviondb");
+import AvionDB from "aviondb";
 var db = await AvionDB.open(
   "/orbitdb/Qmd8TmZrWASypEp4Er9tgWP4kCNQnW4ncSnvjvyHQ3EVSU/DatabaseName",
   ipfs,
@@ -1559,7 +1575,7 @@ Returns a `Promise` that resolves to an Array of existing database names.
 #### Example
 
 ```javascript
-const AvionDB = require("aviondb");
+import AvionDB from "aviondb";
 var db = await AvionDB.init("DatabaseName", ipfs, options, orbitDbOptions);
 await AvionDB.listDatabases();
 // prints ['DatabaseName']
@@ -1574,8 +1590,23 @@ Syntax: `AvionDB.setDatabaseConfig(options)`
 #### Example
 
 ```javascript
-const AvionDB = require("aviondb");
+import AvionDB from "aviondb";
 
 // Sets a custom path for aviondb database list
 AvionDB.setDatabaseConfig({ path: "./custom/database/path" });
+```
+
+### getDatabaseConfig
+
+> Get configuration for AvionDB.
+
+Syntax: `AvionDB.getDatabaseConfig()`
+
+#### Example
+
+```javascript
+import AvionDB from "aviondb";
+
+// Get database configuration
+AvionDB.getDatabaseConfig();
 ```
