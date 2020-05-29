@@ -10,13 +10,7 @@ const Path = require("path");
 
 const DefaultOptions = { path: "./.testdb" };
 // Test utils
-const {
-  config,
-  testAPIs,
-  startIpfs,
-  stopIpfs,
-  implementations,
-} = require("orbit-db-test-utils");
+const { config, implementations } = require("orbit-db-test-utils");
 
 const properLevelModule = implementations
   .filter((i) => i.key.indexOf("memdown") > -1)
@@ -84,7 +78,6 @@ describe("DB", function () {
     await identityStore.open();
   });
   it("Get Config Path", async () => {
-    await ipfs.ready;
     assert.strictEqual(
       AvionDB.getDatabaseConfig().path,
       Path.join(__dirname, "../.testdb", "db")
@@ -92,13 +85,11 @@ describe("DB", function () {
   });
 
   it("List Databases", async () => {
-    await ipfs.ready;
     const databases = await AvionDB.listDatabases();
     assert.strictEqual(arraysEqual(databases, ["test-address"]), true);
   });
 
   it("Init Collection", async () => {
-    await ipfs.ready;
     const collection = await store.initCollection("Accounts");
     await collection.insertOne({
       name: "vasa",
@@ -111,7 +102,6 @@ describe("DB", function () {
     //TODO: Create test here
   });
   it("List Collections", async () => {
-    await ipfs.ready;
     const collection = await store.initCollection("Users");
     await collection.insertOne({
       name: "vasa",

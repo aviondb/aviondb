@@ -137,12 +137,50 @@ describe("Collection", function () {
     assert.strictEqual(result[0].name, "kim");
     assert.strictEqual(result[1].name, "vasa");
   });
-  it("Find: Limit & Skip & Sort", async () => {
+  it("Find: Sort: Nested Fields: Ascending", async () => {
+    await store.insert([
+      { name: { firstname: "elon", lastname: "musk" }, age: 35 },
+      { name: { firstname: "vasa", lastname: "develop" }, age: 22 },
+    ]);
+    const result = await store.find({}, null, {
+      sort: { "name.firstname": 1 },
+    });
+    assert.strictEqual(typeof result, "object");
+    assert.strictEqual(result[0].name.firstname, "elon");
+    assert.strictEqual(result[1].name.firstname, "vasa");
+  });
+  it("Find: Sort: Nested Fields: Descending", async () => {
+    await store.insert([
+      { name: { firstname: "elon", lastname: "musk" }, age: 35 },
+      { name: { firstname: "vasa", lastname: "develop" }, age: 22 },
+    ]);
+    const result = await store.find({}, null, {
+      sort: { "name.firstname": -1 },
+    });
+    assert.strictEqual(typeof result, "object");
+    assert.strictEqual(result[0].name.firstname, "vasa");
+    assert.strictEqual(result[1].name.firstname, "elon");
+  });
+  it("Find: Query with Limit & Skip & Sort", async () => {
     await store.insert([
       { name: "kim", age: 35 },
       { name: "vasa", age: 22 },
     ]);
     const result = await store.find({ age: { $gt: 10 } }, null, {
+      sort: { age: 1 },
+      limit: 1,
+      skip: 1,
+    });
+    assert.strictEqual(typeof result, "object");
+    assert.strictEqual(result.length, 1);
+    assert.strictEqual(result[0].name, "kim");
+  });
+  it("Find: No Query with Limit & Skip & Sort", async () => {
+    await store.insert([
+      { name: "kim", age: 35 },
+      { name: "vasa", age: 22 },
+    ]);
+    const result = await store.find({}, null, {
       sort: { age: 1 },
       limit: 1,
       skip: 1,
