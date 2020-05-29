@@ -7,14 +7,14 @@ const Path = require("path");
 const os = require("os");
 
 export default {
-  repoPath: function (path?) {
+  repoPath: function (path?: string) {
     if (isBrowser()) {
       return path || "aviondb";
     } else {
       return path || Path.join(os.homedir(), ".aviondb");
     }
   },
-  datastore: function (path) {
+  datastore: function (path?: string) {
     if (isBrowser()) {
       return new LevelDb(Path.join(path, "db"));
     } else {

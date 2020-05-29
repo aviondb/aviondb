@@ -1,7 +1,7 @@
 class StoreIndex {
-  _index: {};
+  _index: any = {};
   store: any;
-  loaded: boolean;
+  loaded: boolean = false;
 
   constructor() {
     this._index = {};
@@ -36,7 +36,7 @@ class StoreIndex {
   }
   updateIndex(oplog: any) {
     if (!this.loaded) {
-      oplog.values.forEach((item) => {
+      oplog.values.forEach((item: any) => {
         this.handleEntry(item);
       });
     }

@@ -1,4 +1,5 @@
 import * as arrSort from "array-sort";
+import { DocumentInterface } from "../interfaces";
 
 const parseAndFind = (
   query: Object = {},
@@ -155,7 +156,7 @@ Possible queries
  * @returns {boolean}
  */
 
-const evaluateQuery = (doc, query) => {
+const evaluateQuery = (doc: any, query: any) => {
   let res;
   let killSwitch = true; // kills the main loop if set to false
   const fields = Object.keys(query);
@@ -210,7 +211,7 @@ const evaluateQuery = (doc, query) => {
     else {
       res = true;
       for (let i = 0; i < fields.length; i++) {
-        const check = {};
+        const check: any = {};
         check[fields[i]] = query[fields[i]];
         if (!evaluateCondition(check, doc)) {
           res = false;
@@ -231,7 +232,7 @@ const evaluateQuery = (doc, query) => {
  * @returns {boolean}
  */
 
-const evaluateCondition = (condition, doc) => {
+const evaluateCondition = (condition: any, doc: any) => {
   let res = true;
   Object.keys(condition).forEach((field) => {
     //Check if condition[field] is a JSON object with keys having "$" character
@@ -309,7 +310,7 @@ const evaluateCondition = (condition, doc) => {
  * @param {Array} docs
  */
 
-const eq = (argValue, comparisonValue) => {
+const eq = (argValue: any, comparisonValue: any) => {
   return argValue === comparisonValue;
 };
 
@@ -319,7 +320,7 @@ const eq = (argValue, comparisonValue) => {
  * @param {Array} docs
  */
 
-const gt = (argValue, comparisonValue) => {
+const gt = (argValue: any, comparisonValue: any) => {
   return argValue > comparisonValue;
 };
 
@@ -329,7 +330,7 @@ const gt = (argValue, comparisonValue) => {
  * @param {Array} docs
  */
 
-const gte = (argValue, comparisonValue) => {
+const gte = (argValue: any, comparisonValue: any) => {
   return argValue >= comparisonValue;
 };
 
@@ -339,7 +340,7 @@ const gte = (argValue, comparisonValue) => {
  * @param {Array} docs
  */
 
-const inop = (argValue, comparisonValue) => {
+const inop = (argValue: any, comparisonValue: any) => {
   throw new Error("Not yet implemented.");
 };
 
@@ -349,7 +350,7 @@ const inop = (argValue, comparisonValue) => {
  * @param {Array} docs
  */
 
-const lt = (argValue, comparisonValue) => {
+const lt = (argValue: any, comparisonValue: any) => {
   return argValue < comparisonValue;
 };
 
@@ -359,7 +360,7 @@ const lt = (argValue, comparisonValue) => {
  * @param {Array} docs
  */
 
-const lte = (argValue, comparisonValue) => {
+const lte = (argValue: any, comparisonValue: any) => {
   return argValue <= comparisonValue;
 };
 
@@ -369,7 +370,7 @@ const lte = (argValue, comparisonValue) => {
  * @param {Array} docs
  */
 
-const ne = (arg, val) => {
+const ne = (arg: any, val: any) => {
   throw new Error("Not yet implemented.");
 };
 
@@ -379,7 +380,7 @@ const ne = (arg, val) => {
  * @param {Array} docs
  */
 
-const nin = (arg, val) => {
+const nin = (arg: any, val: any) => {
   throw new Error("Not yet implemented.");
 };
 
@@ -399,7 +400,7 @@ const nin = (arg, val) => {
  * @param {Array} docs
  */
 
-const not = (arg, val) => {
+const not = (arg: any, val: any) => {
   throw new Error("Not yet implemented.");
 };
 
@@ -409,7 +410,7 @@ const not = (arg, val) => {
  * @param {Array} docs
  */
 
-const nor = (arg, val) => {
+const nor = (arg: any, val: any) => {
   throw new Error("Not yet implemented.");
 };
 
@@ -429,7 +430,7 @@ const nor = (arg, val) => {
  * @param {Array} docs
  */
 
-const exists = (arg, val) => {
+const exists = (arg: any, val: any) => {
   throw new Error("Not yet implemented.");
 };
 
@@ -439,13 +440,13 @@ const exists = (arg, val) => {
  * @param {Array} docs
  */
 
-const type = (arg, val) => {
+const type = (arg: any, val: any) => {
   throw new Error("Not yet implemented.");
 };
 
 // Utility Functions
 
-const arraysEqual = (a, b) => {
+const arraysEqual = (a: any, b: any) => {
   if (a === b) return true;
   if (a == null || b == null) return false;
   if (a.length != b.length) return false;
@@ -461,7 +462,7 @@ const arraysEqual = (a, b) => {
   return true;
 };
 
-function jsonEqual(a, b) {
+function jsonEqual(a: any, b: any) {
   return JSON.stringify(a) === JSON.stringify(b);
 }
 
