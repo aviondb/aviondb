@@ -58,9 +58,10 @@ class Collection extends OrbitdbStore {
   /**
    * Inserts multiple records into a Collection
    *
-   * @param {Array<DocumentInterface>} docs
-   * @param {InsertOptions} options
-   * @param {Function} callback
+   * @param {Array<DocumentInterface>} docs Array of Documents/Records
+   * @param {InsertOptions} options Options for insert()
+   * @param {Function} callback Callback function
+   * @returns {Promise<string>} Returns a Promise that resolves to CID of the inserted DAG that points to the inserted document(s)
    */
 
   insert(
@@ -82,9 +83,10 @@ class Collection extends OrbitdbStore {
   /**
    * Inserts single record into a Collection
    *
-   * @param {DocumentInterface} doc
-   * @param {InsertOneOptions} options
-   * @param {Function} callback
+   * @param {DocumentInterface} doc Single Document/Record
+   * @param {InsertOneOptions} options options for insertOne()
+   * @param {Function} callback Callback function
+   * @returns {Promise<string>} Returns a Promise that resolves to CID of the inserted DAG that points to the inserted document
    */
   async insertOne(
     doc: DocumentInterface,
@@ -100,10 +102,11 @@ class Collection extends OrbitdbStore {
   /**
    * Fetches matching record(s)
    *
-   * @param {object} query
-   * @param {object|string} projection
-   * @param {FindOptionsInterface} options
-   * @param {Function} callback
+   * @param {object} query Query for find
+   * @param {object|string} projection Projection (not implemented yet)
+   * @param {FindOptionsInterface} options Options for find()
+   * @param {Function} callback Callback function
+   * @returns {Promise<Array<DocumentInterface>>} Returns a Promise that resolves to an Array of Document(s)
    */
 
   find(
@@ -118,10 +121,11 @@ class Collection extends OrbitdbStore {
   /**
    * Fetches the first matching record
    *
-   * @param {JSON Object} query
-   * @param {object|string} projection
-   * @param {object} options
-   * @param {Function} callback
+   * @param {JSON Object} query Query for findOne(), same as for find()
+   * @param {object|string} projection Projection (not implemented yet)
+   * @param {object} options Options for findOne()
+   * @param {Function} callback Callback function
+   * @returns {Promise<DocumentInterface>} Returns a Promise that resolves a Document
    */
 
   findOne(
@@ -136,10 +140,11 @@ class Collection extends OrbitdbStore {
   /**
    * Updates the first matching record
    *
-   * @param {object} query
-   * @param {object} modification
-   * @param {FindOneAndUpdateOptionsInterface} options
-   * @param {Function} callback
+   * @param {object} query Query for findOneAndUpdate(), same as for find()
+   * @param {object} modification Projection (not implemented yet)
+   * @param {FindOneAndUpdateOptionsInterface} options Options for findOneAndUpdate()
+   * @param {Function} callback Callback function
+   * @returns {Promise<DocumentInterface>} Returns a Promise that resolves to the updated Document
    */
 
   async findOneAndUpdate(
@@ -162,8 +167,9 @@ class Collection extends OrbitdbStore {
    * Deletes a single document based on the filter and sort criteria,
    * returning the deleted document.
    * @param {object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
-   * @param {FindOneAndDeleteOptionsInterface} options
-   * @param {Function} callback
+   * @param {FindOneAndDeleteOptionsInterface} options Options for findOneAndDelete()
+   * @param {Function} callback Callback function
+   * @returns {Promise<DocumentInterface>} Returns a Promise that resolves to the deleted Document
    */
   async findOneAndDelete(
     filter: object = {},
@@ -183,11 +189,11 @@ class Collection extends OrbitdbStore {
   /**
    * Finds a record in the collection by Id
    *
-   * @param {object|string|number} _id
-   * @param {object|string} projection
-   * @param {object} options
-   * @param {Function} callback
-   * @returns {JSON Object}
+   * @param {object|string|number} _id "_id" for a Document/Record
+   * @param {object|string} projection Projection (not implemented yet)
+   * @param {object} options Options for findById()
+   * @param {Function} callback Callback function
+   * @returns {Promise<DocumentInterface>} Returns a Promise that resolves to a Document with matching "_id"
    */
   findById(
     _id: string | number,
@@ -201,10 +207,10 @@ class Collection extends OrbitdbStore {
   /**
    * Finds & deletes a record in the collection by Id
    *
-   * @param {object|string|number} _id
-   * @param {object} options
-   * @param {Function} callback
-   * @returns {JSON Object} return the deleted record
+   * @param {object|string|number} _id "_id" for a Document/Record
+   * @param {object} options Options for findByIdAndDelete()
+   * @param {Function} callback Callback function
+   * @returns {Promise<DocumentInterface>} Returns a Promise that resolves to the deleted Document with matching "_id"
    */
 
   async findByIdAndDelete(
@@ -226,11 +232,11 @@ class Collection extends OrbitdbStore {
    *
    * Finds & updates a record in the collection by Id
    *
-   * @param {object|string|number} _id
-   * @param {object} modification
-   * @param {object} options
-   * @param {Function} callback
-   * @returns {JSON Object} return the updated record
+   * @param {object|string|number} _id "_id" for a Document/Record
+   * @param {object} modification Updates that need to made to the matching documents
+   * @param {object} options Options for findByIdAndUpdate()
+   * @param {Function} callback Callback function
+   * @returns {Promise<DocumentInterface>} Returns a Promise that resolves to the updated Document with matching "_id"
    */
 
   async findByIdAndUpdate(
@@ -274,10 +280,11 @@ class Collection extends OrbitdbStore {
             hint:  <document|string>
         }
         )
-     * @param {object} filter 
-     * @param {object} modification 
-     * @param {UpdateOptionsInterface} options 
-     * @param {Function} callback 
+     * @param {object} filter Query/Filter criteria for documents, same as for find()
+     * @param {object} modification Updates that need to made to the matching document(s)
+     * @param {UpdateOptionsInterface} options Options for update()
+     * @param {Function} callback Callback function
+     * @returns {Promise<Array<DocumentInterface>>} Returns a Promise that resolves to an Array of updated Document(s)
      */
 
   async update(
@@ -328,10 +335,11 @@ class Collection extends OrbitdbStore {
         }
         )
      * 
-     * @param {object} filter 
-     * @param {object} modification 
-     * @param {UpdateOneOptionsInterface} options 
-     * @param {Function} callback 
+     * @param {object} filter Query/Filter criteria for documents, same as for find()
+     * @param {object} modification Updates that need to made to the matching document
+     * @param {UpdateOneOptionsInterface} options Options for updateOne()
+     * @param {Function} callback Callback function
+     * @returns {Promise<DocumentInterface>} Returns a Promise that resolves to an updated Document
      */
 
   async updateOne(
@@ -368,10 +376,11 @@ class Collection extends OrbitdbStore {
         }
         )
      * 
-     * @param {object} filter 
-     * @param {object} modification 
-     * @param {UpdateManyOptionsInterface} options 
-     * @param {Function} callback 
+     * @param {object} filter Query/Filter criteria for documents, same as for find()
+     * @param {object} modification Updates that need to made to the matching document(s)
+     * @param {UpdateManyOptionsInterface} options Options for updateOneMany()
+     * @param {Function} callback Callback function
+     * @returns {Promise<Array<DocumentInterface>>} Returns a Promise that resolves to an Array of updated Document(s)
      */
 
   async updateMany(
@@ -395,8 +404,9 @@ class Collection extends OrbitdbStore {
    * Deletes a single document based on the filter, returning the deleted document.
    *
    * @param {object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
-   * @param {DeleteOneOptionsInterface} options
-   * @param {Function} callback
+   * @param {DeleteOneOptionsInterface} options Options for deleteOne()
+   * @param {Function} callback Callback function
+   * @returns {Promise<DocumentInterface>} Returns a Promise that resolves to a deleted Document
    */
 
   async deleteOne(
@@ -418,8 +428,9 @@ class Collection extends OrbitdbStore {
    * Deletes all the documents based on the filter, returning the deleted documents.
    *
    * @param {object} filter The selection criteria for the deletion. The same query selectors as in the find() method are available.
-   * @param {DeleteManyOptionsInterface} options
-   * @param {Function} callback
+   * @param {DeleteManyOptionsInterface} options Options for deleteMany()
+   * @param {Function} callback Callback function
+   * @returns {Promise<Array<DocumentInterface>>} Returns a Promise that resolves to an Array of deleted Document
    */
 
   async deleteMany(
@@ -438,6 +449,13 @@ class Collection extends OrbitdbStore {
     return docs;
   }
 
+  /**
+   * Returns unique (with respect to a key) Documents
+   * @param key name of the field whose values should be unique
+   * @param query Query criteria for documents, same as for find()
+   * @returns {Promise<Array<DocumentInterface>>} Returns a Promise that resolves to an Array of unique Document(s)
+   */
+
   distinct(
     key: object | string | number,
     query: object
@@ -447,7 +465,7 @@ class Collection extends OrbitdbStore {
   /**
    * Returns CID string representing oplog heads.
    * returns null if oplog is empty
-   * @returns {string}
+   * @returns {string} Returns CID string representing oplog heads.
    */
   async getHeadHash(): Promise<string | null> {
     try {
@@ -459,8 +477,8 @@ class Collection extends OrbitdbStore {
   /**
    * Syncs datastore to a supplied CID representing oplog heads.
    * Pauses all write operations until sync is complete.
-   * @param {string} hash
-   * @param {boolean} stopWrites
+   * @param {string} hash Head hash string
+   * @param {boolean} stopWrites Should we pause write operations while syncing
    * @returns {Promise<null>}
    */
   async syncFromHeadHash(
@@ -493,9 +511,9 @@ class Collection extends OrbitdbStore {
   /**
    * Import data into aviondb through buffer.
    *
-   * @param {any} data_in
-   * @param {ImportOptionsInterface} options
-   * @param {Function} progressCallback
+   * @param {any} data_in Data to be imported in "cbor", "json_mongo", or "raw" format
+   * @param {ImportOptionsInterface} options Options for import()
+   * @param {Function} progressCallback Callback Function for checking progress of syncing process
    */
   async import(
     data_in: any,
@@ -543,9 +561,10 @@ class Collection extends OrbitdbStore {
   }
   /**
    *
-   * @param {AsyncIterable} stream
-   * @param {ImportStreamOptionsInterface} options
-   * @param {Function} progressCallback
+   * @param {AsyncIterable} stream Data stream to be imported
+   * @param {number} length Total stream length
+   * @param {ImportStreamOptionsInterface} options Options for importStream()
+   * @param {Function} progressCallback Callback Function for checking progress of syncing process
    */
   async importStream(
     stream: AsyncIterable<any>,
@@ -586,7 +605,8 @@ class Collection extends OrbitdbStore {
   }
   /**
    * Exports records in collection
-   * @param {ExportOptionsInterface} options
+   * @param {ExportOptionsInterface} options Options for export()
+   * @returns {Promise<string | DocumentInterface[]>} Returns a Promise that resolves to the exported data in "cbor", "json_mongo", "raw" format
    */
   async export(
     options: ExportOptionsInterface = {}

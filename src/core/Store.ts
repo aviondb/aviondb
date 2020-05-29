@@ -70,10 +70,11 @@ class Store extends OrbitdbStore {
     );
   }
   /**
-   * Opens a collection
+   * Create a collection
    * @param {String} name Name of collection
-   * @param {CollectionOptions} options
-   * @param {ICreateOptions} orbitDbOptions options directly passed into orbitdb.create()
+   * @param {CollectionOptions} options Options for avoindb
+   * @param {ICreateOptions} orbitDbOptions Options directly passed into orbitdb.create()
+   * @returns {Promise<Collection>} Returns a Promise that resolves to an AvionDB Collection instance
    */
   async createCollection(
     name: string,
@@ -111,8 +112,9 @@ class Store extends OrbitdbStore {
   /**
    * Opens a collection
    * @param {String} name Name of collection
-   * @param {CollectionOptions} options
+   * @param {CollectionOptions} options options for avoindb
    * @param {IOpenOptions} orbitDbOptions options directly passed into orbitdb.open()
+   * @returns {Promise<Collection>} Returns a Promise that resolves to an AvionDB Collection instance
    */
   async openCollection(
     name: string,
@@ -143,10 +145,11 @@ class Store extends OrbitdbStore {
     }
   }
   /**
-   *
-   * @param {string} name
-   * @param {CollectionOptions} options
-   * @param {IStoreOptions} orbitDbOptions
+   * Creates a collection if it does not exist, or opens an existing database collection.
+   * @param {string} name Name of collection
+   * @param {CollectionOptions} options options for avoindb
+   * @param {IStoreOptions} orbitDbOptions options directly passed into orbitdb.open() or orbitdb.create()
+   * @returns {Promise<Collection>} Returns a Promise that resolves to an AvionDB Collection instance
    */
   async initCollection(
     name: string,
@@ -166,8 +169,8 @@ class Store extends OrbitdbStore {
     }
   }
   /**
-   *
-   * @param {string} name
+   * Deletes collection removing all stored data
+   * @param {string} name Name of collection to be dropped
    * @param {JSON Object} options
    */
   async dropCollection(name: string, options: any = {}) {
@@ -183,16 +186,19 @@ class Store extends OrbitdbStore {
     });
   }
   /**
-   *
+   * Lists collections in the database
    * @param {JSON Object} filter
    * @param {JSON Object} options
+   * @returns {Array<string>} Returns an Array of Collection names
    */
   listCollections(filter: any = {}, options: any = {}): Array<string> {
     return Object.keys(this._index._index);
   }
   /**
+   * Returns collection instance. Throws error if collection is not open.
    *
-   * @param {string} name
+   * @param {string} name Name of collection
+   * @returns {Promise<Collection>} Returns a Promise that resolves to an AvionDB Collection instance
    */
   collection(name: string): Promise<Collection> {
     if (!name || typeof name !== "string") {
@@ -204,8 +210,8 @@ class Store extends OrbitdbStore {
     return this.openCollections[name];
   }
   /**
-   *
-   * @param {string} name
+   * Closes an open collection
+   * @param {string} name Name of collection
    */
   async closeCollection(name: string) {
     if (this.openCollections[name]) {
@@ -228,11 +234,12 @@ class Store extends OrbitdbStore {
     await super.close();
   }
   /**
-   *
-   * @param {string} address
-   * @param {Ipfs} ipfs
-   * @param {IStoreOptions} options
-   * @param {OrbitDBOptions} orbitDbOptions
+   * Creates a new instance of AvionDB
+   * @param {string} name Name of Database
+   * @param {Ipfs} ipfs IPFS Instance
+   * @param {IStoreOptions} options options to be passed to orbitdb.create()
+   * @param {OrbitDBOptions} orbitDbOptions options to be passed to OrbitDB.createInstance()
+   * @returns {Promise<Store>} Returns a Promise that resolves to an AvionDB instance
    */
   static async create(
     name: string,
@@ -249,11 +256,12 @@ class Store extends OrbitdbStore {
     return store;
   }
   /**
-   *
-   * @param {string} address
-   * @param {Ipfs} ipfs
-   * @param {IStoreOptions} options
-   * @param {OrbitDBOptions} orbitDbOptions
+   * Opens an existing instance of AvionDB
+   * @param {string} address Address of Database
+   * @param {Ipfs} ipfs IPFS Instance
+   * @param {IStoreOptions} options options to be passed to orbitdb.open()
+   * @param {OrbitDBOptions} orbitDbOptions options to be passed to OrbitDB.createInstance()
+   * @returns {Promise<Store>} Returns a Promise that resolves to an AvionDB instance
    */
   static async open(
     address: string,
@@ -270,11 +278,14 @@ class Store extends OrbitdbStore {
     return store;
   }
   /**
+   * Creates a new instance of AvionDB if not present already.
+   * If an instance with name is exists, then opens and returns the instance.
    *
-   * @param {string} name
-   * @param {Ipfs} ipfs
-   * @param {IStoreOptions} options
-   * @param {OrbitDBOptions} orbitDbOptions
+   * @param {string} name Name of database
+   * @param {Ipfs} ipfs IPFS Instance
+   * @param {IStoreOptions} options options to be passed to orbitdb.open() or orbitdb.create()
+   * @param {OrbitDBOptions} orbitDbOptions options to be passed to OrbitDB.createInstance()
+   * @returns {Promise<Store>} Returns a Promise that resolves to an AvionDB instance
    */
   static async init(
     name: string,
