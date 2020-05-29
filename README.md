@@ -7,7 +7,8 @@
 <h3 align="center">AvionDB: A Distributed, MongoDB-like Database</h3>
 
 <p align="center">
-<a href="https://badge.fury.io/js/aviondb.svg">
+<a href="https://badge.fury.io/js/aviondb"><img src="https://badge.fury.io/js/aviondb.svg" /></a>
+<a href="https://img.shields.io/badge/Node.js-%3E%3D8.6.0-orange.svg?style=flat-square">
 <img src="https://img.shields.io/badge/Node.js-%3E%3D8.6.0-orange.svg?style=flat-square" /></a>
 <a href="https://github.com/dappkit/aviondb/workflows/Node.js%20CI/badge.svg"><img src="https://github.com/dappkit/aviondb/workflows/Node.js%20CI/badge.svg" /></a>
 <a href="https://david-dm.org/dappkit/aviondb"><img src="https://david-dm.org/dappkit/aviondb.svg?style=flat-square"/></a>
