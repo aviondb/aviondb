@@ -33,7 +33,7 @@ Status: **in active development**
 
 **_NOTE!_** _AvionDB is **alpha-stage** software. It means AvionDB hasn't been security audited and programming APIs and data formats can still change. We encourage you to [reach out to the maintainers](https://discord.gg/88YpNuQ) if you plan to use AvionDB in mission critical systems._
 
-This is the Javascript implementation and it works both in **Browsers** and **Node.js** with support for Linux, OS X, and windows . The minimum required version of Node.js is now 8.6.0 due to the usage of `...` spread syntax. LTS versions (even numbered versions 8, 10, etc) are preferred.
+This is the TypeScript implementation and it works with **Browsers**, **Node.js** & **TypeScript** with support for Linux, OS X, and Windows . The minimum required version of Node.js is now 8.6.0 due to the usage of `...` spread syntax. LTS versions (even numbered versions 8, 10, etc) are preferred.
 
 ## Table of Contents
 
@@ -109,7 +109,7 @@ CDN-based AvionDB provides the `AvionDB` constructor as a method of the global `
 
 ```javascript
 // create an AvionDB instance
-const aviondb = await AvionDB.create("DatabaseName", ipfs);
+const aviondb = await AvionDB.default.init("DatabaseName", ipfs);
 ```
 
 **See [examples/index.html](./examples/index.html) to check out a fully functioning example for AvionDB with browser.**
@@ -281,6 +281,11 @@ You can see the following examples to get started with AvionDB:
 
   - Check out the app [here](https://bit.ly/aviondb-blocknative)
   - Check out the code [here](https://github.com/dappkit/aviondb-onboard)
+
+- [**aviondb-ceramic-3id**](https://github.com/dappkit/aviondb-ceramic-3id)
+
+  An example using DID-agnostic [Ceramic 3IDs](https://jwt.io/) based Access Controller for AvionDB & OrbitDB. You can join the discussion [here](https://github.com/dappkit/aviondb/issues/41).
+  **Coming Soon**
 
 - [**aviondb-jwt**](https://github.com/dappkit/aviondb-jwt)
 
