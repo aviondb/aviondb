@@ -1,6 +1,6 @@
 {
   "name": "aviondb",
-  "version": "0.2.3-rc.2",
+  "version": "0.2.3-rc.3",
   "description": "AvionDB aims to bring MongoDB-like developer interface to Web 3.0.",
   "main": "dist/src/index",
   "module": "dist/src/index",
