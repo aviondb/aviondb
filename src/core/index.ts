@@ -27,7 +27,7 @@ class AvionDB extends Store {
     name: string,
     ipfs: Ipfs,
     options: StoreOptions = {},
-    orbitDbOptions: OrbitDBOptions
+    orbitDbOptions: OrbitDBOptions = {}
   ): Promise<AvionDB> {
     if (options.path) {
       this.setDatabaseConfig({ path: options.path });
