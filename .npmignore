@@ -10,6 +10,8 @@ examples/
 # Don't distribute source maps
 dist/*.map
 dist/src/*.map
+dist/src/core/*.map
+dist/src/core/operators/*.map
 
 # Don't distribute assets
 assets/
@@ -20,6 +22,8 @@ assets/
 .prettierignore
 .travis.yml
 .npmrc
+.eslintrc.json
+.prettierrc
 benchmarks
 test
 ipfs
