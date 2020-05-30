@@ -110,7 +110,7 @@ CDN-based AvionDB provides the `AvionDB` constructor as a method of the global `
 
 ```javascript
 // create an AvionDB instance
-const aviondb = await AvionDB.default.init("DatabaseName", ipfs);
+const aviondb = await AvionDB.init("DatabaseName", ipfs);
 ```
 
 **See [examples/index.html](./examples/index.html) to check out a fully functioning example for AvionDB with browser.**
