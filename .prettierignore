@@ -1,4 +1,0 @@
-# See https://glebbahmutov.com/blog/configure-prettier-in-vscode/#tips for more info
-
-# do not run Prettier against any files
-**/*

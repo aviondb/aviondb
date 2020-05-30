@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "lib": ["es2018"],
+    "module": "commonjs",
+    "target": "es6",
+    "declaration": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules"]
+}

@@ -1,22 +1,24 @@
 {
   "name": "aviondb",
-  "version": "0.2.2",
+  "version": "0.2.3-rc.3",
   "description": "AvionDB aims to bring MongoDB-like developer interface to Web 3.0.",
-  "main": "src/core/index.js",
+  "main": "dist/src/index",
+  "module": "dist/src/index",
+  "browser": "dist/aviondb.min.js",
+  "types": "dist/src/index",
   "scripts": {
-    "build": "webpack --mode production",
-    "test": "mocha",
+    "build": "npm run lint && webpack --mode production",
+    "prepublishOnly": "npm run build",
+    "test": "ts-mocha -p ./tsconfig.json ./test/**/*.spec.ts",
     "test:coverage": "codecov",
-    "benchmark:write": "node ./test/benchmarks/benchmark.write.js",
-    "benchmark:query": "node ./test/benchmarks/benchmark.query.js",
-    "benchmark:update": "node ./test/benchmarks/benchmark.update.js"
+    "benchmark:write": "ts-node ./test/benchmarks/benchmark.write.ts",
+    "benchmark:query": "ts-node ./test/benchmarks/benchmark.query.ts",
+    "benchmark:update": "ts-node ./test/benchmarks/benchmark.update.ts",
+    "lint": "node ./node_modules/eslint/bin/eslint -c ./.eslintrc.json ./src/**/*.ts --fix"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dappkit/aviondb.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
   },
   "author": "Dappkit",
   "license": "MIT",
@@ -27,23 +29,38 @@
   "contributors": [
     "vasa-develop",
     "vaultec81",
+    "deanpress",
     "ethdev279"
   ],
   "devDependencies": {
+    "@sindresorhus/tsconfig": "^0.7.0",
+    "@types/mocha": "^7.0.2",
+    "@typescript-eslint/eslint-plugin": "^3.0.0",
+    "@typescript-eslint/parser": "^3.0.0",
     "datastore-level": "^0.14.1",
+    "eslint": "^7.1.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
     "ipfs": "^0.44.0",
-    "mocha": "^7.1.1",
+    "mocha": "^7.2.0",
     "orbit-db-test-utils": "^0.9.4",
     "rimraf": "^3.0.2",
+    "ts-loader": "^7.0.4",
+    "ts-mocha": "^7.0.0",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.9.3",
+    "typings": "^2.1.1",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@types/elliptic": "^6.4.12",
+    "array-sort": "^1.0.0",
     "bson-objectid": "^1.3.0",
     "cids": "^0.8.1",
     "datastore-fs": "^1.0.0",
     "debug": "^4.1.1",
-    "interface-datastore": "^0.8.3",
+    "interface-datastore": "^1.0.2",
     "ipld-dag-cbor": "^0.15.2",
     "orbit-db": "^0.24.1",
     "orbit-db-store": "^3.3.0"

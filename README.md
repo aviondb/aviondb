@@ -7,9 +7,10 @@
 <h3 align="center">AvionDB: A Distributed, MongoDB-like Database</h3>
 
 <p align="center">
-<a href="https://badge.fury.io/js/aviondb.svg">
+<a href="https://badge.fury.io/js/aviondb"><img src="https://badge.fury.io/js/aviondb.svg" /></a>
+<a href="https://img.shields.io/badge/Node.js-%3E%3D8.6.0-orange.svg?style=flat-square">
 <img src="https://img.shields.io/badge/Node.js-%3E%3D8.6.0-orange.svg?style=flat-square" /></a>
-<a href="https://travis-ci.com/dappkit/aviondb"><img src="https://travis-ci.com/dappkit/aviondb.svg?branch=master" /></a>
+<a href="https://github.com/dappkit/aviondb/workflows/Node.js%20CI/badge.svg"><img src="https://github.com/dappkit/aviondb/workflows/Node.js%20CI/badge.svg" /></a>
 <a href="https://david-dm.org/dappkit/aviondb"><img src="https://david-dm.org/dappkit/aviondb.svg?style=flat-square"/></a>
 <a href="https://bundlephobia.com/result?p=aviondb"><img src="https://flat.badgen.net/bundlephobia/minzip/aviondb"></a>
 <a href="https://discord.gg/88YpNuQ"><img src="https://img.shields.io/discord/616677539812868097?color=blueviolet&label=discord"></a>
@@ -31,36 +32,38 @@ See more details in the [Specs](https://github.com/dappkit/aviondb-specs).
 
 Status: **in active development**
 
-***NOTE!*** *AvionDB is **alpha-stage** software. It means AvionDB hasn't been security audited and programming APIs and data formats can still change. We encourage you to [reach out to the maintainers](https://discord.gg/88YpNuQ) if you plan to use AvionDB in mission critical systems.*
+**_NOTE!_** _AvionDB is **alpha-stage** software. It means AvionDB hasn't been security audited and programming APIs and data formats can still change. We encourage you to [reach out to the maintainers](https://discord.gg/88YpNuQ) if you plan to use AvionDB in mission critical systems._
 
-This is the Javascript implementation and it works both in **Browsers** and **Node.js** with support for Linux, OS X, and windows . The minimum required version of Node.js is now 8.6.0 due to the usage of `...` spread syntax. LTS versions (even numbered versions 8, 10, etc) are preferred.
+This is the TypeScript implementation and it works with **Browsers**, **Node.js** & **TypeScript** with support for Linux, OS X, and Windows . The minimum required version of Node.js is now 8.6.0 due to the usage of `...` spread syntax. LTS versions (even numbered versions 8, 10, etc) are preferred.
 
 ## Table of Contents
 
 <!-- toc -->
+
+- [Table of Contents](#table-of-contents)
 - [Install](#install)
   - [Using NodeJS](#using-nodejs)
   - [In a web browser](#in-a-web-browser)
-	- [In a web browser through Browserify](#through-browserify)
-	- [In a web browser through Webpack](#through-webpack)
-	- [In a web browser through CDN](#from-cdn)
+    - [through Browserify](#through-browserify)
+    - [through webpack](#through-webpack)
+    - [from CDN](#from-cdn)
 - [Usage](#usage)
+  - [Example](#example)
 - [API](#api)
 - [Development](#development)
-  * [Run Tests](#run-tests)
-  * [Benchmarks](#benchmarks)
+  - [Run Tests](#run-tests)
+  - [Benchmarks](#benchmarks)
 - [Specs](#specs)
 - [Community Repos](#community-repos)
 - [Frequently Asked Questions](#frequently-asked-questions)
-  * [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
-  * [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
-  * [What mongodb features does aviondb support?](#what-mongodb-features-does-aviondb-support)
-  * [How can I use AvionDB in my Application?](#how-can-i-use-aviondb-in-my-application)
-  * [Other questions?](#other-questions)
+  - [Are there implementations in other languages?](#are-there-implementations-in-other-languages)
+  - [Where can I see your Roadmap?](#where-can-i-see-your-roadmap)
+  - [What mongodb features does aviondb support?](#what-mongodb-features-does-aviondb-support)
+  - [How can I use AvionDB in my Application?](#how-can-i-use-aviondb-in-my-application)
+  - [Other Questions?](#other-questions)
 - [Contributing](#contributing)
 - [Sponsors](#sponsors)
 - [License](#license)
-
 
 ## Install
 
@@ -81,18 +84,23 @@ We support both the Current and Active LTS versions of Node.js. Please see [node
 ### In a web browser
 
 #### **through Browserify**
+
 Same as in Node.js, you just have to [browserify](http://browserify.org/) to bundle the code before serving it.
- > Note: The code uses `es6`, so you have to use [babel](https://babeljs.io/) to convert the code into `es5` before using `browserify`. 
+
+> Note: The code uses `es6`, so you have to use [babel](https://babeljs.io/) to convert the code into `es5` before using `browserify`.
 
 #### **through webpack**
+
 Same as in Node.js, you just have to [webpack](https://webpack.js.org/) to bundle the the code before serving it.
- > Note: The code uses `es6`, so you have to use [babel](https://babeljs.io/) to convert the code into `es5` before using `webpack`.
+
+> Note: The code uses `es6`, so you have to use [babel](https://babeljs.io/) to convert the code into `es5` before using `webpack`.
 
 #### **from CDN**
 
 Instead of a local installation (and browserification) you may request a remote copy of AvionDB from unpkg CDN.
 
 To always request the latest version, use the following:
+
 ```html
 <!-- loading the minified version -->
 <script src="https://unpkg.com/aviondb/dist/aviondb.min.js"></script>
@@ -102,37 +110,40 @@ CDN-based AvionDB provides the `AvionDB` constructor as a method of the global `
 
 ```javascript
 // create an AvionDB instance
-const aviondb = await AvionDB.create("DatabaseName", ipfs) 
+const aviondb = await AvionDB.init("DatabaseName", ipfs);
 ```
 
 **See [examples/index.html](./examples/index.html) to check out a fully functioning example for AvionDB with browser.**
 
 ## Usage
 
-
 ### Example
+
 ```javascript
 // Import modules
-const AvionDB = require("aviondb");
-const IPFS = require("ipfs");
- 
+import AvionDB from "aviondb";
+import IPFS from "ipfs";
+
 const runExample = async () => {
   const ipfs = await IPFS.create();
-    
-  // Creates a db named "DatabaseName"
-  const aviondb = await AvionDB.init("DatabaseName", ipfs); 
-  
+
+  // Creates a db named "DatabaseName" in the ".aviondb" directory in the project root.
+  // If no path option is defined, $HOME/.aviondb is used for the database directory (e.g. "C:/Users/John/.aviondb" or "~/.aviondb").
+  const aviondb = await AvionDB.init("DatabaseName", ipfs, {
+    path: "./.aviondb",
+  });
+
   // Returns the List of database names
-  await AvionDB.listDatabases()
+  await AvionDB.listDatabases();
   // prints ['DatabaseName']
 
   // Creates a Collection named "employees"
   const collection = await aviondb.initCollection("employees");
- 
+
   // Returns the List of collection names
-  await aviondb.listCollections() 
-  // prints ['employees'] 
- 
+  await aviondb.listCollections();
+  // prints ['employees']
+
   // Adding an employee document
   await collection.insertOne({
     hourly_pay: "$15",
@@ -140,56 +151,54 @@ const runExample = async () => {
     ssn: "562-48-5384",
     weekly_hours: 100,
   });
- 
+
   // We also support multi-insert using collection.insert()
   // See https://github.com/dappkit/aviondb/blob/master/API.md
-    
-    
+
   // Search by a single field Or many!
   var employee = await collection.findOne({
-    ssn: "562-48-5384", 
+    ssn: "562-48-5384",
   });
- 
+
   // We also support find(), findById()
   // See https://github.com/dappkit/aviondb/blob/master/API.md
-    
+
   // Returns the matching document
-  console.log(employee); 
+  console.log(employee);
   // Prints the above added JSON document
-    
-    
+
   // Update a document
   var updatedEmployee = await collection.update(
-   { ssn: "562-48-5384" },
-   { $set: { hourly_pay: '$100' } }
+    { ssn: "562-48-5384" },
+    { $set: { hourly_pay: "$100" } }
   );
-    
+
   // We also support updateMany(), findOneAndUpdate()
   // See https://github.com/dappkit/aviondb/blob/master/API.md
 
   // Returns the updated document
-  console.log(updatedEmployee); 
+  console.log(updatedEmployee);
   // Prints the updated JSON document
 
-    
   // await collection.close(); // Collection will be closed.
-  // await aviondb.drop(); // Drops the database 
+  // await aviondb.drop(); // Drops the database
   // await aviondb.close(); // Closes all collections and binding database.
   // await ipfs.stop();
 };
- 
+
 runExample();
 ```
 
 See [FAQs](#how-can-i-use-aviondb-in-my-application) Section for more examples on how to use AvionDB in your project.
 
-
 ## API
+
 See [API.md](https://github.com/dappkit/aviondb/blob/master/API.md) for the full documentation.
 
 ## Development
 
 ### Run Tests
+
 ```
 npm test
 ```
@@ -197,22 +206,24 @@ npm test
 ### Benchmarks
 
 Run Write Benchmark
+
 ```
 npm run benchmarks:write
 ```
 
 Run Query Benchmark
+
 ```
 npm run benchmarks:query
 ```
 
 Run Update Benchmark
+
 ```
 npm run benchmarks:update
 ```
 
 See [benchmarks/](https://github.com/dappkit/aviondb/tree/master/test/benchmarks) for more info on benchmarks.
-
 
 ## Specs
 
@@ -221,7 +232,6 @@ We are working on the initial Specs. See [AvionDB Specs doc](https://github.com/
 ## Community Repos
 
 - [Movie-Reviews-CRUD-Application](https://github.com/BCDevs/movies-avionDB): A Kickstarter Application to understand how AvionDB Works by Implementing one.
-
 
 ## Frequently Asked Questions
 
@@ -234,7 +244,7 @@ We are working to implement AvionDB for following languages:
 - Golang
 - Rust
 
-The best place to find out what is out there and what is being actively worked on is likely by asking in the [Discord](https://discord.gg/88YpNuQ). 
+The best place to find out what is out there and what is being actively worked on is likely by asking in the [Discord](https://discord.gg/88YpNuQ).
 
 If you want or are planning to create an implementation in a language that is not listed here, then feel free to reach us out and discuss about it in the [Discord](https://discord.gg/88YpNuQ).
 
@@ -254,7 +264,7 @@ You can see the following examples to get started with AvionDB:
 
 - [**aviondb-p2p-sync**](https://github.com/dappkit/aviondb-p2p-sync)
 
-  A TodoList example using showing how you can sync/replicate AvionDB data across multiple devices. In this example, we synced a todolist from a desktop browser to a mobile browser using a QR Code. 
+  A TodoList example using showing how you can sync/replicate AvionDB data across multiple devices. In this example, we synced a todolist from a desktop browser to a mobile browser using a QR Code.
 
   - Check out the app [here](https://bit.ly/aviondb-p2p-sync)
   - Check out the code [here](https://github.com/dappkit/aviondb-p2p-sync)
@@ -263,15 +273,20 @@ You can see the following examples to get started with AvionDB:
 
   An example using Firebase for AvionDB Access Control. In this example, we used Firebase email/password authentication as an Access Control for AvionDB (a distributed, MongoDB-like database). So, if you would try to write to AvionDB without logging in, the database will not allow you to do so internally.
 
-    - Check out the app [here](https://bit.ly/aviondb-firebase)
-    - Check out the code [here](https://github.com/dappkit/aviondb-firebase)
+  - Check out the app [here](https://bit.ly/aviondb-firebase)
+  - Check out the code [here](https://github.com/dappkit/aviondb-firebase)
 
 - [**aviondb-onboard**](https://github.com/dappkit/aviondb-onboard)
 
   An example using Blocknaive's OnBoard.js Auth based Access Controller for AvionDB & OrbitDB. This allows you to integrate [AvionDB](https://github.com/dappkit/aviondb) with [@metamask_io](https://twitter.com/metamask_io), [@TorusLabs](https://twitter.com/TorusLabs), [@authereum](https://twitter.com/authereum), [@dapper_labs](https://twitter.com/dapper_labs), [@coinbase](https://twitter.com/coinbase), [@TrustWalletApp](https://twitter.com/TrustWalletApp), [@Trezor](https://twitter.com/Trezor), [@Ledger](https://twitter.com/Ledger), [@fortmatic](https://twitter.com/fortmatic), [@portis_io](https://twitter.com/portis_io), [@Squarelink_Inc](https://twitter.com/Squarelink_Inc), [@WalletConnect](https://twitter.com/WalletConnect), [@opera](https://twitter.com/opera), [@ethstatus](https://twitter.com/ethstatus), [@unilogin](https://twitter.com/unilogin), [@imTokenOfficial](https://twitter.com/imTokenOfficial).
 
-    - Check out the app [here](https://bit.ly/aviondb-blocknative)
-    - Check out the code [here](https://github.com/dappkit/aviondb-onboard)
+  - Check out the app [here](https://bit.ly/aviondb-blocknative)
+  - Check out the code [here](https://github.com/dappkit/aviondb-onboard)
+
+- [**aviondb-ceramic-3id**](https://github.com/dappkit/aviondb-ceramic-3id)
+
+  An example using DID-agnostic [Ceramic 3IDs](https://jwt.io/) based Access Controller for AvionDB & OrbitDB. You can join the discussion [here](https://github.com/dappkit/aviondb/issues/41).
+  **Coming Soon**
 
 - [**aviondb-jwt**](https://github.com/dappkit/aviondb-jwt)
 
@@ -283,11 +298,9 @@ You can see the following examples to get started with AvionDB:
   An example using [WebAuthn](https://webauthn.io/) based Access Controller for AvionDB & OrbitDB. You can join the discussion [here](https://github.com/dappkit/aviondb/issues/18)
   **Coming Soon**
 
-
 ### Other Questions?
 
 If you didn't find the answer to your question(s), feel free to reach us out on [Discord](https://discord.gg/88YpNuQ).
-
 
 ## Contributing
 
@@ -303,9 +316,10 @@ Please note that we have a [Code of Conduct](CODE_OF_CONDUCT.md), and that all a
 
 The development of AvionDB has been sponsored by:
 
-* [Dappkit](https://dappkit.io)
+- [Dappkit](https://dappkit.io)
 
 If you want to sponsor developers to work on AvionDB, please consider sponsoring using the "Sponsor" button on the top of the [AvionDB Github Page](https://github.com/dappkit/aviondb).
 
 ## License
+
 [MIT](https://github.com/dappkit/aviondb/blob/master/LICENSE)
