@@ -229,7 +229,13 @@ See [benchmarks/](https://github.com/dappkit/aviondb/tree/master/test/benchmarks
 
 We are working on the initial Specs. See [AvionDB Specs doc](https://github.com/dappkit/aviondb-specs/blob/master/README.md)
 
-## Community Repos
+## Projects using AvionDB
+
+- [nOS Client](https://github.com/nos/client): **nOS** is a blockchain powered virtual operating system that serves as the gateway to Decentralized Applications. The **nOS Client** (Developer MVP Release) allows for the development of Decentralized Applications that interact with Smart Contracts in the back-end.
+
+- [bitsong-media-player](https://github.com/bitsongofficial/bitsong-media-player): **[Private Repo]** BitSong Media Player for BitSong Blockchain, uses AvionDB to store, and share song tracks & metadata among the browser clients.
+
+- [js-pinza](https://github.com/vaultec81/js-pinza): Pinza is a IPFS pinning system using [orbit-db](https://github.com/orbitdb/orbit-db), and [aviondb](https://github.com/dappkit/aviondb) as a distributed database.
 
 - [Movie-Reviews-CRUD-Application](https://github.com/BCDevs/movies-avionDB): A Kickstarter Application to understand how AvionDB Works by Implementing one.
 
