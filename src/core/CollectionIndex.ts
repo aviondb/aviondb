@@ -10,7 +10,7 @@ class CollectionIndex {
     this.loaded = false;
   }
   async find(
-    query: object,
+    query: object = {},
     projection?: object | string,
     options: FindOptionsInterface = {},
     callback?: Function
@@ -20,7 +20,7 @@ class CollectionIndex {
   }
 
   async findOne(
-    query: object,
+    query: object = {},
     projection: object | string,
     options: object = {},
     callback?: Function
