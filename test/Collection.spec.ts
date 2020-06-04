@@ -1,4 +1,5 @@
 import Collection from "../src/core/Collection";
+const dagCBOR = require("ipld-dag-cbor");
 const Cache = require("orbit-db-cache");
 const Keystore = require("orbit-db-keystore");
 const IdentityProvider = require("orbit-db-identity-provider");
@@ -425,5 +426,163 @@ describe("Collection", function () {
     assert.notStrictEqual(headHash, null);
     await store.syncFromHeadHash(headHash);
     //Expects no errors to be thrown.
+  });
+  it("Import: json_mongo", async () => {
+    await store.import(
+      JSON.stringify([
+        {
+          name: "jessie",
+          age: 35,
+          userId: 971349,
+          _id: "5e8cf7e1b9b93a4c7dc2d69e",
+        },
+        {
+          name: "vasa",
+          age: 22,
+          userId: 971350,
+          _id: "5e8cf7e1b9b93a4c7dc2d68d",
+        },
+      ]),
+      { type: "json_mongo" },
+      (currentLength, totalLength, progressPercent) => {
+        //console.log("currentLength: ", currentLength);
+        //console.log("totalLength: ", totalLength);
+        //console.log("progressPercent: ", progressPercent);
+      }
+    );
+  });
+  it("Import: cbor", async () => {
+    const documents = [
+      {
+        name: "jessie",
+        age: 35,
+        userId: 971349,
+        _id: "5e8cf7e1b9b93a4c7dc2d69e",
+      },
+      {
+        name: "vasa",
+        age: 22,
+        userId: 971350,
+        _id: "5e8cf7e1b9b93a4c7dc2d68d",
+      },
+    ];
+    const serialized = dagCBOR.util.serialize(documents);
+    await store.import(
+      serialized,
+      { type: "cbor" },
+      (currentLength, totalLength, progressPercent) => {
+        //console.log("currentLength: ", currentLength);
+        //console.log("totalLength: ", totalLength);
+        //console.log("progressPercent: ", progressPercent);
+      }
+    );
+  });
+  it("Import: raw", async () => {
+    await store.import(
+      [
+        {
+          name: "jessie",
+          age: 35,
+          userId: 971349,
+          _id: "5e8cf7e1b9b93a4c7dc2d69e",
+        },
+        {
+          name: "vasa",
+          age: 22,
+          userId: 971350,
+          _id: "5e8cf7e1b9b93a4c7dc2d68d",
+        },
+      ],
+      { type: "raw" },
+      (currentLength, totalLength, progressPercent) => {
+        //console.log("currentLength: ", currentLength);
+        //console.log("totalLength: ", totalLength);
+        //console.log("progressPercent: ", progressPercent);
+      }
+    );
+  });
+  it("Export: json_mongo", async () => {
+    await store.import(
+      JSON.stringify([
+        {
+          name: "jessie",
+          age: 35,
+          userId: 971349,
+          _id: "5e8cf7e1b9b93a4c7dc2d69e",
+        },
+        {
+          name: "vasa",
+          age: 22,
+          userId: 971350,
+          _id: "5e8cf7e1b9b93a4c7dc2d68d",
+        },
+      ]),
+      { type: "json_mongo" },
+      (currentLength, totalLength, progressPercent) => {}
+    );
+    const exportedData = await store.export({
+      type: "json_mongo",
+      query: {},
+      limit: 1,
+    });
+    assert.strictEqual(JSON.parse(exportedData).length, 1);
+    assert.strictEqual(JSON.parse(exportedData)[0].name, "jessie");
+  });
+  it("Export: cbor", async () => {
+    await store.import(
+      JSON.stringify([
+        {
+          name: "jessie",
+          age: 35,
+          userId: 971349,
+          _id: "5e8cf7e1b9b93a4c7dc2d69e",
+        },
+        {
+          name: "vasa",
+          age: 22,
+          userId: 971350,
+          _id: "5e8cf7e1b9b93a4c7dc2d68d",
+        },
+      ]),
+      { type: "json_mongo" },
+      (currentLength, totalLength, progressPercent) => {}
+    );
+    const exportedData = await store.export({
+      type: "cbor",
+      query: {},
+      limit: 1,
+    });
+    assert.strictEqual(dagCBOR.util.deserialize(exportedData).length, 1);
+    assert.strictEqual(
+      dagCBOR.util.deserialize(exportedData)[0].name,
+      "jessie"
+    );
+  });
+  it("Export: raw", async () => {
+    await store.import(
+      JSON.stringify([
+        {
+          name: "jessie",
+          age: 35,
+          userId: 971349,
+          _id: "5e8cf7e1b9b93a4c7dc2d69e",
+        },
+        {
+          name: "vasa",
+          age: 22,
+          userId: 971350,
+          _id: "5e8cf7e1b9b93a4c7dc2d68d",
+        },
+      ]),
+      { type: "json_mongo" },
+      (currentLength, totalLength, progressPercent) => {}
+    );
+    const exportedData = await store.export({
+      type: "raw",
+      query: {},
+      limit: 1,
+    });
+    assert.strictEqual(exportedData.length, 1);
+    assert.strictEqual(exportedData[0].name, "jessie");
   });
 });
