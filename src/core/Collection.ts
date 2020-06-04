@@ -513,12 +513,12 @@ class Collection extends OrbitdbStore {
    *
    * @param {any} data_in Data to be imported in "cbor", "json_mongo", or "raw" format
    * @param {ImportOptionsInterface} options Options for import()
-   * @param {Function} progressCallback Callback Function for checking progress of syncing process
+   * @param {Function} progressCallback Callback Function for checking progress of import process
    */
   async import(
     data_in: any,
     options: ImportOptionsInterface = {},
-    progressCallback: Function
+    progressCallback?: Function
   ) {
     if (!options.overwrite) {
       //TODO: drop database and overwrite all entries.
@@ -564,13 +564,13 @@ class Collection extends OrbitdbStore {
    * @param {AsyncIterable} stream Data stream to be imported
    * @param {number} length Total stream length
    * @param {ImportStreamOptionsInterface} options Options for importStream()
-   * @param {Function} progressCallback Callback Function for checking progress of syncing process
+   * @param {Function} progressCallback Callback Function for checking progress of import process
    */
   async importStream(
     stream: AsyncIterable<any>,
     length: number,
     options: ImportStreamOptionsInterface,
-    progressCallback: Function
+    progressCallback?: Function
   ) {
     const totalLength = length; //Assumes array at the moment.
     let currentLength = 0;
@@ -622,12 +622,9 @@ class Collection extends OrbitdbStore {
     if (!options.query) {
       options.query = {};
     }
-    const results = await this.find(
-      {},
-      {
-        limit: options.limit,
-      }
-    );
+    const results = await this.find(options.query, {
+      limit: options.limit,
+    });
     switch (options.type) {
       case "json_mongodb": {
         //TODO: Future streamed json.
