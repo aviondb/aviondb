@@ -615,18 +615,18 @@ class Collection extends OrbitdbStore {
       options.limit = 0; // No limit.
     }
     if (!options.type) {
-      options.type = "json_mongodb";
+      options.type = "json_mongo";
       //options.type = "cbor";
       //options.type = "raw";
     }
     if (!options.query) {
       options.query = {};
     }
-    const results = await this.find(options.query, {
+    const results = await this.find(options.query, null, {
       limit: options.limit,
     });
     switch (options.type) {
-      case "json_mongodb": {
+      case "json_mongo": {
         //TODO: Future streamed json.
         return JSON.stringify(results);
       }
