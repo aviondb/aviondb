@@ -1466,9 +1466,9 @@ Syntax: `collection.import(data_in, [options], [progressCallback])`
 Following parameters are supported by `options`:
 
 - `type` (string): defines the data format of the data to be imported. Allowed values are:
-  - `cbor`: Documents in cbor format
-  - `json_mongo`: Documents in JSON format
-  - `raw` : Documents in `raw` format (as if they were exported from AvionDB in `raw` format)
+  - `cbor`: Documents in cbor Buffer format
+  - `json_mongo`: Documents in stringified JSON format
+  - `raw` : Documents in JSON format
 
 If no `type` is passed, it defaults to `json_mongo`.
 
@@ -1530,20 +1530,24 @@ Following parameters are supported by `options`:
 - `query` (object): A `find()` query to filter the documents to be exported. By default, there is no query, hence all the documents are exported.
 
 - `type` (string): defines the data format of the data to be exported. Allowed values are:
-  - `cbor`: Documents in cbor format
-  - `json_mongo`: Documents in JSON format
-  - `raw` : Documents resulting from [`find()`](#collectionfind) query.
+  - `cbor`: Documents in cbor Buffer format
+  - `json_mongo`: Documents in stringified JSON format
+  - `raw` : Documents resulting from [`find()`](#collectionfind) query, i.e. JSON format.
 
 If no `type` is passed, it defaults to `json_mongo`.
 
-- `limit` (number): The `limit` specifies the maximum _number_ of matching records that should be returned from a query. Useful in case if you want export only first X number of documents.
+- `cursor` (object): Cursor methods like `limit`, `skip` & `sort` are supported. See [Supported Cursor Methods](#supportedcursormethods) for more details.
 
 #### Example
 
 ```javascript
 await collection.export({
   type: "json_mongo",
-  limit: 100,
+  cursor: {
+    limit: 100,
+    skip 10,
+    sort: { "age": -1 }
+  },
   query: {
     age: { $gt: 20 },
   },
