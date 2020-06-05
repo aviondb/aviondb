@@ -523,7 +523,11 @@ describe("Collection", function () {
     const exportedData = await store.export({
       type: "json_mongo",
       query: {},
-      limit: 1,
+      cursor: {
+        sort: { age: 1 },
+        limit: 1,
+        skip: 1,
+      },
     });
     assert.strictEqual(JSON.parse(exportedData).length, 1);
     assert.strictEqual(JSON.parse(exportedData)[0].name, "jessie");
@@ -550,7 +554,11 @@ describe("Collection", function () {
     const exportedData = await store.export({
       type: "cbor",
       query: {},
-      limit: 1,
+      cursor: {
+        sort: { age: 1 },
+        limit: 1,
+        skip: 1,
+      },
     });
     assert.strictEqual(dagCBOR.util.deserialize(exportedData).length, 1);
     assert.strictEqual(
@@ -580,7 +588,11 @@ describe("Collection", function () {
     const exportedData = await store.export({
       type: "raw",
       query: {},
-      limit: 1,
+      cursor: {
+        sort: { age: 1 },
+        limit: 1,
+        skip: 1,
+      },
     });
     assert.strictEqual(exportedData.length, 1);
     assert.strictEqual(exportedData[0].name, "jessie");
