@@ -226,6 +226,6 @@ export interface ImportStreamOptionsInterface {
 
 export interface ExportOptionsInterface {
   type?: string;
-  limit?: number;
+  cursor?: object;
   query?: object;
 }

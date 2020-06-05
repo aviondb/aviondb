@@ -611,8 +611,8 @@ class Collection extends OrbitdbStore {
   async export(
     options: ExportOptionsInterface = {}
   ): Promise<string | DocumentInterface[]> {
-    if (!options.limit) {
-      options.limit = 0; // No limit.
+    if (!options.cursor) {
+      options.cursor = {}; // No limit.
     }
     if (!options.type) {
       options.type = "json_mongo";
@@ -622,9 +622,7 @@ class Collection extends OrbitdbStore {
     if (!options.query) {
       options.query = {};
     }
-    const results = await this.find(options.query, null, {
-      limit: options.limit,
-    });
+    const results = await this.find(options.query, null, options.cursor);
     switch (options.type) {
       case "json_mongo": {
         //TODO: Future streamed json.
