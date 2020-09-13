@@ -117,6 +117,8 @@ const aviondb = await AvionDB.init("DatabaseName", ipfs);
 
 ## Usage
 
+**We are upgrading AvionDB to newer versions of `js-ipfs`. For now, please use js-ipfs@0.44.0**
+
 ### Example
 
 ```javascript
