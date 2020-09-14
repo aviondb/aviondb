@@ -14,6 +14,9 @@
     "benchmark:update": "ts-node ./test/benchmarks/benchmark.update.ts",
     "lint": "node ./node_modules/eslint/bin/eslint -c ./.eslintrc.json ./src/**/*.ts --fix"
   },
+  "bin": {
+    "aviondb": "dist/server/bin.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dappkit/aviondb.git"
@@ -61,6 +64,7 @@
     "debug": "^4.1.1",
     "interface-datastore": "^1.0.2",
     "orbit-db": "^0.24.1",
-    "orbit-db-store": "^3.3.0"
+    "orbit-db-store": "^3.3.0",
+    "yargs": "^15.3.1"
   }
 }
