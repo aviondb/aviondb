@@ -216,6 +216,26 @@ describe("Collection", function () {
     assert.strictEqual(result.age, 22);
     assert.strictEqual(result.name, "vasa");
   });
+  it("FindOneAndUpdate: increase with $inc operator", async () => {
+    await store.insertOne({ name: "kim", age: 35 });
+    const result = await store.findOneAndUpdate(
+      { name: "kim" },
+      { $inc: { age: 1 } }
+    );
+    assert.strictEqual(typeof result, "object");
+    assert.strictEqual(result.age, 36);
+    assert.strictEqual(result.name, "kim");
+  });
+  it("FindOneAndUpdate: decrease with $inc operator", async () => {
+    await store.insertOne({ name: "kim", age: 35 });
+    const result = await store.findOneAndUpdate(
+      { name: "kim" },
+      { $inc: { age: -1 } }
+    );
+    assert.strictEqual(typeof result, "object");
+    assert.strictEqual(result.age, 34);
+    assert.strictEqual(result.name, "kim");
+  });
   it("FindOneAndUpdate: Negetive", async () => {
     await store.insertOne({ name: "kim", age: 35 });
     const result = await store.findOneAndUpdate(
