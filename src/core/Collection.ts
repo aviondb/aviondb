@@ -65,7 +65,7 @@ class Collection extends OrbitdbStore {
    */
 
   insert(
-    docs: Array<DocumentInterface>,
+    docs: Array<Partial<DocumentInterface>>,
     options?: InsertOptions,
     callback?: Function
   ): Promise<string> {
@@ -89,7 +89,7 @@ class Collection extends OrbitdbStore {
    * @returns {Promise<string>} Returns a Promise that resolves to CID of the inserted DAG that points to the inserted document
    */
   async insertOne(
-    doc: DocumentInterface,
+    doc: Partial<DocumentInterface>,
     options?: InsertOneOptions,
     callback?: Function
   ): Promise<string> {
