@@ -42,7 +42,7 @@
     "ipfs": "^0.46.1",
     "ipld-dag-cbor": "^0.15.3",
     "mocha": "^7.2.0",
-    "orbit-db-test-utils": "^0.9.4",
+    "orbit-db-test-utils": "^2.2.0",
     "rimraf": "^3.0.2",
     "ts-loader": "^7.0.4",
     "ts-mocha": "^7.0.0",
