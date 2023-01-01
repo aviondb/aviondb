@@ -44,13 +44,13 @@
     "mocha": "^7.2.0",
     "orbit-db-test-utils": "^0.9.4",
     "rimraf": "^3.0.2",
-    "ts-loader": "^7.0.4",
+    "ts-loader": "^9.4.2",
     "ts-mocha": "^7.0.0",
     "ts-node": "^8.10.1",
     "typescript": "^3.9.3",
     "typings": "^2.1.1",
-    "webpack": "^4.42.1",
-    "webpack-cli": "^3.3.11"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "dependencies": {
     "@tabcat/orbit-db-fsstore": "^1.0.0",
